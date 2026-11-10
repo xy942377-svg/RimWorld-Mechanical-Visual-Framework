@@ -1,33 +1,37 @@
 # 开发交接说明
 
-入口是仓库 README；不依赖任何先前聊天、旧 MOD 或私有路径。当前版本和发布状态在 project.json / docs/status.md。先读 architecture、model-format 和 api，再改对应实现。
+当前框架版本为0.1.0-candidate1，资料修订为docs2（2026-11-10）。入口为仓库README，版本与发布状态记录于project.json和docs/status.md。修改前阅读architecture、model-format和api。
+
+本次修订更新文档、双语说明和模板文本，并加入Modeling/ShieldGenerator建模案例。框架算法、依赖和存档字段保持不变。
 
 ## 建立环境
 
-下载完整仓库。运行预编译示例不需要开发软件；制作模型需要已有 Python 3.10+；修改 C# 需要已有 Roslyn csc.exe 与本人持有的对应 RimWorld 安装。复制 ToolPaths.example.json 为 ToolPaths.local.json 或用 Start.cmd 的 Configure 填写。示例配置为空值，不假定任何盘符或开发者名字。
+下载完整仓库。运行预编译示例不需要开发软件；制作模型需要已有Python 3.10+；修改C# 需要已有Roslyn csc.exe与本人持有的对应RimWorld安装。复制ToolPaths.example.json为ToolPaths.local.json或用Start.cmd的Configure填写。在配置中填写本机实际路径。
 
-构建顺序：BuildAssets → BuildCode → Validate；随后顺序执行 Test16、Test17。测试器使用 Work/Runtime 下指向本人游戏的文件链接和独立 Work/Runs 存档，不改正常 ModsConfig。一次只运行一个版本；测试将在完成后退出。要手动体验可运行 Start-Examples.ps1 -Version 1.7 -Launch；自动测试用 -AutoTest -Launch。
+构建顺序：BuildAssets → BuildCode → Validate；随后顺序执行Test16、Test17。测试器使用Work/Runtime下指向本人游戏的文件链接和独立Work/Runs存档，不改正常ModsConfig。一次只运行一个版本；测试将在完成后退出。要手动体验可运行Start-Examples.ps1 -Version 1.7 -Launch；自动测试用 -AutoTest -Launch。
 
-首版 C# 构建器针对已验证游戏布局：1.6 的 Managed 子目录、1.7 的游戏根目录。游戏更新改变程序集/API 时，应检查实际安装，不能拿另一版 DLL 混用。
+首版C# 构建器针对已验证游戏布局：1.6的Managed子目录、1.7的游戏根目录。游戏更新改变程序集/API时，应检查实际安装，不能拿另一版DLL混用。
 
 ## 接口约定
 
-- Actor 游戏逻辑只调用参数/动作/挂接点，不能塞入 Draw 或模型加载器。
-- 带真实射击/能量/导航的例子放消费 MOD；Core 不内置武器规则。
-- 资源路径属于消费 MOD，不能硬编码框架根目录或单个模型全局变量。
+- 游戏逻辑通过参数、动作和挂接点接口控制视觉；绘制函数和模型加载器只处理显示与资源。
+- 射击、能量和导航功能由使用框架的MOD实现。
+- 资源路径属于使用框架的MOD，不能硬编码框架根目录或单个模型全局变量。
 - 只共享不可变资产；实例动画和网格不能共享。
-- Asset 格式改动要更新 version 并处理存档参数名语义；不要只改一个例子的转轴而不更新源模型。
-- 1.7 原生缓冲不能与 Unity 兼容 setter 混用。
-- 几何与贴图修改都必须重新构建并通过 BuildHashes / BuildManifest 核验。
-- Node 坐标、轮廓和模型几何的说明写在相应源码；工具行为见各脚本顶部及 quickstart。
+- 模型格式改变时更新version，并检查已有存档中的参数名是否仍表示相同含义。转轴和几何的改动保存在源模型中，然后重新构建。
+- 1.7原生缓冲不能与Unity兼容setter混用。
+- 几何与贴图修改都必须重新构建并通过BuildHashes / BuildManifest核验。
+- 节点坐标、轮廓和模型几何的说明写在相应源码；工具行为见各脚本顶部及quickstart。
 
 ## 验证与交付
 
-Tools/validate.py 检查 XML、语言键、几何、构建哈希、大小；Verification/test_tools.py 覆盖新项目生成、输入约束、可重复构建与 GLB 坐标/层级。FrameworkProbe.cs 在真实游戏中检查变换、关节隔离、播放状态、Scribe 恢复和游戏 tick 接线。修改绘制应再检查实际截图，不把数值通过当作画面通过。
+Tools/validate.py检查XML、语言键、几何、构建哈希、大小；Verification/test_tools.py覆盖新项目生成、输入约束、可重复构建与GLB坐标/层级。FrameworkProbe.cs在真实游戏中检查变换、关节隔离、播放状态、Scribe恢复和游戏更新驱动动画的过程。修改绘制应再检查实际截图，不把数值通过当作画面通过。
 
-源与 DLL 通过 Mod/BuildManifest.json 对应；每个版本的实际测试范围见 verification.md。纯网页链接/文字修改无需重跑机械运动测试，但须重编译变化的 C# 并校验哈希。
+源与DLL通过Mod/BuildManifest.json对应；每个版本的实际测试范围见verification.md。纯网页链接/文字修改无需重跑机械运动测试，但须重编译变化的C# 并校验哈希。
 
-只用 Tools/package.py 白名单打包。Releases 已交付 ZIP 不覆盖；新版本改 project.json、FrameworkMod.Version 和 CHANGELOG 后重新打包。Downloads 保留可直接安装的版本 ZIP；GitHub Code → Download ZIP 下载完整项目。Steam 上传只选解压后的运行包，不包含工具、测试档或游戏链接。
+只用Tools/package.py白名单打包。Releases已交付ZIP不覆盖；框架版本变更时同步project.json、FrameworkMod.Version和CHANGELOG；仅修订文档、说明文字或建模资料时更新project.json中的revision和CHANGELOG，保留框架版本。Downloads保留可直接安装的版本ZIP；GitHub Code → Download ZIP下载完整项目。Steam上传使用解压后的运行包。Modeling目录随开发资料提供，不放入运行包或动画示例包。
 
-Work 中的运行时链接绝不能作为普通子目录递归删除。清理前解析绝对路径、确认在项目 Work 下、检查链接；先保留必要证据，再删除没有链接的已结束 Runs 子目录。每版本最多留两次完成测试。预算详见根目录 AGENTS.md。
+护盾建模案例运行`python Modeling/ShieldGenerator/build_model.py --output Work/ShieldModel`，生成OBJ、材质和结构检查结果。模型生成使用Python标准库；制作贴图的方法见案例README。
+
+Work中的运行时链接绝不能作为普通子目录递归删除。清理前解析绝对路径、确认在项目Work下、检查链接；先保留必要证据，再删除没有链接的已结束Runs子目录。每版本最多留两次完成测试。预算详见根目录AGENTS.md。
 

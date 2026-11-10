@@ -1,0 +1,67 @@
+{
+  "cornerAngles": [
+    45,
+    135,
+    225,
+    315
+  ],
+  "cornerRadius": 1.68,
+  "cornerScale": 1.0,
+  "maxInverseTransformError": 3.3306690738754696e-16,
+  "masterFaces": 2362,
+  "baseFaces": 18216,
+  "orbFaces": 5248,
+  "camera": {
+    "projection": "orthographic",
+    "elevationDegrees": 55
+  },
+  "instances": [
+    {
+      "id": 0,
+      "yaw": 45,
+      "translation": [
+        -1.1879393923933999,
+        1.1879393923933999,
+        0.0
+      ]
+    },
+    {
+      "id": 1,
+      "yaw": 135,
+      "translation": [
+        -1.1879393923933999,
+        -1.1879393923933996,
+        0.0
+      ]
+    },
+    {
+      "id": 2,
+      "yaw": 225,
+      "translation": [
+        1.1879393923933996,
+        -1.1879393923934,
+        0.0
+      ]
+    },
+    {
+      "id": 3,
+      "yaw": 315,
+      "translation": [
+        1.1879393923934,
+        1.1879393923933994,
+        0.0
+      ]
+    }
+  ],
+  "exportedFaces": {
+    "shared_corner": 2362,
+    "shield_base": 18120,
+    "orb": 5104
+  },
+  "files": {
+    "materials.mtl": "8aec0e0bed11f6b54eebfe8ee60aaee02b004ba2a5397706ef561bc5181e7378",
+    "orb.obj": "e05423f02b4b748cd9d23805a19712347a74fc6b79a04285809e560316fbf877",
+    "shared_corner.obj": "364c8a33ef9521e3ad761d8311ba700f5a6e21334032c39e8d1435c53e45814d",
+    "shield_base.obj": "7dff72df7f4636d26698ec4a8b34175631b49cfb28f6348dafb69009194fd359"
+  }
+}

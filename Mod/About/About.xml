@@ -7,6 +7,6 @@
     <li>1.6</li>
     <li>1.7</li>
   </supportedVersions>
-  <description>Rigid mechanical visuals, authoring tools and examples. See Guide/README.md.
-机械动态视觉框架；部件、转轴、动画与制作工具。参阅 Guide/README.md。</description>
+  <description>Animation and rendering for mechanical models: rotation, elevation, recoil, lift and folding. Supports RimWorld 1.6 / 1.7. Load after Core and before mods that use the framework. Tools, tutorials and optional examples are available on GitHub. See Guide/README.md.
+为机械模型提供转向、俯仰、后坐、升降和折叠动画。支持RimWorld 1.6 / 1.7，在Core之后、使用框架的MOD之前启用。制作工具、教程和可选示例可从GitHub获取，参阅Guide/README.md。</description>
 </ModMetaData>

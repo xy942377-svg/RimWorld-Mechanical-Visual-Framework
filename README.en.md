@@ -1,16 +1,29 @@
 # RimWorld Mechanical Visual Framework
 
-[中文首页](README.md) · [Quick start](docs/quickstart.md) · [Runtime API](docs/api.md)
+[中文首页](README.md) · [Quick start (Chinese)](docs/quickstart.md) · [API (Chinese)](docs/api.md) · [Shield modeling example](Modeling/ShieldGenerator/README.en.md)
 
-Version **0.1.0-candidate1**, RimWorld **1.6 / 1.7**. Author: Grey·Oviin/OpenAI Assisted.
+A visual framework for rigid mechanical parts in RimWorld. It supports continuous rotation, independent elevation and recoil, translation, folding and uniform scaling. Each part has a local pivot and can inherit motion from a parent. The renderer projects the current pose onto the map with flat shading and thick outlines.
 
-A reusable rigid-part visual system: hierarchical pivots, continuous traversal, elevation, recoil, folding, translation, uniform scale and parameter-driven clips. Model vertices are projected into RimWorld's map plane with flat shading and thick outlines. It is not a PNG-per-angle player, and does not run Blender in game.
+Framework version: **0.1.0-candidate1**, for RimWorld **1.6 / 1.7**. Documentation revision **docs2** adds clearer instructions and a shield-generator modeling example. Author: Grey·Oviin/OpenAI Assisted.
 
-Install `Mod` and optionally `Examples/Mechanisms` as separate folders under RimWorld/Mods. Load Core, framework, then examples. Build examples under Misc and open Animation controls. The turret is a visual example, without combat behavior.
+## Install and try
 
-The repository includes compiled DLLs, matching C# sources, editable JSON models, a rigid GLB subset importer, a new-mod generator, scripts and tests. Double-click `Start.cmd` on Windows. Configure an existing Python 3.10+ executable. Building framework C# additionally requires an existing Roslyn compiler and locally owned game assemblies. Nothing is downloaded or installed by the tools.
+Download the [runtime](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-docs2-Workshop.zip) and optionally the [examples](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-docs2-Examples.zip). Extract `MechanicalVisualFramework` and `RMVFExamples` into RimWorld's `Mods` folder.
 
-Use `Tools/new_project.py` for a standalone XML/data consumer. Use `CompMechanicalVisual.Animation.SetTarget`, `Play` and `TryAnchor` for a custom adapter. See the commented source and Chinese technical guides for exact contracts.
+Load **Core → Mechanical Visual Framework → RMVF · Mechanical examples**. The runtime requires Core; the examples require the framework. Build the examples under **Misc** and open **Animation controls**. The triple turret demonstrates rotation, independent gun elevation and recoil; it does not fire projectiles.
 
-Only Steam Workshop and this GitHub repository are distribution destinations. Workshop upload files are prepared; the listing is not yet published. MIT covers original code/tools/docs/example assets. Game assemblies and player data are excluded. See LICENSE, NOTICE and docs/verification.md.
+The Steam Workshop listing is not published yet. Downloads are available here.
 
+## Create a model
+
+Use **Code → Download ZIP** for the full project, then extract it. On Windows, run `Start.cmd`, select **Configure paths** and enter an existing Python 3.10+ executable. Select **New mod** to create a working model-based mod. Framework C# changes also require Roslyn and the matching local game assemblies.
+
+The project includes editable JSON models, a GLB importer for supported rigid-node files, templates, build scripts and tests. The optional shield modeling example demonstrates four rotated copies of one shared corner, a separate sphere, OBJ export and aligned PNG layers.
+
+The runtime supports parameter-driven rotation, translation and uniform scaling, linear keyframes, concurrent clips with separate parameters, visual anchors and saved animation state. Gameplay such as firing, power generation and shield interception belongs to the mod using the framework. Skinning, flexible deformation and inverse kinematics are not implemented. The GLB importer supports rigid geometry and plain opaque colors; its accepted input is documented in the quick start.
+
+Game controls are available in English and Simplified Chinese. The toolbox uses English; detailed API and format guides are currently in Chinese.
+
+## License and testing
+
+Original code, tools, documentation and examples use [MIT](LICENSE). See [NOTICE](NOTICE.md) for attribution and [verification](docs/verification.md) for tested versions and scope.

@@ -5,7 +5,7 @@ from assets import ROOT,require
 from validate import validate
 
 ROOT_FILES={"README.md","README.en.md","LICENSE","NOTICE.md","CHANGELOG.md","AGENTS.md","project.json","ToolPaths.example.json","Start.cmd",".gitignore",".gitattributes"}
-ROOT_DIRS={"Mod","Examples","Authoring","Templates","Tools","docs","Verification",".github"}
+ROOT_DIRS={"Mod","Examples","Authoring","Templates","Tools","docs","Verification",".github","Modeling"}
 def portable_files(root):
     for folder in sorted(ROOT_DIRS):
         base=root/folder
@@ -17,6 +17,7 @@ def portable_files(root):
 def pack(root=ROOT):
     validate(root)
     project=json.loads((root/"project.json").read_text(encoding="utf-8-sig"));version=project["version"]
+    if project.get("revision"):version+="-"+project["revision"]
     releases=root/"Releases";releases.mkdir(exist_ok=True)
     plans=[("RMVF-"+version+"-DeveloperKit.zip",list(portable_files(root)),"RMVF"),
            ("RMVF-"+version+"-Workshop.zip",[f for f in portable_files(root) if f.relative_to(root).parts[0]=="Mod"],"MechanicalVisualFramework"),

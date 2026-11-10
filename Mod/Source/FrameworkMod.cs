@@ -8,7 +8,6 @@ namespace MechanicalVisualFramework
     public sealed class FrameworkMod : Mod
     {
         public const string Version="0.1.0-candidate1";
-        // Filled only after an actual repository exists. Never send users to a guessed account or URL.
         public const string Repository="https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework";
         public FrameworkMod(ModContentPack content):base(content){}
         public override string SettingsCategory(){return "RMVF_Title".Translate();}

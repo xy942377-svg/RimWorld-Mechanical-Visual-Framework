@@ -17,6 +17,6 @@
   <loadAfter>
     <li>greyoviin.mechanicalvisualframework</li>
   </loadAfter>
-  <description>Optional mechanical visual examples. Not balanced combat buildings.
-可选机械视觉示例，不是正式战斗建筑。</description>
+  <description>Animation examples: a rotating arm, a folding and lifting mechanism, and a triple turret. Build them under Misc and open Animation controls. The turret demonstrates motion and does not fire projectiles. Requires Mechanical Visual Framework.
+动画示例包含转臂、升降折叠机构和三联装炮塔。在“杂项”菜单建造后，选中建筑并打开“动画控制”。炮塔演示机械运动，不发射弹丸。需要启用机械动态视觉框架。</description>
 </ModMetaData>

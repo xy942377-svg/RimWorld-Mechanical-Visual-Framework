@@ -1,19 +1,27 @@
 # 发布与下载
 
-项目只使用 Steam Workshop 与本 GitHub。仓库的 README、docs、Source 和 Tools 是同一份维护来源。
+## 安装游戏内容
 
-面向玩家：Downloads 中的 Workshop ZIP；解压目录直接放入 Mods。示例是单独的 Examples ZIP，按需启用。
-面向作者：GitHub 的 Code → Download ZIP，或者下载开发包。下载完整项目即可离线读教程并编辑模型；首次配置本机工具路径后可重建。
+在仓库首页下载框架运行包和可选的动画示例包。解压后，分别将`MechanicalVisualFramework`和`RMVFExamples`文件夹放入游戏的`Mods`目录，按Core、框架、示例的顺序启用。
 
-本地运行 `python Tools/package.py` 生成三份内容选择不同的 ZIP：
-Workshop（纯运行 MOD，附源码和简明说明）、Examples（可选示例 MOD）、DeveloperKit（完整开发项目）。
-这三份是同一 GitHub 项目的下载选项，不是三套网站或独立维护工程。
-打包前验证资源/程序集哈希；ZIP 内含文件校验清单，Releases 中有 SHA256 清单。历史 ZIP 不原地重写。
+框架支持RimWorld 1.6和1.7。玩家运行时只需游戏及所用MOD的依赖。
 
-Steam 条目建议标题：Mechanical Visual Framework / 机械动态视觉框架。
-说明应列明 1.6/1.7、Core 依赖、这是供其他 MOD 使用的刚性机械视觉框架，并附本仓库地址。
-不应把视觉例子描述为已经平衡完成的战斗炮塔，也不应宣传尚未实现的蒙皮/物理/IK 功能。
-正式上传前用可见游戏窗口检查两版外观，准备适当的封面，并确认发布说明与实际候选状态相符。
+## 获取开发资料
 
-许可证：MIT，保留 Grey·Oviin/OpenAI Assisted 署名和许可文本。玩家运行不需要下载建模软件或 Python。
+使用GitHub的 **Code → Download ZIP** 获取完整项目。解压后可阅读教程、编辑模型并使用工具箱。护盾建模案例位于`Modeling/ShieldGenerator`。
 
+`Downloads/`提供可直接安装的运行包和示例包，以及这两个下载文件的SHA-256校验值。完整开发资料从仓库下载；`DeveloperKit.zip`由本地打包工具生成。
+
+## 维护发布包
+
+完成[开发交接说明](handoff.md)中的检查后，在仓库根目录运行：
+
+```text
+python Tools/package.py
+```
+
+工具在`Releases/`生成运行包、示例包和完整开发包。每个ZIP包含文件校验清单，同目录生成三个压缩包的SHA-256清单。
+
+框架版本记录于`project.json`的`version`。文档、示例资料或说明文字修订使用独立的`revision`，并加入压缩包文件名；当前为`docs2`。已交付的同名压缩包保留原文件，新修订使用新文件名。
+
+创意工坊上传使用运行包解压后的MOD目录。发布说明应包含功能、加载顺序、游戏版本、教程链接和作者。当前条目尚未发布。

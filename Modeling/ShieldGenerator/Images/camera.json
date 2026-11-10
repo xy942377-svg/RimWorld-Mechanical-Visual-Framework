@@ -1,0 +1,39 @@
+{
+  "projection": "orthographic",
+  "axes": "X right, Y ground depth, Z up",
+  "elevationDegrees": 55,
+  "size": [
+    1024,
+    1024
+  ],
+  "projectionRows": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      -0.8191520442889918,
+      -0.573576436351046
+    ],
+    [
+      0,
+      -0.573576436351046,
+      0.8191520442889918
+    ]
+  ],
+  "pixelsPerModelUnit": 225.13655268016743,
+  "offsetPixels": [
+    512,
+    612.805197789597
+  ],
+  "formula": "pixelXY = projectionRows[0:2] * modelXYZ * pixelsPerModelUnit + offsetPixels",
+  "layers": [
+    "base-1024.png",
+    "orb-1024.png"
+  ],
+  "pixelOrigin": "top-left",
+  "alpha": "RGBA",
+  "renderOrigin": "Shared frame from the full base and orb assembly"
+}

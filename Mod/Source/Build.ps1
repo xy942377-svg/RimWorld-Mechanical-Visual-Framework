@@ -12,7 +12,7 @@ if(Test-Path -LiteralPath $ConfigPath){
  if(-not $Game16Root){$Game16Root=$cfg.Game16Root}
  if(-not $Game17Root){$Game17Root=$cfg.Game17Root}
 }
-if(-not $CompilerPath -or -not(Test-Path -LiteralPath $CompilerPath -PathType Leaf)){throw 'Provide an existing Roslyn csc.exe using -CompilerPath or ToolPaths.local.json. No tools are downloaded.'}
+if(-not $CompilerPath -or -not(Test-Path -LiteralPath $CompilerPath -PathType Leaf)){throw 'Set -CompilerPath or ToolPaths.local.json to an existing Roslyn csc.exe.'}
 $sources=@(Get-ChildItem -LiteralPath $PSScriptRoot -Filter '*.cs' | Sort-Object Name)
 $targets=@()
 # The tested 1.6 uses Unity Managed references; tested 1.7 exposes compatibility assemblies at game root.

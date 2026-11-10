@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <RMVF_Starter.label>Mechanical arm example</RMVF_Starter.label>
-  <RMVF_Starter.description>Minimal parent-child turntable and arm. Use animation controls.</RMVF_Starter.description>
+  <RMVF_Starter.description>A simple base and rotating arm. Open Animation controls to adjust its rotation.</RMVF_Starter.description>
   <RMVF_Deployment.label>Deployable mechanism example</RMVF_Deployment.label>
   <RMVF_Deployment.description>Four articulated panels with independent spin, folding and lift parameters.</RMVF_Deployment.description>
   <RMVF_TripleTurret.label>Triple turret visual example</RMVF_TripleTurret.label>
-  <RMVF_TripleTurret.description>Visual rig: continuous yaw, independent gun elevation and recoil. It does not fire projectiles; combat belongs to a separate adapter.</RMVF_TripleTurret.description>
+  <RMVF_TripleTurret.description>Demonstrates continuous rotation, independent gun elevation and recoil. Open Animation controls to adjust the pose and play clips. This example does not fire projectiles.</RMVF_TripleTurret.description>
 </LanguageData>

@@ -7,7 +7,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>RMVF_Starter</defName>
     <label>Mechanical arm example</label>
-    <description>Minimal parent-child turntable and arm. Use animation controls.</description>
+    <description>A simple base and rotating arm. Open Animation controls to adjust its rotation.</description>
     <thingClass>MechanicalVisualFramework.Building_MechanicalDisplay</thingClass>
     <category>Building</category>
     <tickerType>Normal</tickerType>
@@ -89,7 +89,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>RMVF_TripleTurret</defName>
     <label>Triple turret visual example</label>
-    <description>Visual rig: continuous yaw, independent gun elevation and recoil. It does not fire projectiles; combat belongs to a separate adapter.</description>
+    <description>Demonstrates continuous rotation, independent gun elevation and recoil. Open Animation controls to adjust the pose and play clips. This example does not fire projectiles.</description>
     <thingClass>MechanicalVisualFramework.Building_MechanicalDisplay</thingClass>
     <category>Building</category>
     <tickerType>Normal</tickerType>

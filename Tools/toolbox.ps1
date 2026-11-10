@@ -22,7 +22,7 @@ if($Action -eq 'Configure'){
  Write-Host 'Saved locally; excluded from repository and release packages.';return
 }
 if($Action -eq 'Docs'){Start-Process (Join-Path $root 'README.md');return}
-if(-not(Test-Path -LiteralPath $config)){throw 'Run Configure first. Tools never install/download dependencies.'}
+if(-not(Test-Path -LiteralPath $config)){throw 'Run Configure to set the tool paths first.'}
 $cfg=Get-Content -LiteralPath $config -Raw -Encoding UTF8|ConvertFrom-Json
 $python=$cfg.PythonPath;if(-not $python){$python='python'}
 $env:PYTHONIOENCODING='utf-8'

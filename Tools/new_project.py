@@ -1,4 +1,4 @@
-"""Create a standalone consumer mod; no C# compilation is needed for parameter/clip-only visuals."""
+"""Create a mod with an editable model, bilingual descriptions and an RMVF dependency."""
 import argparse,json,re,shutil
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -20,7 +20,7 @@ def metadata(mod,name,package,core=False):
         ET.SubElement(dep,"displayName").text="RimWorld Mechanical Visual Framework"
         ET.SubElement(dep,"downloadUrl").text="https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework"
         ET.SubElement(ET.SubElement(about,"loadAfter"),"li").text="greyoviin.mechanicalvisualframework"
-    ET.SubElement(about,"description").text=("Rigid mechanical visuals, authoring tools and examples. See Guide/README.md.\n机械动态视觉框架；部件、转轴、动画与制作工具。参阅 Guide/README.md。" if core else "Optional mechanical visual examples. Not balanced combat buildings.\n可选机械视觉示例，不是正式战斗建筑。")
+    ET.SubElement(about,"description").text=("Animation and rendering for mechanical models. Tools and examples are available on GitHub. See Guide/README.md.\n为机械模型提供动画与绘制功能。制作工具和示例可从GitHub获取，参阅Guide/README.md。" if core else "A mechanical animation model using RMVF. Select the building and open Animation controls.\n使用RMVF的机械动画模型。选中建筑后打开“动画控制”查看动作。")
     xml(mod/"About/About.xml",about)
 
 def thing(defs,name,label,description,size,autoplay=""):
@@ -63,7 +63,7 @@ def create(output,package,name):
     ET.SubElement(lang,"RMVF_"+asset+".label").text=name
     ET.SubElement(lang,"RMVF_"+asset+".description").text="A mechanical visual. Select it and open animation controls to adjust parameters and play clips."
     xml(output/"Languages/English/DefInjected/ThingDef/Mechanism.xml",lang)
-    (output/"README.md").write_text("# "+name+"\n\nEnable RimWorld Core, RMVF, then this mod. Build the object under Misc.\nEdit Authoring/model.json, then run the framework tool:\n\n    python Tools/assets.py <this-mod>/Authoring/model.json <this-mod> "+asset+"\n\nKeep packageId and asset/Def names unique. No restart-free asset reload is provided.\n",encoding="utf-8")
+    (output/"README.md").write_text("# "+name+"\n\nEnable RimWorld Core, RMVF, then this mod. Build the object under Misc.\nEdit Authoring/model.json, then run this command from the framework repository root:\n\n    python Tools/assets.py <this-mod>/Authoring/model.json <this-mod> "+asset+"\n\nKeep packageId and asset/Def names unique. Restart the game after rebuilding assets.\n",encoding="utf-8")
     print("Created",output)
 if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)

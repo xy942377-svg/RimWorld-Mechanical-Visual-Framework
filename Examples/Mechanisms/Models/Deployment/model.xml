@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mechanicalModel version="1" camera="55" geometry="geometry.bin" palette="RMVF/Deployment/Palette">
+  <nodes>
+    <node name="foundation" layer="foundation" />
+    <node name="hub" parent="foundation" position="0 0 0.65" layer="raised" />
+    <node name="panel0" parent="hub" position="0 -0.75 0" rotation="0 0 0 1" layer="raised" />
+    <node name="panel1" parent="hub" position="0.75 -4.5924255e-17 0" rotation="0 0 0.707106781 0.707106781" layer="raised" />
+    <node name="panel2" parent="hub" position="9.18485099e-17 0.75 0" rotation="0 0 1 6.123234e-17" layer="raised" />
+    <node name="panel3" parent="hub" position="-0.75 1.37772765e-16 0" rotation="0 0 0.707106781 -0.707106781" layer="raised" />
+  </nodes>
+  <parameters>
+    <parameter name="yaw" min="0" max="360" default="0" speed="30" wrap="true" />
+    <parameter name="lift" min="0" max="1.3" default="0" speed="0.6" wrap="false" />
+    <parameter name="fold" min="0" max="80" default="0" speed="35" wrap="false" />
+  </parameters>
+  <bindings>
+    <binding node="hub" parameter="yaw" kind="rotation" axis="0 0 1" factor="1" />
+    <binding node="hub" parameter="lift" kind="translation" axis="0 0 1" factor="1" />
+    <binding node="panel0" parameter="fold" kind="rotation" axis="1 0 0" factor="-1" />
+    <binding node="panel1" parameter="fold" kind="rotation" axis="1 0 0" factor="-1" />
+    <binding node="panel2" parameter="fold" kind="rotation" axis="1 0 0" factor="-1" />
+    <binding node="panel3" parameter="fold" kind="rotation" axis="1 0 0" factor="-1" />
+  </bindings>
+  <anchors>
+    <anchor name="panel_tip" node="panel0" position="0 -2.05 0" />
+  </anchors>
+  <clips>
+    <clip name="deploy_cycle" duration="12" loop="true">
+      <track parameter="lift">
+        <key time="0" value="0" />
+        <key time="2" value="1.3" />
+        <key time="8" value="1.3" />
+        <key time="10" value="0" />
+        <key time="12" value="0" />
+      </track>
+      <track parameter="fold">
+        <key time="0" value="80" />
+        <key time="2" value="80" />
+        <key time="4" value="0" />
+        <key time="7" value="0" />
+        <key time="9" value="80" />
+        <key time="12" value="80" />
+      </track>
+    </clip>
+    <clip name="spin" duration="12" loop="true">
+      <track parameter="yaw">
+        <key time="0" value="0" />
+        <key time="12" value="360" />
+      </track>
+    </clip>
+  </clips>
+</mechanicalModel>

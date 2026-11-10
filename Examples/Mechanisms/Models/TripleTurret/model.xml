@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mechanicalModel version="1" camera="55" geometry="geometry.bin" palette="RMVF/TripleTurret/Palette">
+  <nodes>
+    <node name="foundation" position="0 0 0" layer="foundation" />
+    <node name="house" parent="foundation" position="0 0 0" layer="raised" />
+    <node name="left" parent="house" position="-0.94 -1.15 1.25" layer="raised" />
+    <node name="center" parent="house" position="0 -1.15 1.25" layer="raised" />
+    <node name="right" parent="house" position="0.94 -1.15 1.25" layer="raised" />
+  </nodes>
+  <parameters>
+    <parameter name="yaw" min="0" max="360" default="0" speed="24" wrap="true" />
+    <parameter name="left_elevation" min="-5" max="30" default="8" speed="15" wrap="false" />
+    <parameter name="left_recoil" min="0" max="0.45" default="0" speed="1.5" wrap="false" />
+    <parameter name="center_elevation" min="-5" max="30" default="8" speed="15" wrap="false" />
+    <parameter name="center_recoil" min="0" max="0.45" default="0" speed="1.5" wrap="false" />
+    <parameter name="right_elevation" min="-5" max="30" default="8" speed="15" wrap="false" />
+    <parameter name="right_recoil" min="0" max="0.45" default="0" speed="1.5" wrap="false" />
+  </parameters>
+  <bindings>
+    <binding node="house" parameter="yaw" kind="rotation" axis="0 0 1" factor="1" />
+    <binding node="left" parameter="left_elevation" kind="rotation" axis="1 0 0" factor="-1" />
+    <binding node="left" parameter="left_recoil" kind="translation" axis="0 1 0" factor="1" />
+    <binding node="center" parameter="center_elevation" kind="rotation" axis="1 0 0" factor="-1" />
+    <binding node="center" parameter="center_recoil" kind="translation" axis="0 1 0" factor="1" />
+    <binding node="right" parameter="right_elevation" kind="rotation" axis="1 0 0" factor="-1" />
+    <binding node="right" parameter="right_recoil" kind="translation" axis="0 1 0" factor="1" />
+  </bindings>
+  <anchors>
+    <anchor name="muzzle_left" node="left" position="0 -4.26 0" direction="0 -1 0" />
+    <anchor name="muzzle_center" node="center" position="0 -4.26 0" direction="0 -1 0" />
+    <anchor name="muzzle_right" node="right" position="0 -4.26 0" direction="0 -1 0" />
+  </anchors>
+  <clips>
+    <clip name="spin" duration="15" loop="true">
+      <track parameter="yaw">
+        <key time="0" value="0" />
+        <key time="15" value="360" />
+      </track>
+    </clip>
+    <clip name="recoil_left" duration="0.5" loop="false">
+      <track parameter="left_recoil">
+        <key time="0" value="0" />
+        <key time="0.07" value="0.45" />
+        <key time="0.5" value="0" />
+      </track>
+    </clip>
+    <clip name="recoil_center" duration="0.5" loop="false">
+      <track parameter="center_recoil">
+        <key time="0" value="0" />
+        <key time="0.07" value="0.45" />
+        <key time="0.5" value="0" />
+      </track>
+    </clip>
+    <clip name="recoil_right" duration="0.5" loop="false">
+      <track parameter="right_recoil">
+        <key time="0" value="0" />
+        <key time="0.07" value="0.45" />
+        <key time="0.5" value="0" />
+      </track>
+    </clip>
+  </clips>
+</mechanicalModel>

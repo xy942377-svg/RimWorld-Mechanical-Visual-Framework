@@ -1,0 +1,6 @@
+ToolPaths.local.json
+Work/
+Releases/
+__pycache__/
+*.pyc
+*.pdb

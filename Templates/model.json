@@ -1,0 +1,221 @@
+{
+  "version": 1,
+  "camera": 55,
+  "palette": [
+    [
+      147,
+      157,
+      164
+    ],
+    [
+      177,
+      187,
+      192
+    ],
+    [
+      92,
+      103,
+      112
+    ],
+    [
+      57,
+      65,
+      72
+    ],
+    [
+      32,
+      37,
+      42
+    ],
+    [
+      112,
+      121,
+      129
+    ],
+    [
+      194,
+      197,
+      191
+    ],
+    [
+      19,
+      23,
+      27
+    ],
+    [
+      185,
+      141,
+      65
+    ],
+    [
+      0,
+      200,
+      232
+    ],
+    [
+      70,
+      110,
+      140
+    ],
+    [
+      190,
+      80,
+      60
+    ],
+    [
+      100,
+      160,
+      110
+    ],
+    [
+      190,
+      190,
+      190
+    ],
+    [
+      90,
+      90,
+      90
+    ],
+    [
+      19,
+      23,
+      27
+    ]
+  ],
+  "nodes": [
+    {
+      "name": "foundation",
+      "layer": "foundation",
+      "geometry": [
+        {
+          "type": "box",
+          "size": [
+            2,
+            2,
+            0.3
+          ],
+          "center": [
+            0,
+            0,
+            0.15
+          ],
+          "material": 2
+        }
+      ]
+    },
+    {
+      "name": "arm",
+      "parent": "foundation",
+      "position": [
+        0,
+        0,
+        0.55
+      ],
+      "geometry": [
+        {
+          "type": "cylinder",
+          "radius": 0.4,
+          "length": 0.5,
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "material": 0,
+          "axis": 2,
+          "segments": 16
+        },
+        {
+          "type": "box",
+          "size": [
+            0.35,
+            1.4,
+            0.3
+          ],
+          "center": [
+            0,
+            -0.65,
+            0.05
+          ],
+          "material": 1
+        },
+        {
+          "type": "box",
+          "size": [
+            0.4,
+            0.2,
+            0.08
+          ],
+          "center": [
+            0,
+            -1.15,
+            0.24
+          ],
+          "material": 9
+        }
+      ]
+    }
+  ],
+  "parameters": [
+    {
+      "name": "yaw",
+      "min": 0,
+      "max": 360,
+      "default": 0,
+      "speed": 45,
+      "wrap": true
+    }
+  ],
+  "bindings": [
+    {
+      "node": "arm",
+      "parameter": "yaw",
+      "kind": "rotation",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "factor": 1
+    }
+  ],
+  "clips": [
+    {
+      "name": "spin",
+      "duration": 8,
+      "loop": true,
+      "tracks": [
+        {
+          "parameter": "yaw",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              8,
+              360
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "anchors": [
+    {
+      "name": "tip",
+      "node": "arm",
+      "position": [
+        0,
+        -1.35,
+        0.05
+      ],
+      "direction": [
+        0,
+        -1,
+        0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <RMVF_Title>Mechanical Visual Framework</RMVF_Title>
+  <RMVF_About>RMVF {0}
+Animated rigid parts projected into RimWorld.</RMVF_About>
+  <RMVF_LocalGuide>Open local guide</RMVF_LocalGuide>
+  <RMVF_Repository>Open GitHub repository</RMVF_Repository>
+  <RMVF_CopyVersion>Copy version information</RMVF_CopyVersion>
+  <RMVF_ExamplesNote>Examples and authoring tools are optional downloads in the same repository. They are not required by players of a consumer mod.</RMVF_ExamplesNote>
+  <RMVF_Controls>Animation controls</RMVF_Controls>
+  <RMVF_ControlsDesc>Adjust this instance's parameters and play model clips.</RMVF_ControlsDesc>
+  <RMVF_Play>Play: {0}</RMVF_Play>
+  <RMVF_Pause>Pause clips</RMVF_Pause>
+  <RMVF_Resume>Resume clips</RMVF_Resume>
+  <RMVF_Stop>Stop clips</RMVF_Stop>
+</LanguageData>

@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Defs>
+  <MechanicalVisualFramework.MechanicalModelDef>
+    <defName>RMVF_StarterModel</defName>
+    <assetPath>Models/Starter/model.xml</assetPath>
+  </MechanicalVisualFramework.MechanicalModelDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>RMVF_Starter</defName>
+    <label>Mechanical arm example</label>
+    <description>Minimal parent-child turntable and arm. Use animation controls.</description>
+    <thingClass>MechanicalVisualFramework.Building_MechanicalDisplay</thingClass>
+    <category>Building</category>
+    <tickerType>Normal</tickerType>
+    <drawerType>RealtimeOnly</drawerType>
+    <rotatable>false</rotatable>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <designationCategory>Misc</designationCategory>
+    <fillPercent>0.5</fillPercent>
+    <graphicData>
+      <texPath>RMVF/Fallback</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2, 2)</drawSize>
+    </graphicData>
+    <size>(2, 2)</size>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>100</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>10</Steel>
+    </costList>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+    <comps>
+      <li Class="MechanicalVisualFramework.CompProperties_MechanicalVisual">
+        <model>RMVF_StarterModel</model>
+        <autoplay>spin</autoplay>
+      </li>
+    </comps>
+  </ThingDef>
+  <MechanicalVisualFramework.MechanicalModelDef>
+    <defName>RMVF_DeploymentModel</defName>
+    <assetPath>Models/Deployment/model.xml</assetPath>
+  </MechanicalVisualFramework.MechanicalModelDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>RMVF_Deployment</defName>
+    <label>Deployable mechanism example</label>
+    <description>Four articulated panels with independent spin, folding and lift parameters.</description>
+    <thingClass>MechanicalVisualFramework.Building_MechanicalDisplay</thingClass>
+    <category>Building</category>
+    <tickerType>Normal</tickerType>
+    <drawerType>RealtimeOnly</drawerType>
+    <rotatable>false</rotatable>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <designationCategory>Misc</designationCategory>
+    <fillPercent>0.5</fillPercent>
+    <graphicData>
+      <texPath>RMVF/Fallback</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(4, 4)</drawSize>
+    </graphicData>
+    <size>(4, 4)</size>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>100</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>10</Steel>
+    </costList>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+    <comps>
+      <li Class="MechanicalVisualFramework.CompProperties_MechanicalVisual">
+        <model>RMVF_DeploymentModel</model>
+        <autoplay>deploy_cycle</autoplay>
+      </li>
+    </comps>
+  </ThingDef>
+  <MechanicalVisualFramework.MechanicalModelDef>
+    <defName>RMVF_TripleTurretModel</defName>
+    <assetPath>Models/TripleTurret/model.xml</assetPath>
+  </MechanicalVisualFramework.MechanicalModelDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>RMVF_TripleTurret</defName>
+    <label>Triple turret visual example</label>
+    <description>Visual rig: continuous yaw, independent gun elevation and recoil. It does not fire projectiles; combat belongs to a separate adapter.</description>
+    <thingClass>MechanicalVisualFramework.Building_MechanicalDisplay</thingClass>
+    <category>Building</category>
+    <tickerType>Normal</tickerType>
+    <drawerType>RealtimeOnly</drawerType>
+    <rotatable>false</rotatable>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <designationCategory>Misc</designationCategory>
+    <fillPercent>0.5</fillPercent>
+    <graphicData>
+      <texPath>RMVF/Fallback</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(4, 4)</drawSize>
+    </graphicData>
+    <size>(4, 4)</size>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>100</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>10</Steel>
+    </costList>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+    <comps>
+      <li Class="MechanicalVisualFramework.CompProperties_MechanicalVisual">
+        <model>RMVF_TripleTurretModel</model>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <RMVF_Title>机械动态视觉框架</RMVF_Title>
+  <RMVF_About>RMVF {0}
+将机械部件的运动投影为环世界中的动态视觉。</RMVF_About>
+  <RMVF_LocalGuide>打开本地说明</RMVF_LocalGuide>
+  <RMVF_Repository>打开 GitHub 项目</RMVF_Repository>
+  <RMVF_CopyVersion>复制版本信息</RMVF_CopyVersion>
+  <RMVF_ExamplesNote>示例和制作工具位于同一个仓库。使用其他作者的作品时，玩家只需要框架和对应作品。</RMVF_ExamplesNote>
+  <RMVF_Controls>动画控制</RMVF_Controls>
+  <RMVF_ControlsDesc>调节本建筑的动画参数，播放模型内置动作。</RMVF_ControlsDesc>
+  <RMVF_Play>播放：{0}</RMVF_Play>
+  <RMVF_Pause>暂停动作</RMVF_Pause>
+  <RMVF_Resume>继续动作</RMVF_Resume>
+  <RMVF_Stop>停止动作</RMVF_Stop>
+</LanguageData>

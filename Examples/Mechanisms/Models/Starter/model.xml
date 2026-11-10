@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mechanicalModel version="1" camera="55" geometry="geometry.bin" palette="RMVF/Starter/Palette">
+  <nodes>
+    <node name="foundation" layer="foundation" />
+    <node name="arm" parent="foundation" position="0 0 0.55" layer="raised" />
+  </nodes>
+  <parameters>
+    <parameter name="yaw" min="0" max="360" default="0" speed="45" wrap="true" />
+  </parameters>
+  <bindings>
+    <binding node="arm" parameter="yaw" kind="rotation" axis="0 0 1" factor="1" />
+  </bindings>
+  <anchors>
+    <anchor name="tip" node="arm" position="0 -1.35 0.05" direction="0 -1 0" />
+  </anchors>
+  <clips>
+    <clip name="spin" duration="8" loop="true">
+      <track parameter="yaw">
+        <key time="0" value="0" />
+        <key time="8" value="360" />
+      </track>
+    </clip>
+  </clips>
+</mechanicalModel>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ModMetaData>
+  <name>RMVF · Mechanical examples / 机械示例</name>
+  <author>Grey·Oviin/OpenAI Assisted</author>
+  <packageId>greyoviin.rmvf.examples</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+    <li>1.7</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>greyoviin.mechanicalvisualframework</packageId>
+      <displayName>RimWorld Mechanical Visual Framework</displayName>
+      <downloadUrl>https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>greyoviin.mechanicalvisualframework</li>
+  </loadAfter>
+  <description>Optional mechanical visual examples. Not balanced combat buildings.
+可选机械视觉示例，不是正式战斗建筑。</description>
+</ModMetaData>

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ModMetaData>
+  <name>Mechanical Visual Framework / 机械动态视觉框架</name>
+  <author>Grey·Oviin/OpenAI Assisted</author>
+  <packageId>greyoviin.mechanicalvisualframework</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+    <li>1.7</li>
+  </supportedVersions>
+  <description>Rigid mechanical visuals, authoring tools and examples. See Guide/README.md.
+机械动态视觉框架；部件、转轴、动画与制作工具。参阅 Guide/README.md。</description>
+</ModMetaData>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <RMVF_Starter.label>转臂示例</RMVF_Starter.label>
+  <RMVF_Starter.description>最小父子层级转臂，可通过动画控制调整参数。</RMVF_Starter.description>
+  <RMVF_Deployment.label>升降折叠示例</RMVF_Deployment.label>
+  <RMVF_Deployment.description>四臂机构，旋转、折叠和升降通过独立参数控制。</RMVF_Deployment.description>
+  <RMVF_TripleTurret.label>三联装炮塔视觉示例</RMVF_TripleTurret.label>
+  <RMVF_TripleTurret.description>连续转向、炮管独立俯仰和后坐。此例只演示视觉，不发射弹丸；战斗逻辑由独立适配器负责。</RMVF_TripleTurret.description>
+</LanguageData>

@@ -7,12 +7,12 @@
 
 游戏运行时，框架根据各部件的位置和角度，将三维模型投影到地图画面上，并按各个面的朝向计算明暗、绘制粗描边。
 
-框架版本：**0.1.0-candidate1**；支持RimWorld **1.6 / 1.7**。本次资料修订为**docs3**，补齐英文指南并修订项目说明、操作提示和报错文字。作者：Grey·Oviin/OpenAI Assisted。
+框架版本：**0.1.0-candidate1**；支持RimWorld **1.6 / 1.7**。本次发布资料修订为**workshop1**，加入工坊封面、中英文介绍和上传说明。作者：Grey·Oviin/OpenAI Assisted。
 
 ## 下载与安装
 
-- [框架运行包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-docs3-Workshop.zip)：解压后，将`MechanicalVisualFramework`文件夹放入游戏的`Mods`目录。
-- [动画示例包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-docs3-Examples.zip)：解压后，将`RMVFExamples`文件夹放入`Mods`，用于体验转臂、升降折叠机构和三联装炮塔。
+- [框架运行包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-workshop1-Workshop.zip)：解压后，将`MechanicalVisualFramework`文件夹放入游戏的`Mods`目录。
+- [动画示例包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-workshop1-Examples.zip)：解压后，将`RMVFExamples`文件夹放入`Mods`，用于体验转臂、升降折叠机构和三联装炮塔。
 - **完整开发资料**：使用本页的 **Code → Download ZIP**，包含源码、模型、制作工具和教程。下载后先解压，再运行工具。
 
 在游戏中按 **Core → Mechanical Visual Framework → RMVF · Mechanical examples** 的顺序启用。框架仅依赖Core，示例包需要框架。框架本身提供绘制和动画功能；建筑及其玩法由使用框架的MOD添加。

@@ -24,6 +24,6 @@ python Tools/package.py
 
 The tool creates runtime, example and full developer packages under `Releases/`. Each ZIP includes a file checksum manifest; a separate SHA-256 list covers all three archives.
 
-The framework version is recorded in `project.json`'s `version`. Documentation, reference assets and explanatory text use a separate `revision`, included in package names; the current revision is `docs3`. Preserve previously delivered archives and use new filenames for a new revision.
+The framework version is recorded in `project.json`'s `version`. Documentation, reference assets, explanatory text and cover art use a separate `revision`, included in package names; the current revision is `workshop1`. Preserve previously delivered archives and use new filenames for a new revision.
 
-For Steam Workshop uploads, use the extracted runtime mod directory. The description should state the features, load order, game versions, tutorial links and author. The Workshop listing has not yet been published.
+For Steam Workshop uploads, use the extracted runtime mod directory. The cover is in `Mod/About/Preview.png`; bilingual descriptions, the title, initial change notes and upload steps are in [Workshop materials](../Workshop/README.md). That folder is included only in the authoring project. The Workshop listing has not yet been published.

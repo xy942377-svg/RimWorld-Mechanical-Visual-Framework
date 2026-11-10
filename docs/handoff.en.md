@@ -2,9 +2,9 @@
 
 [中文](handoff.md) · [English home](../README.en.md) · [Status](status.en.md) · [Verification](verification.en.md) · [Releases](release.en.md)
 
-The framework version is 0.1.0-candidate1; the documentation revision is docs3 (2026-11-10). Start with the repository README. Version and publication status are recorded in `project.json` and [status](status.en.md). Before changing implementation, read [architecture](architecture.en.md), [model format](model-format.en.md) and [API](api.en.md).
+The framework version is 0.1.0-candidate1; the package revision is workshop1 (2026-11-11). Start with the repository README. Version and publication status are recorded in `project.json` and [status](status.en.md). Before changing implementation, read [architecture](architecture.en.md), [model format](model-format.en.md) and [API](api.en.md).
 
-This revision adds English versions of all eight detailed guides and reviews project documents, game descriptions, tool prompts, templates and source comments. Error messages now explain the relevant conditions. Runtime algorithms, dependencies and save fields are unchanged.
+This revision adds the Workshop cover, bilingual listing descriptions and upload instructions; see [Workshop materials](../Workshop/README.md). The runtime package contains the upload cover. Listing text and the cover master are supplied with the authoring project. C# sources, DLLs, models, dependencies and save fields are unchanged from docs3.
 
 ## Set up the environment
 

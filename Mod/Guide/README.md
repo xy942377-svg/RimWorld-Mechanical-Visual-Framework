@@ -1,6 +1,6 @@
 # Mechanical Visual Framework / 机械动态视觉框架
 
-框架版本：0.1.0-candidate1。资料修订：docs3。
+框架版本：0.1.0-candidate1。发布资料修订：workshop1。
 作者：Grey·Oviin/OpenAI Assisted。许可：MIT，见上级目录的LICENSE。
 
 ## 中文说明
@@ -18,7 +18,7 @@ https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework
 
 ## English
 
-Framework version: 0.1.0-candidate1. Documentation revision: docs3.
+Framework version: 0.1.0-candidate1. Package revision: workshop1.
 Author: Grey·Oviin/OpenAI Assisted. License: MIT; see LICENSE in the parent folder.
 
 The framework provides continuous rotation, elevation, recoil, lift and folding for mechanical models in RimWorld 1.6 / 1.7. Load it after Core and before mods that use it. Buildings and gameplay are supplied by those mods. Players do not need Python, modeling software or a compiler.

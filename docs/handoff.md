@@ -2,9 +2,9 @@
 
 [English](handoff.en.md) · [中文首页](../README.md) · [当前版本](status.md) · [验证记录](verification.md) · [发布与下载](release.md)
 
-当前框架版本为0.1.0-candidate1，资料修订为docs3（2026-11-10）。入口为仓库README，版本与发布状态记录于project.json和[当前版本](status.md)。修改前阅读[运行时结构](architecture.md)、[模型格式](model-format.md)和[接口说明](api.md)。
+当前框架版本为0.1.0-candidate1，发布资料修订为workshop1（2026-11-11）。入口为仓库README，版本与发布状态记录于project.json和[当前版本](status.md)。修改前阅读[运行时结构](architecture.md)、[模型格式](model-format.md)和[接口说明](api.md)。
 
-本次修订补齐八篇详细指南的英文版，并重新审读项目文档、游戏说明、工具提示、模板和源码注释。报错文字也改为说明具体条件；框架算法、依赖和存档字段保持不变。
+本次修订加入工坊封面、中英文条目介绍和上传说明，见[工坊发布资料](../Workshop/README.md)。运行包包含上传用封面；发布文案和封面原图只随开发资料提供。C#源码、DLL、模型、依赖和存档字段均沿用docs3版本。
 
 ## 建立环境
 

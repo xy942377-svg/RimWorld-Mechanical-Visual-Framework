@@ -1,0 +1,41 @@
+Mechanical Visual Framework brings continuous rotation, elevation, recoil, lifting and folding to mechanical models in RimWorld. Mod authors can give each part its own pivot and keep attached parts moving together.
+
+This Workshop item provides in-game rendering and animation. Mods using the framework supply buildings, weapons and gameplay. Authoring tools, source code, tutorials and optional examples are available on GitHub.
+
+[h1]For players[/h1]
+Supports RimWorld 1.6 and 1.7. The framework requires only Core.
+
+If another mod lists this framework as a dependency, subscribe and enable it in the game's mod list. Load in this order:
+[b]Core → Mechanical Visual Framework → Mods that use this framework[/b]
+
+Players do not need development tools. In-game controls and descriptions are available in English and Simplified Chinese.
+
+[h1]Animation features[/h1]
+[list]
+[*]Continuous rotation: set a target angle and turning speed so a turret or platform turns gradually.
+[*]Independent parts: control elevation and recoil for each barrel, or move parts up, down, in and out.
+[*]Connected mechanisms: attached parts follow their parent, allowing articulated arms and folding assemblies.
+[*]Combined actions: save parameter changes as animation clips, with playback, looping, pausing and concurrent clips that control different parameters.
+[/list]
+The framework draws the model from each part's current position and angle, with flat shading and thick outlines. Animation state can be saved with the game. Authors can also read named positions, such as muzzles, to connect visuals to their own gameplay code.
+
+[h1]Create your own mod[/h1]
+Get the full authoring project from the [url=https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework]GitHub repository[/url]. Choose [b]Code → Download ZIP[/b] and extract the files.
+
+The repository includes a new-mod template, model authoring and import tools, bilingual tutorials, API documentation and editable examples. Model tools require Python 3.10 or newer. Windows users can open the toolbox with Start.cmd. Follow the [url=https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/docs/quickstart.en.md]English quick start[/url] for setup and authoring steps.
+
+The framework is designed for mechanical models made of rigid parts that rotate, translate or scale. Gameplay such as firing, power consumption and shield interception is implemented by mods using the framework.
+
+[h1]Try examples and explore a modeling case[/h1]
+The [url=https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/tree/main/Downloads]animation examples download[/url] contains a rotating arm, a lifting and folding mechanism, and a triple turret. Extract RMVFExamples into the game's Mods directory and enable it after the framework.
+
+Build an example under Misc, select it and open Animation controls. The triple turret demonstrates turning, independent elevation of its three barrels and recoil. It does not fire projectiles.
+
+The [url=https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/tree/main/Modeling/ShieldGenerator]shield-generator modeling case[/url] shows how to build four corners from one shared component and export the base and orb separately. It is an authoring reference and does not add a shield building to the game.
+
+[h1]Author and license[/h1]
+Author: Grey·Oviin/OpenAI Assisted.
+
+Framework code, tools, documentation and original examples use the [url=https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/LICENSE]MIT license[/url]. You may modify, redistribute and use them in other mods while retaining the copyright and license notice.
+
+To report a problem, open a [url=https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/issues]GitHub issue[/url] with the game version, framework version, reproduction steps and relevant logs.

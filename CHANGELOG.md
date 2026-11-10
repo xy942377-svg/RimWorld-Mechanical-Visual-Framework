@@ -1,5 +1,12 @@
 # Changelog
 
+## Workshop materials revision workshop1 — 2026-11-11
+
+- Added an original cover, a 1024×576 upload preview, bilingual Steam BBCode descriptions and first-publication notes.
+- Added publisher instructions and links to the authoring tools, tutorials, optional animation examples and shield modeling case.
+- Included publisher materials in the developer package and the preview in the runtime package.
+- Framework code, DLLs, models, dependencies and save format are unchanged from docs3. The Workshop listing remains unpublished.
+
 ## Bilingual documentation revision docs3 — 2026-11-10
 
 - Added English versions of all eight detailed guides: quick start, model format, API, architecture, maintenance, releases, status and verification.

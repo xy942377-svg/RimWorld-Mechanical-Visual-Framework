@@ -5,7 +5,7 @@ from assets import ROOT,require
 from validate import validate
 
 ROOT_FILES={"README.md","README.en.md","LICENSE","NOTICE.md","CHANGELOG.md","AGENTS.md","project.json","ToolPaths.example.json","Start.cmd",".gitignore",".gitattributes"}
-ROOT_DIRS={"Mod","Examples","Authoring","Templates","Tools","docs","Verification",".github","Modeling"}
+ROOT_DIRS={"Mod","Examples","Authoring","Templates","Tools","docs","Verification",".github","Modeling","Workshop"}
 def portable_files(root):
     for folder in sorted(ROOT_DIRS):
         base=root/folder

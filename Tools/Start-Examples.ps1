@@ -8,14 +8,14 @@ if(-not(Test-Path -LiteralPath $ConfigPath)){throw 'Create ToolPaths.local.json 
 $cfg=Get-Content -LiteralPath $ConfigPath -Encoding UTF8 -Raw|ConvertFrom-Json
 $game=if($Version -eq '1.6'){$cfg.Game16Root}else{$cfg.Game17Root}
 $exe=if($Version -eq '1.6'){'RimWorldWin64.exe'}else{'RimWorld.exe'}
-if(-not $game -or -not(Test-Path -LiteralPath "$game/$exe")){throw "Missing $Version game root/executable"}
+if(-not $game -or -not(Test-Path -LiteralPath "$game/$exe")){throw "The configured RimWorld $Version directory does not contain $exe. Check Game16Root or Game17Root in the configuration."}
 $runtime="$kit/Work/Runtime/$Version";$mod="$kit/Mod"
-if((Get-PSDrive -Name ([IO.Path]::GetPathRoot($kit).Substring(0,1))).Free -lt 10GB){throw 'Less than 10 GiB free'}
+if((Get-PSDrive -Name ([IO.Path]::GetPathRoot($kit).Substring(0,1))).Free -lt 10GB){throw 'The project drive needs at least 10 GiB of free space to prepare a test run.'}
 $owned=0
 if(Test-Path -LiteralPath "$kit/Work/Runs"){$owned=(Get-ChildItem -LiteralPath "$kit/Work/Runs" -Recurse -File|Measure-Object Length -Sum).Sum}
 if($owned -gt 192MB){throw 'Reserve 64 MiB for a run within the 256 MiB Work output budget; review finished runs first.'}
 if(Get-Process RimWorld,RimWorldWin64 -ErrorAction SilentlyContinue){throw 'A RimWorld process is already running. Finish it before starting an isolated test.'}
-if([IO.Path]::GetPathRoot($runtime) -ne [IO.Path]::GetPathRoot([IO.Path]::GetFullPath($game))){throw 'Put kit and game on the same drive for hard links, or install Example/Mod manually.'}
+if([IO.Path]::GetPathRoot($runtime) -ne [IO.Path]::GetPathRoot([IO.Path]::GetFullPath($game))){throw 'The project and game must be on the same drive for hard links. Alternatively, install Mod and Examples/Mechanisms manually as described in the quick start.'}
 New-Item -ItemType Directory -Path "$runtime/Mods" -Force|Out-Null
 foreach($f in Get-ChildItem -LiteralPath $game -File|Where-Object {$_.Extension -in '.dll','.exe','.json','.zip' -or $_.Name -in 'Version.txt','steam_appid.txt'}){
  $target=[IO.Path]::GetFullPath("$runtime/$($f.Name)")
@@ -48,7 +48,7 @@ if($AutoTest){
  }
  $refs+="$mod/$Version/Assemblies/MechanicalVisualFramework.dll"
  $argsCompile=@('/nologo','/noconfig','/nostdlib+','/target:library','/optimize+','/langversion:12',"/out:$probe/Assemblies/FrameworkProbe.dll")
- # Probe sources are case fixtures, not components for a player's save.
+ # FrameworkProbe runs automated checks in the isolated test profile.
  $argsCompile+=@($refs|ForEach-Object{"/reference:$_"});$argsCompile+="$kit/Verification/FrameworkProbe.cs"
  & $cfg.CompilerPath $argsCompile
  if($LASTEXITCODE -ne 0){throw 'Probe build failed'}
@@ -57,7 +57,7 @@ if($AutoTest){
  $mods=$mods+@('local.rmvf.audit')
 }
 $runs="$kit/Work/Runs"
-if(Test-Path -LiteralPath $runs){if(@(Get-ChildItem -LiteralPath $runs -Directory|Where-Object Name -Like "$Version-*").Count -ge 2){throw 'Two runs already exist for this version. Preserve minimal evidence, then remove only finished task-owned runs.'}}
+if(Test-Path -LiteralPath $runs){if(@(Get-ChildItem -LiteralPath $runs -Directory|Where-Object Name -Like "$Version-*").Count -ge 2){throw 'Two test profiles already exist for this version in Work/Runs. Save the results you need, then remove a completed test profile before starting another.'}}
 $id=$Version+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss');$profile="$runs/$id"
 New-Item -ItemType Directory -Path "$profile/Config" -Force|Out-Null
 ('<ModsConfigData><version>'+$Version+'</version><activeMods>'+(($mods|ForEach-Object{"<li>$_</li>"})-join '')+'</activeMods></ModsConfigData>')|Set-Content -LiteralPath "$profile/Config/ModsConfig.xml" -Encoding UTF8
@@ -69,8 +69,8 @@ Write-Output "Prepared: $profile"
 if($Launch){
  $style=if($AutoTest -and -not $Visible){'Hidden'}else{'Normal'}
  $p=Start-Process -FilePath "$runtime/$exe" -WorkingDirectory $runtime -ArgumentList $launchArgs -WindowStyle $style -RedirectStandardOutput "$profile/stdout.txt" -RedirectStandardError "$profile/stderr.txt" -PassThru
- Write-Output "Started PID=$($p.Id); AutoTest exits itself. Check the selected probe's results and screenshots."
-}else{Write-Output 'Preparation only; no game launched. Run with -Launch to create/start a fresh run.'}
+ Write-Output "Started PID=$($p.Id). Automated tests close the game when finished. Test output is saved in $profile."
+}else{Write-Output 'The test profile is ready. To launch a new run, repeat the command with -Launch; this creates a new profile.'}
 
 
 

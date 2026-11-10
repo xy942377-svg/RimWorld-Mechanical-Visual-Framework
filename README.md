@@ -3,14 +3,16 @@
 
 [English](README.en.md) · [上手教程](docs/quickstart.md) · [模型格式](docs/model-format.md) · [接口说明](docs/api.md) · [开发交接](docs/handoff.md)
 
-机械动态视觉框架为RimWorld中的机械模型提供连续转向、独立俯仰、后坐、升降和折叠动画。模型由多个部件组成，每个部件有自己的转轴，父部件的运动会带动子部件。游戏根据当前姿态绘制模型，并添加平面明暗和粗描边。
+这个框架用于在 RimWorld 中显示可以活动的机械模型。MOD 作者可以分别设置各个部件的旋转中心，制作炮塔转向、炮管抬升与后坐、平台升降和机械折叠等动画。部件之间可以建立父子关系，例如炮塔转动时，安装在它上面的炮管会一起转动。
 
-框架版本：**0.1.0-candidate1**；支持RimWorld **1.6 / 1.7**。本次资料修订为**docs2**，包含文字修订和护盾建模示例。作者：Grey·Oviin/OpenAI Assisted。
+游戏运行时，框架根据各部件的位置和角度，将三维模型投影到地图画面上，并按各个面的朝向计算明暗、绘制粗描边。
+
+框架版本：**0.1.0-candidate1**；支持RimWorld **1.6 / 1.7**。本次资料修订为**docs3**，补齐英文指南并修订项目说明、操作提示和报错文字。作者：Grey·Oviin/OpenAI Assisted。
 
 ## 下载与安装
 
-- [框架运行包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-docs2-Workshop.zip)：解压后，将`MechanicalVisualFramework`文件夹放入游戏的`Mods`目录。
-- [动画示例包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-docs2-Examples.zip)：解压后，将`RMVFExamples`文件夹放入`Mods`，用于体验转臂、升降折叠机构和三联装炮塔。
+- [框架运行包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-docs3-Workshop.zip)：解压后，将`MechanicalVisualFramework`文件夹放入游戏的`Mods`目录。
+- [动画示例包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-docs3-Examples.zip)：解压后，将`RMVFExamples`文件夹放入`Mods`，用于体验转臂、升降折叠机构和三联装炮塔。
 - **完整开发资料**：使用本页的 **Code → Download ZIP**，包含源码、模型、制作工具和教程。下载后先解压，再运行工具。
 
 在游戏中按 **Core → Mechanical Visual Framework → RMVF · Mechanical examples** 的顺序启用。框架仅依赖Core，示例包需要框架。框架本身提供绘制和动画功能；建筑及其玩法由使用框架的MOD添加。
@@ -21,7 +23,13 @@
 
 安装示例包后，在“杂项”菜单建造示例，选中建筑并打开“动画控制”。三联装炮塔演示连续转向、三根炮管的独立俯仰和后坐，不发射弹丸。
 
-制作自己的MOD时，双击完整项目中的`Start.cmd`，先用 **Configure paths** 配置Python，再选择 **New mod**。修改生成的模型文件后，按[上手教程](docs/quickstart.md)构建资源并重启游戏。
+制作自己的 MOD 时，按以下步骤操作：
+
+1. 下载并解压完整项目，双击其中的 `Start.cmd` 打开工具箱。
+2. 选择 **Configure paths（配置路径）**，填写 Python 程序的位置，例如 `C:/Python312/python.exe`。
+3. 再次打开工具箱，选择 **New mod（新建 MOD）**，填写新 MOD 的保存目录、唯一标识和名称。
+4. 编辑新 MOD 中的 `Authoring/model.json`，按[上手教程](docs/quickstart.md)中的命令生成游戏所需的资源文件。
+5. 将新 MOD 放入游戏的 `Mods` 目录，在框架之后启用。修改模型并重新生成资源后，重启游戏查看效果。
 
 玩家可直接使用预编译的运行文件。模型制作工具需要Python 3.10+；修改框架C#源码还需要Roslyn编译器和对应版本的游戏程序集。工具箱菜单使用英文，游戏内按钮和说明提供英文、简体中文。
 
@@ -31,8 +39,8 @@
 |---|---|
 |部件与转轴|设置父子关系、局部坐标和独立旋转中心|
 |动画参数|控制转速、俯仰、位移和均匀缩放|
-|动作片段|播放、循环、暂停和同时运行使用不同参数的动作|
-|接口与存档|由游戏逻辑控制动画，查询炮口等挂接点，保存姿态和播放进度|
+|动作片段|将一组参数变化保存为动作，支持播放、循环、暂停和同时播放互不冲突的动作|
+|接口与存档|由游戏逻辑控制动画，获取炮口等指定位置的坐标，保存部件状态和播放进度|
 |制作工具|创建MOD模板、编译JSON模型、导入符合要求的GLB模型、校验和打包|
 |运行示例|100个三角面的转臂、380个三角面的折叠机构、5344个三角面的三联装炮塔|
 |[护盾建模示例](Modeling/ShieldGenerator/README.md)|用同一个构件生成四角结构，将基座与球盖分开导出|
@@ -40,6 +48,19 @@
 框架适合由刚性部件组成的机械。部件可以旋转、平移和缩放；骨骼蒙皮、柔性变形和自动关节求解尚未实现。射击、产电、护盾拦截等玩法需要由对应MOD实现。GLB导入条件见[导入步骤](docs/quickstart.md#4-从建模软件接入)。
 
 ## 文档与许可
+
+详细指南均提供中英文版本，可从每页顶部切换语言。
+
+|指南|内容|
+|---|---|
+|[上手教程](docs/quickstart.md)|安装、创建MOD、编辑模型和导入GLB|
+|[模型格式](docs/model-format.md)|坐标、层级、参数、动作和编译产物|
+|[接口说明](docs/api.md)|游戏逻辑调用、挂接点、资源所有权和保存|
+|[运行时结构](docs/architecture.md)|加载、动画、绘制缓冲和性能测量|
+|[开发交接](docs/handoff.md)|环境配置、构建、测试和维护约定|
+|[发布与下载](docs/release.md)|获取文件、打包和创意工坊发布|
+|[当前版本](docs/status.md)|版本、发布状态和后续工作|
+|[验证记录](docs/verification.md)|测试环境、检查项目和已验证范围|
 
 `Mod/`包含框架及源码；`Examples/`包含游戏示例；`Authoring/`包含示例源模型；`Modeling/`包含建模案例；`Templates/`提供起步模型；`Tools/`包含制作工具；`docs/`和`Verification/`分别存放说明与测试。
 

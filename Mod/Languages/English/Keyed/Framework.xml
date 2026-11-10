@@ -8,7 +8,7 @@ Rotation, elevation, recoil, lift and folding for mechanical models.</RMVF_About
   <RMVF_CopyVersion>Copy version information</RMVF_CopyVersion>
   <RMVF_ExamplesNote>Examples, tools and tutorials are available on GitHub. Players need this framework and the mods that use it.</RMVF_ExamplesNote>
   <RMVF_Controls>Animation controls</RMVF_Controls>
-  <RMVF_ControlsDesc>Adjust this instance's parameters and play model clips.</RMVF_ControlsDesc>
+  <RMVF_ControlsDesc>Adjust this building's animation parameters and play its predefined motions.</RMVF_ControlsDesc>
   <RMVF_Play>Play: {0}</RMVF_Play>
   <RMVF_Pause>Pause clips</RMVF_Pause>
   <RMVF_Resume>Resume clips</RMVF_Resume>

@@ -1,4 +1,4 @@
-"""Build the shipped, independently editable model sources. Does not read any other project."""
+"""Compile the three source models in Authoring into the game example mod."""
 import sys
 from pathlib import Path
 from assets import build, ROOT

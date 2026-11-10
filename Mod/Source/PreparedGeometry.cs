@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace MechanicalVisualFramework
 {
-    // 只在加载资产时建立索引；位置按精确 float 合并，保留原色块接缝与面顺序。
+    // Build indices once when loading the asset. Merge exactly equal vertex positions;
+    // preserve material boundaries and triangle order.
     internal sealed class PreparedGeometry
     {
         internal struct Key : IEquatable<Key>

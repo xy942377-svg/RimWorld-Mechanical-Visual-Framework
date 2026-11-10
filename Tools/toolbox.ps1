@@ -8,7 +8,7 @@ if($Action -eq 'Menu'){
  Write-Host "5 Validate          6 Test 1.6  7 Test 1.7             8 Package"
  Write-Host "9 Open guide       10 Import GLB rest pose"
  $items=@('Configure','New','BuildAssets','BuildCode','Validate','Test16','Test17','Package','Docs','ImportGLB')
- $choice=0;if(-not [int]::TryParse((Read-Host 'Choose 1..10'),[ref]$choice) -or $choice -lt 1 -or $choice -gt 10){throw 'Unknown choice'}
+ $choice=0;if(-not [int]::TryParse((Read-Host 'Choose 1..10'),[ref]$choice) -or $choice -lt 1 -or $choice -gt 10){throw 'Enter a menu number from 1 to 10.'}
  $Action=$items[$choice-1]
 }
 if($Action -eq 'Configure'){
@@ -22,19 +22,19 @@ if($Action -eq 'Configure'){
  Write-Host 'Saved locally; excluded from repository and release packages.';return
 }
 if($Action -eq 'Docs'){Start-Process (Join-Path $root 'README.md');return}
-if(-not(Test-Path -LiteralPath $config)){throw 'Run Configure to set the tool paths first.'}
+if(-not(Test-Path -LiteralPath $config)){throw 'Open Start.cmd and choose Configure paths before running this tool.'}
 $cfg=Get-Content -LiteralPath $config -Raw -Encoding UTF8|ConvertFrom-Json
 $python=$cfg.PythonPath;if(-not $python){$python='python'}
 $env:PYTHONIOENCODING='utf-8'
 switch($Action){
- 'New' { $dest=Read-Host 'New mod directory';$id=Read-Host 'Unique package ID (example author.machine)';$name=Read-Host 'Mod display name'; & $python "$PSScriptRoot/new_project.py" $dest --id $id --name $name }
+ 'New' { $dest=Read-Host 'New mod directory (a folder that does not exist yet)';$id=Read-Host 'Unique lowercase package ID (example author.machine)';$name=Read-Host 'Mod display name'; & $python "$PSScriptRoot/new_project.py" $dest --id $id --name $name }
  'BuildAssets' { & $python "$PSScriptRoot/build_assets.py" }
  'BuildCode' { & "$root/Mod/Source/Build.ps1" }
  'Validate' { & $python "$PSScriptRoot/validate.py";if($LASTEXITCODE -ne 0){throw 'Validation failed'};& $python -m unittest discover -s "$root/Verification" -p 'test_*.py' }
  'Test16' { & "$PSScriptRoot/Start-Examples.ps1" -Version 1.6 -AutoTest -Launch }
  'Test17' { & "$PSScriptRoot/Start-Examples.ps1" -Version 1.7 -AutoTest -Launch }
  'Package' { & $python "$PSScriptRoot/package.py" }
- 'ImportGLB' { $src=Read-Host 'GLB file';$dest=Read-Host 'New output JSON file'; & $python "$PSScriptRoot/import_glb.py" $src $dest }
+ 'ImportGLB' { $src=Read-Host 'Path to the GLB file to import';$dest=Read-Host 'Output JSON path (a file that does not exist yet)'; & $python "$PSScriptRoot/import_glb.py" $src $dest }
 }
 if($LASTEXITCODE -and $LASTEXITCODE -ne 0){throw "Tool failed ($LASTEXITCODE)"}
 

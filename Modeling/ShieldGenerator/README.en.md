@@ -6,6 +6,20 @@ This authoring example contains a four-corner shield-generator model, editable g
 
 ![Model preview](Images/preview.png)
 
+## Files
+
+| File | Purpose |
+|---|---|
+| `build_model.py` | Generate and assemble the corners, base and orb, then export OBJ files |
+| `primitives.py` | Build beveled boxes and solids from polygon cross-sections at different heights |
+| `Models/shared_corner.obj` | One complete corner in local coordinates, including armor, foot and vents |
+| `Models/shield_base.obj` | The assembled base and four corners |
+| `Models/orb.obj` | The separate orb at its assembly position |
+| `Models/materials.mtl` | Plain-color OBJ materials |
+| `Models/structure-check.json` | Corner transforms, triangle counts and export checksums |
+| `Images/base-1024.png`, `Images/orb-1024.png` | Transparent sprite layers with matching framing |
+| `Images/camera.json` | Orthographic camera, canvas and positioning parameters |
+
 ## Generate the geometry
 
 Python 3.10+ and its standard library are sufficient. From the repository root, run:
@@ -32,7 +46,7 @@ The supplied orb pose can be drawn over the base. Recheck occlusion if its heigh
 
 ## Use with RMVF
 
-This folder is an authoring reference and does not register a game building. Import the OBJ files into modeling software, make moving parts separate nodes, and follow the [GLB workflow (Chinese)](../../docs/quickstart.md#4-从建模软件接入).
+This folder is an authoring reference and does not register a game building. Import the OBJ files into modeling software, make moving parts separate nodes, and follow the [GLB workflow](../../docs/quickstart.en.md#4-import-from-modeling-software).
 
 OBJ preserves groups and materials but not the four shared instances. To edit them as instances, import `shared_corner.obj` and apply the placements in `structure-check.json`. For an independently moving orb, place its node origin at `(0,0,1.60)`, convert its vertices to that local origin, and bind a Z translation parameter.
 

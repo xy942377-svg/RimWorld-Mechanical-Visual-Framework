@@ -19,7 +19,7 @@ def rotate(point,degrees):
 
 def transformed(mesh,a=0,shift=(0,0,0),prefix=''):
     # Rotate each vertex in local coordinates, then place the whole part.
-    # Mirrors and per-corner scaling would change handedness or dimensions.
+    # All placements retain the master mesh's handedness and dimensions.
     return [(tuple(tuple(rotate(v,a)[k]+shift[k] for k in range(3)) for v in p),m,prefix+g)
             for p,m,g in mesh]
 
@@ -62,7 +62,7 @@ def build_master():
     M.loft([(.43,0,0,.45,.36,.065),(.49,0,0,.45,.36,.065),
             (.53,0,0,.40,.33,.055)],'dark','recessed_socket')
     for s in (-1,1):
-        # Raised frames surround the side vent instead of a thin painted black rectangle.
+        # Raised frames surround a recessed side vent.
         shell(s*.631,.17,.38,.022,.25,'joint','side_vent_frame',cy=0,b=.008,edge=.008)
         xx=s*.655
         M.quad((xx,-.207,.207),(xx,.207,.207),(xx,.207,.343),(xx,-.207,.343),'black','side_vent')
@@ -75,7 +75,7 @@ def build_master():
             y=yy+math.copysign(.154,yy)
             M.quad((s*.51-.061,y,.241),(s*.51+.061,y,.241),
                    (s*.51+.061,y,.278),(s*.51-.061,y,.278),'amber','corner_marker')
-    # The inclined central sandwich and both armor rails use the same lean function.
+    # The layered emitter panel and both armor rails use the same lean function.
     shell(0,.50,2.01,.275,.155,'dark','spine',b=.035,edge=.035)
     for s in (-1,1):
         x=s*.38
@@ -93,7 +93,7 @@ def build_master():
             cy=lean(z);xx=s*.555
             M.quad((xx,cy-.107,z),(xx,cy+.107,z),(xx,cy+.107,z+.015),(xx,cy-.107,z+.015),'joint','hip_louver')
         shell(x,.48,.66,.13,.09,'dark','ankle_front_brace',cy=.31,b=.025,edge=.025)
-    # Every emitter panel is a true shallow solid attached to that shared inclined plane.
+    # Each emitter panel is a shallow solid on the same inclined plane.
     for i,(z0,z1) in enumerate(((.76,1.10),(1.17,1.51),(1.58,1.92))):
         hx=.262;dy=.192
         M.loft([(z0,0,lean(z0)+dy,hx-.023,.026,.012),
@@ -143,7 +143,7 @@ def build_chassis():
     lathe([(.615,.945),(.595,.965)],'cyan_rim','well_edge')
     lathe([(.595,.963),(0,.963)],'cyan','well_surface')
     lathe([(.96,.54),(.98,.57),(.98,.64),(.955,.67)],'dark','lower_core_band')
-    # Raised outer rim segmented at true radial attachment points.
+    # The outer rim is divided into sections at the radial attachment points.
     for i in range(8):
         a=i*math.pi/4
         sector([(1.40,.57),(1.42,.62),(1.41,.77),(1.34,.84),
@@ -233,14 +233,14 @@ def validate():
     for inst in ASSEMBLIES:
         restored=transformed(inst['mesh'],shift=tuple(-v for v in inst['translation']))
         restored=transformed(restored,-inst['yaw'])
-        if len(restored)!=len(MASTER):raise ValueError('corner face count differs')
+        if len(restored)!=len(MASTER):raise ValueError('A corner has a different triangle count from the shared master.')
         for (points,material,_),(ref,ref_material,_) in zip(restored,MASTER):
-            if material!=ref_material:raise ValueError('corner material differs')
+            if material!=ref_material:raise ValueError('A corner uses a different material from the corresponding master triangle.')
             error=max(error,max(abs(a-b) for v,w in zip(points,ref) for a,b in zip(v,w)))
-    if error>1e-10:raise ValueError('corner coordinates differ')
+    if error>1e-10:raise ValueError('After reversing placement, corner vertices differ from the shared master by more than 1e-10.')
     for mesh in (BASE,ORB):
         if any(not math.isfinite(x) for p,_,_ in mesh for v in p for x in v):
-            raise ValueError('nonfinite vertex')
+            raise ValueError('A vertex coordinate is NaN or infinity.')
     return {'cornerAngles':[x['yaw'] for x in ASSEMBLIES],
             'cornerRadius':1.68,'cornerScale':1.0,'maxInverseTransformError':error,
             'masterFaces':len(MASTER),'baseFaces':len(BASE),'orbFaces':len(ORB),
@@ -251,7 +251,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,default=Path(__file__).resolve().parents[2]/'Work/ShieldModel')
     args=parser.parse_args();out=args.output
-    # Own only an empty destination. Subsequent exports use a new folder or a cleaned output folder.
+    # Export into an empty directory so existing model files remain available.
     if out.exists() and any(out.iterdir()):parser.error('output folder must be empty')
     report=validate();out.mkdir(parents=True,exist_ok=True)
     counts={}

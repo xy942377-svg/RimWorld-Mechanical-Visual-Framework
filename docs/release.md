@@ -1,5 +1,7 @@
 # 发布与下载
 
+[English](release.en.md) · [中文首页](../README.md) · [开发交接](handoff.md)
+
 ## 安装游戏内容
 
 在仓库首页下载框架运行包和可选的动画示例包。解压后，分别将`MechanicalVisualFramework`和`RMVFExamples`文件夹放入游戏的`Mods`目录，按Core、框架、示例的顺序启用。
@@ -22,6 +24,6 @@ python Tools/package.py
 
 工具在`Releases/`生成运行包、示例包和完整开发包。每个ZIP包含文件校验清单，同目录生成三个压缩包的SHA-256清单。
 
-框架版本记录于`project.json`的`version`。文档、示例资料或说明文字修订使用独立的`revision`，并加入压缩包文件名；当前为`docs2`。已交付的同名压缩包保留原文件，新修订使用新文件名。
+框架版本记录于`project.json`的`version`。文档、示例资料或说明文字修订使用独立的`revision`，并加入压缩包文件名；当前为`docs3`。已交付的同名压缩包保留原文件，新修订使用新文件名。
 
 创意工坊上传使用运行包解压后的MOD目录。发布说明应包含功能、加载顺序、游戏版本、教程链接和作者。当前条目尚未发布。

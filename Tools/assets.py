@@ -16,17 +16,17 @@ def require(ok, message):
     if not ok: raise ValueError(message)
 
 def number(v):
-    require(isinstance(v,(int,float)) and not isinstance(v,bool) and math.isfinite(v), "finite number required")
+    require(isinstance(v,(int,float)) and not isinstance(v,bool) and math.isfinite(v), "Expected a finite number, not a boolean, NaN or infinity.")
     return float(v)
 
 def vector(v, n=3):
-    require(isinstance(v,list) and len(v)==n, f"expected {n} components")
+    require(isinstance(v,list) and len(v)==n, f"Expected a list of {n} numeric components.")
     return [number(x) for x in v]
 
 def contained(root, relative):
-    require(relative and not Path(relative).is_absolute(), "relative output path required")
+    require(relative and not Path(relative).is_absolute(), "The output path must be nonempty and relative to the destination directory.")
     p=(root/relative).resolve()
-    require(p.is_relative_to(root.resolve()) and p!=root.resolve(), "path escaped destination")
+    require(p.is_relative_to(root.resolve()) and p!=root.resolve(), "The output path must stay inside the destination directory.")
     return p
 
 def box(center, size):
@@ -37,7 +37,7 @@ def box(center, size):
     return [[vertices[i] for i in tri] for a,b,c,d in quads for tri in ((a,b,c),(a,c,d))]
 
 def cylinder(center, radius, length, segments, axis):
-    require(axis in (0,1,2) and 3<=segments<=64 and radius>0 and length>0,"cylinder dimensions/axis")
+    require(axis in (0,1,2) and 3<=segments<=64 and radius>0 and length>0,"A cylinder needs axis 0, 1 or 2, 3 to 64 segments, and positive radius and length.")
     u=(axis+1)%3;v=(axis+2)%3
     rings=[]
     for side in (-1,1):
@@ -56,68 +56,68 @@ def cylinder(center, radius, length, segments, axis):
     return faces
 
 def compile_source(src):
-    require(src.get("version")==1,"source version must be 1")
-    require(15<=number(src.get("camera",55))<=85,"camera 15..85")
-    nodes=src.get("nodes",[]);require(1<=len(nodes)<=256,"nodes 1..256")
+    require(src.get("version")==1,"The source model must declare version 1.")
+    require(15<=number(src.get("camera",55))<=85,"Camera elevation must be between 15 and 85 degrees.")
+    nodes=src.get("nodes",[]);require(1<=len(nodes)<=256,"The model must contain 1 to 256 nodes.")
     names={};faces=[]
     for n in nodes:
-        name=n.get("name");require(isinstance(name,str) and name and name not in names,"unique node name required")
-        require(not n.get("parent") or n["parent"] in names,"parents must precede children")
+        name=n.get("name");require(isinstance(name,str) and name and name not in names,"Each node needs a nonempty, unique name.")
+        require(not n.get("parent") or n["parent"] in names,"A parent node must exist and appear before its child in the node list.")
         idx=len(names);names[name]=idx
         vector(n.get("position",[0,0,0]));q=vector(n.get("rotation",[0,0,0,1]),4)
-        require(abs(sum(x*x for x in q)-1)<.002,"unit quaternion required")
-        require(0<number(n.get("scale",1))<=100,"positive uniform scale <=100")
-        require(n.get("layer","raised") in ("raised","foundation"),"layer raised/foundation")
+        require(abs(sum(x*x for x in q)-1)<.002,"Rotation must be a normalized quaternion [x, y, z, w].")
+        require(0<number(n.get("scale",1))<=100,"Node scale must be greater than 0 and at most 100.")
+        require(n.get("layer","raised") in ("raised","foundation"),"Node layer must be raised or foundation.")
         for primitive in n.get("geometry",[]):
-            mat=primitive.get("material",0);require(type(mat)==int and 0<=mat<15,"material 0..14 (15 reserved outline)")
+            mat=primitive.get("material",0);require(type(mat)==int and 0<=mat<15,"Material index must be an integer from 0 to 14; index 15 is reserved for outlines.")
             kind=primitive.get("type")
             if kind=="box":
-                center=vector(primitive.get("center",[0,0,0]));size=vector(primitive["size"]);require(all(x>0 for x in size),"box size positive")
+                center=vector(primitive.get("center",[0,0,0]));size=vector(primitive["size"]);require(all(x>0 for x in size),"All three box dimensions must be greater than zero.")
                 triangles=box(center,size)
             elif kind=="cylinder":
                 triangles=cylinder(vector(primitive.get("center",[0,0,0])),number(primitive["radius"]),number(primitive["length"]),primitive.get("segments",16),primitive.get("axis",2))
             elif kind=="triangles": triangles=primitive["triangles"]
-            else: raise ValueError("supported geometry: box, cylinder, triangles")
+            else: raise ValueError("Geometry type must be box, cylinder or triangles.")
             for tri in triangles:
-                require(len(tri)==3,"triangle needs 3 vertices")
+                require(len(tri)==3,"Each triangle must contain exactly three vertices.")
                 a,b,c=[vector(list(v)) for v in tri]
                 ab=[b[i]-a[i] for i in range(3)];ac=[c[i]-a[i] for i in range(3)]
                 cross=[ab[1]*ac[2]-ab[2]*ac[1],ab[2]*ac[0]-ab[0]*ac[2],ab[0]*ac[1]-ab[1]*ac[0]]
-                require(sum(x*x for x in cross)>1e-16,"degenerate triangle")
+                require(sum(x*x for x in cross)>1e-16,"A triangle has zero or near-zero area; remove it or correct its vertices.")
                 faces.append((idx,mat,*a,*b,*c))
-    require(0<len(faces)<=50000,"triangles 1..50000")
+    require(0<len(faces)<=50000,"The model must contain 1 to 50,000 valid triangles.")
     params={}
     for p in src.get("parameters",[]):
-        name=p.get("name");require(isinstance(name,str) and name and name not in params,"unique parameter name")
+        name=p.get("name");require(isinstance(name,str) and name and name not in params,"Each parameter needs a nonempty, unique name.")
         low=number(p.get("min",0));high=number(p.get("max",1));default=number(p.get("default",0))
-        require(low<high and low<=default<=high and number(p.get("speed",0))>=0,"parameter range/default/speed")
-        require(not p.get("wrap") or abs(high-low-360)<.001,"wrap is only for 360 degree range")
+        require(low<high and low<=default<=high and number(p.get("speed",0))>=0,"A parameter needs min < max, a default within that range, and speed >= 0.")
+        require(not p.get("wrap") or abs(high-low-360)<.001,"A wrapped parameter must have a range spanning exactly 360 degrees.")
         params[name]=p
-    require(len(params)<=256,"parameters <=256")
+    require(len(params)<=256,"A model can contain at most 256 parameters.")
     for b in src.get("bindings",[]):
-        require(b["node"] in names and b["parameter"] in params,"binding reference")
-        require(b["kind"] in ("rotation","translation","scale"),"binding kind")
-        axis=vector(b.get("axis",[0,0,1]));require(sum(v*v for v in axis)>1e-10,"zero binding axis")
+        require(b["node"] in names and b["parameter"] in params,"A binding must name an existing node and parameter.")
+        require(b["kind"] in ("rotation","translation","scale"),"Binding kind must be rotation, translation or scale.")
+        axis=vector(b.get("axis",[0,0,1]));require(sum(v*v for v in axis)>1e-10,"A binding axis must be a nonzero vector.")
         factor=number(b.get("factor",1));p=params[b["parameter"]]
-        if b["kind"]=="scale": require(1+min(p.get("min",0)*factor,p.get("max",1)*factor)>.001,"scale can collapse")
+        if b["kind"]=="scale": require(1+min(p.get("min",0)*factor,p.get("max",1)*factor)>.001,"The scale multiplier must stay above 0.001 across the full parameter range.")
     clips=set()
     for c in src.get("clips",[]):
-        require(c["name"] and c["name"] not in clips,"unique clip name");clips.add(c["name"])
-        duration=number(c["duration"]);require(duration>0 and c["tracks"],"clip duration/tracks")
+        require(c["name"] and c["name"] not in clips,"Each clip needs a nonempty, unique name.");clips.add(c["name"])
+        duration=number(c["duration"]);require(duration>0 and c["tracks"],"A clip needs a positive duration and at least one track.")
         seen=set()
         for t in c["tracks"]:
-            name=t["parameter"];require(name in params and name not in seen,"track reference/duplicate");seen.add(name)
-            p=params[name];last=-1;require(t["keys"],"empty keys")
+            name=t["parameter"];require(name in params and name not in seen,"Each track must name an existing parameter, used only once within that clip.");seen.add(name)
+            p=params[name];last=-1;require(t["keys"],"Each track needs at least one keyframe.")
             for k in t["keys"]:
-                time,value=vector(k,2);require(last<time<=duration and time>=0,"key times must increase within duration")
-                require(p.get("min",0)<=value<=p.get("max",1),"key outside range");last=time
+                time,value=vector(k,2);require(last<time<=duration and time>=0,"Keyframe times must increase strictly and stay between 0 and the clip duration.")
+                require(p.get("min",0)<=value<=p.get("max",1),"A keyframe value is outside its parameter range.");last=time
     anchors=set()
     for a in src.get("anchors",[]):
-        require(a["name"] and a["name"] not in anchors and a["node"] in names,"anchor reference/name");anchors.add(a["name"])
-        vector(a.get("position",[0,0,0]));d=vector(a.get("direction",[0,-1,0]));require(sum(v*v for v in d)>1e-10,"anchor direction")
+        require(a["name"] and a["name"] not in anchors and a["node"] in names,"Each anchor needs a unique name and must reference an existing node.");anchors.add(a["name"])
+        vector(a.get("position",[0,0,0]));d=vector(a.get("direction",[0,-1,0]));require(sum(v*v for v in d)>1e-10,"An anchor direction must be a nonzero vector.")
     palette=src.get("palette",DEFAULT_PALETTE)
-    require(1<=len(palette)<=16,"palette <=16 colors")
-    for rgb in palette: require(len(rgb)==3 and all(type(x)==int and 0<=x<=255 for x in rgb),"RGB byte colors required")
+    require(1<=len(palette)<=16,"The palette must contain 1 to 16 colors.")
+    for rgb in palette: require(len(rgb)==3 and all(type(x)==int and 0<=x<=255 for x in rgb),"Each palette color must contain three integers from 0 to 255.")
     return faces
 
 def png_palette(colors):
@@ -139,7 +139,7 @@ def attrs(obj, keys):
 
 def build(source, mod, asset_name):
     src=json.loads(source.read_text(encoding="utf-8-sig"));faces=compile_source(src)
-    require(asset_name.replace("_","").isalnum() and asset_name.isascii(),"asset name: ASCII letters/digits/underscore")
+    require(asset_name.replace("_","").isalnum() and asset_name.isascii(),"The asset name must use ASCII letters, digits or underscores and contain at least one letter or digit.")
     directory=contained(mod,"Models/"+asset_name);directory.mkdir(parents=True,exist_ok=True)
     top=ET.Element("mechanicalModel",version="1",camera=str(src.get("camera",55)),geometry="geometry.bin",palette="RMVF/"+asset_name+"/Palette")
     for group,tag,keys in (

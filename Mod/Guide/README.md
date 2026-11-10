@@ -1,6 +1,6 @@
 # Mechanical Visual Framework / 机械动态视觉框架
 
-框架版本：0.1.0-candidate1。资料修订：docs2。
+框架版本：0.1.0-candidate1。资料修订：docs3。
 作者：Grey·Oviin/OpenAI Assisted。许可：MIT，见上级目录的LICENSE。
 
 ## 中文说明
@@ -14,14 +14,18 @@ https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework
 
 示例包包含转臂、折叠机构和三联装炮塔。在“杂项”菜单建造示例，选中后打开“动画控制”。示例炮塔演示转向、俯仰和后坐，不发射弹丸。
 
+制作步骤见[中文上手教程](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/docs/quickstart.md)。
+
 ## English
 
-Framework version: 0.1.0-candidate1. Documentation revision: docs2.
+Framework version: 0.1.0-candidate1. Documentation revision: docs3.
 Author: Grey·Oviin/OpenAI Assisted. License: MIT; see LICENSE in the parent folder.
 
 The framework provides continuous rotation, elevation, recoil, lift and folding for mechanical models in RimWorld 1.6 / 1.7. Load it after Core and before mods that use it. Buildings and gameplay are supplied by those mods. Players do not need Python, modeling software or a compiler.
 
 The settings page opens this guide and the GitHub repository above. The repository contains source, tools, tutorials and optional examples. Build examples under Misc and open Animation controls. The example turret demonstrates motion and does not fire projectiles.
+
+For authoring steps, read the [English quick start](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/docs/quickstart.en.md).
 
 ## 编译源码 / Build source
 

@@ -8,7 +8,7 @@ using RimWorld;
 using MechanicalVisualFramework;
 using Anim=MechanicalVisualFramework.Animator;
 
-// Isolated test mod only. No Harmony or hooks in the framework/player mod.
+// Runs framework checks in the isolated game profile created by Start-Examples.ps1.
 public sealed class FrameworkProbe : GameComponent
 {
     int frame,scheduledTicks;float scheduledStart;CompMechanicalVisual starter,deploy,turret;bool complete;MechanicalControls controls;

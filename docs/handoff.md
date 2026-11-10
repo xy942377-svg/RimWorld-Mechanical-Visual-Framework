@@ -1,14 +1,24 @@
 # 开发交接说明
 
-当前框架版本为0.1.0-candidate1，资料修订为docs2（2026-11-10）。入口为仓库README，版本与发布状态记录于project.json和docs/status.md。修改前阅读architecture、model-format和api。
+[English](handoff.en.md) · [中文首页](../README.md) · [当前版本](status.md) · [验证记录](verification.md) · [发布与下载](release.md)
 
-本次修订更新文档、双语说明和模板文本，并加入Modeling/ShieldGenerator建模案例。框架算法、依赖和存档字段保持不变。
+当前框架版本为0.1.0-candidate1，资料修订为docs3（2026-11-10）。入口为仓库README，版本与发布状态记录于project.json和[当前版本](status.md)。修改前阅读[运行时结构](architecture.md)、[模型格式](model-format.md)和[接口说明](api.md)。
+
+本次修订补齐八篇详细指南的英文版，并重新审读项目文档、游戏说明、工具提示、模板和源码注释。报错文字也改为说明具体条件；框架算法、依赖和存档字段保持不变。
 
 ## 建立环境
 
 下载完整仓库。运行预编译示例不需要开发软件；制作模型需要已有Python 3.10+；修改C# 需要已有Roslyn csc.exe与本人持有的对应RimWorld安装。复制ToolPaths.example.json为ToolPaths.local.json或用Start.cmd的Configure填写。在配置中填写本机实际路径。
 
-构建顺序：BuildAssets → BuildCode → Validate；随后顺序执行Test16、Test17。测试器使用Work/Runtime下指向本人游戏的文件链接和独立Work/Runs存档，不改正常ModsConfig。一次只运行一个版本；测试将在完成后退出。要手动体验可运行Start-Examples.ps1 -Version 1.7 -Launch；自动测试用 -AutoTest -Launch。
+构建顺序：BuildAssets → BuildCode → Validate；随后顺序执行Test16、Test17。这些是Tools/Toolbox.ps1的操作，也可通过Start.cmd菜单运行。测试器使用Work/Runtime下指向本人游戏的文件链接和独立Work/Runs存档，不改正常ModsConfig。一次只运行一个版本；自动测试将在完成后退出。
+
+手动体验时，在仓库根目录运行：
+
+```text
+powershell -File Tools/Start-Examples.ps1 -Version 1.7 -Launch
+```
+
+加入`-AutoTest`可运行自动测试；将版本改为`-Version 1.6`可选择另一版游戏。
 
 首版C# 构建器针对已验证游戏布局：1.6的Managed子目录、1.7的游戏根目录。游戏更新改变程序集/API时，应检查实际安装，不能拿另一版DLL混用。
 
@@ -31,7 +41,13 @@ Tools/validate.py检查XML、语言键、几何、构建哈希、大小；Verifi
 
 只用Tools/package.py白名单打包。Releases已交付ZIP不覆盖；框架版本变更时同步project.json、FrameworkMod.Version和CHANGELOG；仅修订文档、说明文字或建模资料时更新project.json中的revision和CHANGELOG，保留框架版本。Downloads保留可直接安装的版本ZIP；GitHub Code → Download ZIP下载完整项目。Steam上传使用解压后的运行包。Modeling目录随开发资料提供，不放入运行包或动画示例包。
 
-护盾建模案例运行`python Modeling/ShieldGenerator/build_model.py --output Work/ShieldModel`，生成OBJ、材质和结构检查结果。模型生成使用Python标准库；制作贴图的方法见案例README。
+护盾建模案例运行：
+
+```text
+python Modeling/ShieldGenerator/build_model.py --output Work/ShieldModel
+```
+
+生成OBJ、材质和结构检查结果。模型生成使用Python标准库；制作贴图的方法见[案例说明](../Modeling/ShieldGenerator/README.md)。
 
 Work中的运行时链接绝不能作为普通子目录递归删除。清理前解析绝对路径、确认在项目Work下、检查链接；先保留必要证据，再删除没有链接的已结束Runs子目录。每版本最多留两次完成测试。预算详见根目录AGENTS.md。
 

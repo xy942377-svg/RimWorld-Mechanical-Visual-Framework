@@ -1,5 +1,12 @@
 # Changelog
 
+## Bilingual documentation revision docs3 — 2026-11-10
+
+- Added English versions of all eight detailed guides: quick start, model format, API, architecture, maintenance, releases, status and verification.
+- Added matching Chinese/English navigation, a guide index on both home pages and English tutorial links in the shield case and installed guide.
+- Rewrote unclear setup instructions and tool errors; expanded the generated mod guide and explained technical terms on first use.
+- Updated package revision names. Runtime validation messages changed; animation and rendering algorithms, model assets and save format remain unchanged.
+
 ## Documentation and examples revision docs2 — 2026-11-10
 
 - Clarified installation, GLB export steps and example descriptions in both languages.

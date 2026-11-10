@@ -1,0 +1,2 @@
+# Preserve exact source/asset bytes across platforms: build manifests hash file bytes.
+* -text

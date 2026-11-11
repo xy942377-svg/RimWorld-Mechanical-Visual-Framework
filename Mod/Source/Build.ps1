@@ -1,6 +1,7 @@
 param(
  [ValidateSet('1.6','1.7')][string[]]$Versions=@('1.6','1.7'),
- [string]$CompilerPath, [string]$Game16Root, [string]$Game17Root, [string]$ConfigPath
+ [string]$CompilerPath, [string]$Game16Root, [string]$Game17Root, [string]$ConfigPath,
+ [string]$ManifestPath
 )
 $ErrorActionPreference='Stop'
 $mod=Split-Path $PSScriptRoot -Parent
@@ -36,11 +37,16 @@ foreach($v in $Versions){
  $targets+=[pscustomobject]@{Version=$v;AssemblySHA256=(Get-FileHash -LiteralPath "$dest/MechanicalVisualFramework.dll").Hash;GameSHA256=(Get-FileHash -LiteralPath "$refsRoot/Assembly-CSharp.dll").Hash}
  Write-Output "Built $v"
 }
-# Manifest covers only the versions built in this invocation. Build BOTH for a dual-version release.
-[pscustomobject]@{
+# An optional developer record goes to the explicitly requested path, never to Mod by default.
+# It covers only this invocation. Build BOTH versions for a dual-version release.
+if($ManifestPath){
+ $ManifestPath=[IO.Path]::GetFullPath($ManifestPath)
+ New-Item -ItemType Directory -Path (Split-Path $ManifestPath -Parent) -Force | Out-Null
+ [pscustomobject]@{
  Build=([regex]::Match((Get-Content -LiteralPath "$PSScriptRoot/FrameworkMod.cs" -Raw),'const string Version="([^"]+)"')).Groups[1].Value
  Sources=@($sources|ForEach-Object{[pscustomobject]@{Name=$_.Name;SHA256=(Get-FileHash -LiteralPath $_.FullName).Hash}})
 
  Targets=$targets
-}|ConvertTo-Json -Depth 5|Set-Content -LiteralPath "$mod/BuildManifest.json" -Encoding UTF8
+ }|ConvertTo-Json -Depth 5|Set-Content -LiteralPath $ManifestPath -Encoding UTF8
+}
 

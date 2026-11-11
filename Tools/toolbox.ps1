@@ -30,7 +30,7 @@ $env:PYTHONIOENCODING='utf-8'
 switch($Action){
  'New' { $dest=Read-Host 'New mod directory (a folder that does not exist yet)';$id=Read-Host 'Unique lowercase package ID (example author.machine)';$name=Read-Host 'Mod display name'; & $python "$PSScriptRoot/new_project.py" $dest --id $id --name $name }
  'BuildAssets' { & $python "$PSScriptRoot/build_assets.py" }
- 'BuildCode' { & "$root/Mod/Source/Build.ps1" }
+ 'BuildCode' { & "$root/Mod/Source/Build.ps1" -ManifestPath "$root/Verification/BuildManifest.json" }
  'Validate' { & $python "$PSScriptRoot/validate.py";if($LASTEXITCODE -ne 0){throw 'Validation failed'};& $python -m unittest discover -s "$root/Verification" -p 'test_*.py' }
  'Test16' { & "$PSScriptRoot/Start-Examples.ps1" -Version 1.6 -AutoTest -Launch }
  'Test17' { & "$PSScriptRoot/Start-Examples.ps1" -Version 1.7 -AutoTest -Launch }

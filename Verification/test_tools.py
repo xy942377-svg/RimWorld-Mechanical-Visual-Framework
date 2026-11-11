@@ -1,5 +1,5 @@
 """Test the Python tools with generated model and GLB fixtures."""
-import copy,json,math,struct,sys,tempfile,unittest
+import copy,hashlib,json,math,struct,sys,tempfile,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"Tools"))
 from assets import ROOT,build,compile_source,contained
@@ -41,7 +41,18 @@ class AssetsTest(unittest.TestCase):
             build(source,mod,"test_mechanism");self.assertEqual(before,binary.read_bytes())
             self.assertTrue((mod/"Languages/ChineseSimplified/DefInjected/ThingDef/Mechanism.xml").exists())
             self.assertEqual((mod/"Licenses/RMVF-MIT.txt").read_bytes(),(ROOT/"LICENSE").read_bytes())
+            self.assertFalse(list(mod.rglob("BuildHashes.json")))
             with self.assertRaises(ValueError):create(mod,"test.mechanism","Do not overwrite")
+    def test_optional_hashes_are_external(self):
+        with self.temp_dir() as d:
+            work=Path(d);source=work/"source.json";source.write_text(json.dumps(self.source))
+            mod=work/"Mod";record=work/"Verification/model.json"
+            build(source,mod,"example",record)
+            hashes=json.loads(record.read_text(encoding="utf-8"))
+            self.assertEqual(hashes.pop("sourceSHA256"),hashlib.sha256(source.read_bytes()).hexdigest())
+            self.assertEqual(set(hashes),{"Models/example/model.xml","Models/example/geometry.bin","Textures/RMVF/example/Palette.png"})
+            for rel,want in hashes.items():self.assertEqual(want,hashlib.sha256((mod/rel).read_bytes()).hexdigest())
+            self.assertFalse(list(mod.rglob("*.json")))
     def test_glb_axes_hierarchy_and_unsupported(self):
         binary=struct.pack("<9f",0,0,0,1,0,0,0,1,0)
         doc=dict(asset={"version":"2.0"},buffers=[{"byteLength":36}],

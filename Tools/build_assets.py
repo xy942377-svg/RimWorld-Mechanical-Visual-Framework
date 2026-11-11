@@ -4,6 +4,7 @@ from pathlib import Path
 from assets import build, ROOT
 def main():
     for name in ("Starter","Deployment","TripleTurret"):
-        build(ROOT/"Authoring"/(name+".json"),ROOT/"Examples"/"Mechanisms",name)
+        build(ROOT/"Authoring"/(name+".json"),ROOT/"Examples"/"Mechanisms",name,
+              ROOT/"Verification"/"AssetHashes"/(name+".json"))
 if __name__=="__main__": main()
 

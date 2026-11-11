@@ -29,7 +29,7 @@ For manual model and control-panel inspection, run:
 powershell -File Tools/Start-Examples.ps1 -Version 1.7 -Launch
 ```
 
-`Mod/BuildManifest.json` records matching sources and DLLs. Rebuild changed models, textures or geometry and verify their BuildHashes. Inspect actual game rendering after renderer changes; numeric checks do not replace visual inspection.
+`Verification/BuildManifest.json` records matching sources and DLLs; example asset records are in `Verification/AssetHashes/`. Toolbox builds update these records. When calling `Mod/Source/Build.ps1` directly, use `-ManifestPath Verification/BuildManifest.json` to write the record; omitting it builds DLLs only. After changing models, textures or geometry, run Build sample assets to regenerate resources and their records. Inspect actual game rendering after renderer changes; numeric checks do not replace visual inspection.
 
 ## Implementation rules
 

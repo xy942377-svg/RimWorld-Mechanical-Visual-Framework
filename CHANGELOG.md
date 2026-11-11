@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.3 — 2026-11-11
+
+- Store framework and example build records under Verification, outside installable mod folders.
+- Generate checksum records only when explicitly requested by the authoring or build tools.
+- Keep runtime and example archives free of build records; write package checksum tables beside the ZIPs.
+- Use LICENSE.txt in installable mods and update both language guides.
+
+开发校验资料移至Verification；构建工具默认只生成运行文件，打包校验表放在压缩包旁边；同步更新安装目录中的许可文件名和中英文说明。
+
 ## v0.1.2 — 2026-11-11
 
 - Clarify target speed versus clip timing, per-model viewing elevation, and node rotation versus rotation bindings.

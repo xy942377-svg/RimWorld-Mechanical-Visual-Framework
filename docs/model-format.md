@@ -46,7 +46,9 @@ foundation使用Building高度带，raised位于ItemImportant之上。这些高�
 
 ## 编译产物
 
-`MechanicalModelDef.assetPath` 从**声明该模型的MOD根目录**开始查找。例如 `Models/Starter/model.xml` 指向该MOD内的模型文件。每个模型有model.xml、geometry.bin、BuildHashes.json；色板位于全局唯一的Textures路径。多个使用框架的MOD必须避免Def名、packageId、贴图路径重复。
+`MechanicalModelDef.assetPath` 从**声明该模型的MOD根目录**开始查找。例如 `Models/Starter/model.xml` 指向该MOD内的模型文件。游戏读取模型目录中的`model.xml`、`geometry.bin`和`Textures`下的色板贴图。多个使用框架的MOD必须避免Def名、packageId、贴图路径重复。
+
+编译器默认只生成这三类运行资源。需要记录源文件和产物的校验值时，可在构建命令后添加`--hashes Work/MyModelHashes.json`，将记录留在开发目录。它不参与游戏运行。仓库自带示例的校验记录统一位于`Verification/AssetHashes/`。
 
 geometry.bin为小端：int32 magic=0x31564D52、int32三角形数；每面int32节点号、int32材料号、9个float32顶点分量，共44字节。法线由顶点绕序计算。面的外法线用于明暗和轮廓，所以双面绘制不能修复错误绕序。
 

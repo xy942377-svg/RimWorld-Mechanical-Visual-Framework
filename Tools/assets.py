@@ -137,7 +137,7 @@ def attrs(obj, keys):
         return str(v)
     return {k:value(obj[k]) for k in keys if k in obj}
 
-def build(source, mod, asset_name):
+def build(source, mod, asset_name, hashes_path=None):
     src=json.loads(source.read_text(encoding="utf-8-sig"));faces=compile_source(src)
     require(asset_name.replace("_","").isalnum() and asset_name.isascii(),"The asset name must use ASCII letters, digits or underscores and contain at least one letter or digit.")
     directory=contained(mod,"Models/"+asset_name);directory.mkdir(parents=True,exist_ok=True)
@@ -164,16 +164,20 @@ def build(source, mod, asset_name):
         for face in faces:f.write(struct.pack("<ii9f",*face))
     texture=contained(mod,"Textures/RMVF/"+asset_name+"/Palette.png");texture.parent.mkdir(parents=True,exist_ok=True)
     texture.write_bytes(png_palette(src.get("palette",DEFAULT_PALETTE)))
-    hashes={str(f.relative_to(mod)).replace("\\","/"):hashlib.sha256(f.read_bytes()).hexdigest() for f in (directory/"model.xml",directory/"geometry.bin",texture)}
-    hashes["sourceSHA256"]=hashlib.sha256(source.read_bytes()).hexdigest()
-    (directory/"BuildHashes.json").write_text(json.dumps(hashes,indent=2),encoding="utf-8")
+    # Only developer builds request a record. Ordinary authoring leaves the installed model clean.
+    if hashes_path is not None:
+        hashes={f.relative_to(mod).as_posix():hashlib.sha256(f.read_bytes()).hexdigest() for f in (directory/"model.xml",directory/"geometry.bin",texture)}
+        hashes["sourceSHA256"]=hashlib.sha256(source.read_bytes()).hexdigest()
+        hashes_path=Path(hashes_path);hashes_path.parent.mkdir(parents=True,exist_ok=True)
+        hashes_path.write_text(json.dumps(hashes,indent=2),encoding="utf-8")
     print(f"{asset_name}: {len(src['nodes'])} nodes, {len(faces)} triangles -> {mod}")
     return len(faces)
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source",type=Path);parser.add_argument("mod",type=Path);parser.add_argument("name")
-    a=parser.parse_args();build(a.source,a.mod,a.name)
+    parser.add_argument("--hashes",type=Path,help="Optional developer checksum file; choose a path outside the installed mod.")
+    a=parser.parse_args();build(a.source,a.mod,a.name,a.hashes)
 if __name__=="__main__":
     try:main()
     except (ValueError,KeyError,OSError) as e: print("ERROR:",e,file=sys.stderr);sys.exit(1)

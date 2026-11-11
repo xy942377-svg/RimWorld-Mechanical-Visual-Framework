@@ -18,9 +18,9 @@
 
 正式包统一命名：
 
-- `RMVF-v0.1.2-Runtime.zip`
-- `RMVF-v0.1.2-Examples.zip`
-- `RMVF-v0.1.2-DeveloperKit.zip`
+- `RMVF-v0.1.3-Runtime.zip`
+- `RMVF-v0.1.3-Examples.zip`
+- `RMVF-v0.1.3-DeveloperKit.zip`
 
 本地构建使用独立标签，例如`RMVF-local-check01-Runtime.zip`。这些标签不占用正式版本号，也不上传GitHub。
 
@@ -37,7 +37,9 @@ python Tools/package.py --stable
 
 检查工具核对当前源码、DLL、模型和本地游戏测试结果，在`Local/release-check.json`记录这次检查对应的文件。正式打包时再次比对；文件发生变化就需要重新检查。
 
-生成文件位于本地`Releases`。核对ZIP内的文件清单、内容和哈希后，在本地交付压缩包。工坊介绍等编辑文件存放在`Local/Workshop`，与待上传的MOD目录一并交付。GitHub只提交检查通过的源码、运行资源、工具、教程和示例，并创建对应正式标签。
+生成文件位于本地`Releases`。Runtime包可直接安装或用于工坊上传，Examples包用于安装示例；两者均不包含构建校验清单。DeveloperKit保留源码、教程、示例和`Verification`中的开发校验资料。
+
+三个压缩包的逐文件校验表位于旁边的`RMVF-v0.1.3-FileHashes.json`，压缩包与该表的SHA256记录于`SHA256-v0.1.3.txt`。这些文件用于发布核对，不放入MOD目录。核对ZIP内容及校验值后，在本地交付压缩包。工坊介绍等编辑文件存放在`Local/Workshop`，与待上传的MOD目录一并交付。GitHub只提交检查通过的源码、运行资源、工具、教程和示例，并创建对应正式标签。
 
 制作本地临时包时使用：
 

@@ -51,7 +51,9 @@ Only one clip can control a parameter at a time. `Play` stops existing clips who
 
 ## Compiled assets
 
-`MechanicalModelDef.assetPath` is relative to **the mod declaring that definition**. Each model has `model.xml`, `geometry.bin` and `BuildHashes.json`; its palette uses a globally unique `Textures` path. Mods using the framework must use distinct definition names, package IDs and texture paths.
+`MechanicalModelDef.assetPath` is relative to **the mod declaring that definition**. The game reads `model.xml`, `geometry.bin` and a palette under `Textures`. Mods using the framework must use distinct definition names, package IDs and texture paths.
+
+The compiler generates only those runtime resources by default. To record source and output checksums, append `--hashes Work/MyModelHashes.json` to the build command and keep the record in your development directory. The game does not use it. Bundled example records are stored in `Verification/AssetHashes/`.
 
 `geometry.bin` is little-endian. Its header contains an int32 magic value `0x31564D52` and an int32 triangle count. Each triangle contains an int32 node index, an int32 material index and nine float32 vertex components: 44 bytes in total. Vertex winding determines the outward normal used for shading and outlines. Drawing both sides does not correct bad winding.
 

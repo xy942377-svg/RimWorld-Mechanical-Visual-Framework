@@ -7,7 +7,7 @@
 
 游戏运行时，框架根据各部件的位置和角度，将三维模型投影到地图画面上，并按各个面的朝向计算明暗、绘制粗描边。
 
-当前正式版：**v0.1.2**；支持RimWorld **1.6 / 1.7**。作者：Grey·Oviin/OpenAI Assisted。
+当前正式版：**v0.1.3**；支持RimWorld **1.6 / 1.7**。作者：Grey·Oviin/OpenAI Assisted。
 
 ## 下载与安装
 
@@ -61,6 +61,6 @@
 |[版本与发布](docs/release.md)|获取文件、正式版本号和本地打包|
 |[验证范围](docs/verification.md)|测试环境、检查项目和已验证范围|
 
-`Mod/`包含框架及源码；`Examples/`包含游戏示例；`Authoring/`包含示例源模型；`Modeling/`包含建模案例；`Templates/`提供起步模型；`Tools/`包含制作工具；`docs/`和`Verification/`分别存放说明与测试。
+`Mod/`包含框架及源码；`Examples/`包含游戏示例；`Authoring/`包含示例源模型；`Modeling/`包含建模案例；`Templates/`提供起步模型；`Tools/`包含制作工具；`docs/`存放详细说明；`Verification/`存放可复用的测试工具和开发校验记录。
 
 代码、工具、文档和原创示例采用[MIT许可](LICENSE)，允许修改、再发布和用于其他MOD，保留版权与许可说明。素材归属见[NOTICE](NOTICE.md)，测试环境和结果见[验证范围](docs/verification.md)。

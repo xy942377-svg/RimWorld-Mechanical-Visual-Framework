@@ -6,6 +6,8 @@ from validate import validate
 
 ROOT_FILES={"README.md","README.en.md","LICENSE","NOTICE.md","CHANGELOG.md","AGENTS.md","project.json","ToolPaths.example.json","Start.cmd",".gitignore",".gitattributes"}
 ROOT_DIRS={"Mod","Examples","Authoring","Templates","Tools","docs","Verification",".github","Modeling"}
+BUILD_RECORDS={"BuildManifest.json","AssetHashes/Starter.json","AssetHashes/Deployment.json","AssetHashes/TripleTurret.json"}
+INSTALL_EXCLUDES={"BuildManifest.json","BuildHashes.json","ReleaseManifest.json"}
 
 def portable_files(root):
     for folder in sorted(ROOT_DIRS):
@@ -15,7 +17,9 @@ def portable_files(root):
             if not f.is_file() or f.is_symlink() or "__pycache__" in f.parts or f.suffix in (".pyc",".pdb"):continue
             rel=f.relative_to(base)
             # Tests are reusable tools; run logs, screenshots and editorial notes stay local.
-            if folder=="Verification" and (len(rel.parts)!=1 or f.suffix not in (".py",".cs")):continue
+            if folder=="Verification":
+                reusable_test=len(rel.parts)==1 and f.suffix in (".py",".cs")
+                if not reusable_test and rel.as_posix() not in BUILD_RECORDS:continue
             yield f
     for name in sorted(ROOT_FILES):
         if (root/name).is_file():yield root/name
@@ -45,12 +49,15 @@ def pack(root=ROOT,stable=False,label=None):
         version="local-"+label
     releases=root/"Releases";releases.mkdir(exist_ok=True)
     files=list(portable_files(root))
+    # Development records are useful in the source kit, but are never installed with a mod.
+    install=[f for f in files if f.name not in INSTALL_EXCLUDES]
     plans=[("RMVF-"+version+"-DeveloperKit.zip",files,"RMVF"),
-           ("RMVF-"+version+"-Runtime.zip",[f for f in files if f.relative_to(root).parts[0]=="Mod"],"MechanicalVisualFramework"),
-           ("RMVF-"+version+"-Examples.zip",[f for f in files if f.relative_to(root).parts[:2]==("Examples","Mechanisms")],"RMVFExamples")]
+           ("RMVF-"+version+"-Runtime.zip",[f for f in install if f.relative_to(root).parts[0]=="Mod"],"MechanicalVisualFramework"),
+           ("RMVF-"+version+"-Examples.zip",[f for f in install if f.relative_to(root).parts[:2]==("Examples","Mechanisms")],"RMVFExamples")]
     report=releases/("SHA256-"+version+".txt")
-    require(not report.exists() and all(not (releases/name).exists() for name,_,_ in plans),"These archive names already exist. Use a new local label or the next stable version.")
-    entries=[]
+    details=releases/("RMVF-"+version+"-FileHashes.json")
+    require(not report.exists() and not details.exists() and all(not (releases/name).exists() for name,_,_ in plans),"These release files already exist. Use a new local label or the next stable version.")
+    entries=[];manifests={}
     for name,selected,prefix in plans:
         dest=releases/name
         with zipfile.ZipFile(dest,"x",zipfile.ZIP_DEFLATED,compresslevel=9) as z:
@@ -59,14 +66,17 @@ def pack(root=ROOT,stable=False,label=None):
                 rel=f.relative_to(root)
                 if prefix=="MechanicalVisualFramework":rel=Path(*rel.parts[1:])
                 elif prefix=="RMVFExamples":rel=Path(*rel.parts[2:])
-                z.write(f,prefix+"/"+rel.as_posix())
-                # Paths are relative to the archive's top-level folder.
-                manifest[rel.as_posix()]=hashlib.sha256(f.read_bytes()).hexdigest()
-            z.writestr(prefix+"/ReleaseManifest.json",json.dumps(manifest,indent=2))
+                archive_path=prefix+"/"+rel.as_posix()
+                z.write(f,archive_path)
+                manifest[archive_path]=hashlib.sha256(f.read_bytes()).hexdigest()
+            manifests[name]=manifest
         require(dest.stat().st_size<64*1024**2,"The archive exceeds the 64 MiB size limit.")
         with zipfile.ZipFile(dest) as z:require(z.testzip() is None,"Archive integrity verification failed.")
         entries.append(hashlib.sha256(dest.read_bytes()).hexdigest()+"  "+name)
         print(name,dest.stat().st_size,"bytes")
+    # One sidecar covers all three archives; no checksum table is added to an install folder.
+    details.write_text(json.dumps(manifests,indent=2),encoding="utf-8")
+    entries.append(hashlib.sha256(details.read_bytes()).hexdigest()+"  "+details.name)
     report.write_text("\n".join(entries)+"\n",encoding="ascii")
 
 if __name__=="__main__":

@@ -29,7 +29,7 @@ powershell -File Tools/Start-Examples.ps1 -Version 1.7 -AutoTest -Launch
 powershell -File Tools/Start-Examples.ps1 -Version 1.7 -Launch
 ```
 
-源码与DLL通过`Mod/BuildManifest.json`对应。模型、贴图或几何变化后重新生成资源，并通过BuildHashes核验。修改绘制逻辑后要检查实机画面，测试数值不代替视觉检查。
+源码与DLL通过`Verification/BuildManifest.json`对应；示例模型的校验记录位于`Verification/AssetHashes/`。工具箱会在构建时更新这些记录。直接运行`Mod/Source/Build.ps1`时，可用`-ManifestPath Verification/BuildManifest.json`指定记录位置；省略该参数只编译DLL。模型、贴图或几何变化后，运行Build sample assets重新生成资源与校验记录。修改绘制逻辑后要检查实机画面，测试数值不代替视觉检查。
 
 ## 实现约定
 

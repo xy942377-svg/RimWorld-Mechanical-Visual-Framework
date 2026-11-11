@@ -6,7 +6,7 @@ This framework displays moving mechanical models in RimWorld. Mod authors can se
 
 At runtime, the framework projects the 3D model onto the map using each part's current position and angle. It shades each face according to its orientation and draws thick outlines.
 
-Current stable release: **v0.1.2**, for RimWorld **1.6 / 1.7**. Author: Grey·Oviin/OpenAI Assisted.
+Current stable release: **v0.1.3**, for RimWorld **1.6 / 1.7**. Author: Grey·Oviin/OpenAI Assisted.
 
 ## Download and install
 
@@ -60,6 +60,6 @@ All detailed guides have Chinese and English versions. Use the link at the top o
 | [Versions and releases](docs/release.en.md) | Getting files, stable version numbers and local packaging |
 | [Verification scope](docs/verification.en.md) | Test environments, checks and verified scope |
 
-`Mod/` contains the framework and its sources; `Examples/` contains the game examples; `Authoring/` contains their source models; `Modeling/` contains modeling cases; `Templates/` supplies a starter model; `Tools/` contains authoring tools; `docs/` and `Verification/` contain guides and tests.
+`Mod/` contains the framework and its sources; `Examples/` contains the game examples; `Authoring/` contains their source models; `Modeling/` contains modeling cases; `Templates/` supplies a starter model; `Tools/` contains authoring tools; `docs/` contains detailed guides; `Verification/` contains reusable tests and development checksum records.
 
 Original code, tools, documentation and examples use [MIT](LICENSE). Modification, redistribution and reuse in other mods are allowed with the copyright and license notices retained. See [NOTICE](NOTICE.md) for attribution and the [verification scope](docs/verification.en.md) for tested versions and scope.

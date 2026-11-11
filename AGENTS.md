@@ -26,7 +26,10 @@ Use sequential public versions (v0.1.0, v0.1.1, ...), never local build labels.
 Ordinary package.py runs create local archives. Use check_release.py and package.py --stable
 only after successful local tool checks, both game tests and visual/content review.
 Keep publisher work notes, generated prompts, test evidence and local verification receipts
-under ignored Local/ or Work/. Retain reusable test tools in Verification.
+under ignored Local/ or Work/. Retain reusable test tools and source/build checksum records in Verification.
+Keep BuildManifest.json, BuildHashes.json and ReleaseManifest.json out of installed mod folders.
+Build.ps1 writes a record only with -ManifestPath; assets.py writes one only with --hashes.
+Package checksum tables belong beside release archives, not inside runtime or example archives.
 
 Distribution: GitHub contains stable source, runtime resources, tutorials, tools and reusable examples.
 Workshop listing text and prepared upload folders stay local under Local/Workshop or Releases.

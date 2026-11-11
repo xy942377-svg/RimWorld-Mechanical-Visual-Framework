@@ -22,6 +22,12 @@ class ReleaseTest(unittest.TestCase):
         (self.root/"Downloads/README.md").write_text("publisher downloads")
         (self.root/"Verification/Evidence/result.txt").write_text("local result")
         (self.root/"project.json").write_text(json.dumps(self.project),encoding="utf-8")
+        (self.root/"Verification/AssetHashes").mkdir()
+        for rel in ("BuildManifest.json","AssetHashes/Starter.json","AssetHashes/Deployment.json","AssetHashes/TripleTurret.json"):
+            (self.root/"Verification"/rel).write_text("{}",encoding="utf-8")
+        # Legacy records must not leak into install archives even when present in an input folder.
+        for rel in ("Mod/BuildManifest.json","Examples/Mechanisms/BuildHashes.json","Mod/ReleaseManifest.json"):
+            (self.root/rel).write_text("{}",encoding="utf-8")
 
     def seal(self):
         (self.root/"Local/release-check.json").write_text(json.dumps({"version":"0.1.0","files":file_hashes(self.root)}),encoding="utf-8")
@@ -42,14 +48,28 @@ class ReleaseTest(unittest.TestCase):
             original=runtime.read_bytes()
             with self.assertRaises(ValueError):pack(self.root,stable=True)
             self.assertEqual(original,runtime.read_bytes())
+        manifests=json.loads((self.root/"Releases/RMVF-v0.1.0-FileHashes.json").read_text(encoding="utf-8"))
         for path in (self.root/"Releases").glob("RMVF-v*.zip"):
             with zipfile.ZipFile(path) as z:
-                names=z.namelist();prefix=names[0].split("/")[0]+"/"
+                names=z.namelist()
                 self.assertFalse(any("/Local/" in n or "/Work/" in n or "/Evidence/" in n or "/Workshop/" in n or "/Downloads/" in n for n in names))
-                manifest=json.loads(z.read(prefix+"ReleaseManifest.json"))
-                self.assertEqual(set(manifest),{n[len(prefix):] for n in names if n!=prefix+"ReleaseManifest.json"})
+                manifest=manifests[path.name]
+                self.assertEqual(set(manifest),set(names))
                 for rel,expected in manifest.items():
-                    self.assertEqual(expected,hashlib.sha256(z.read(prefix+rel)).hexdigest())
+                    self.assertEqual(expected,hashlib.sha256(z.read(rel)).hexdigest())
+                if path.name.endswith("DeveloperKit.zip"):
+                    self.assertIn("RMVF/Verification/BuildManifest.json",names)
+                    self.assertIn("RMVF/Verification/AssetHashes/Starter.json",names)
+                else:
+                    self.assertFalse(any(Path(n).name in {"BuildManifest.json","BuildHashes.json","ReleaseManifest.json"} for n in names))
+
+    def test_existing_hash_report_is_preserved(self):
+        releases=self.root/"Releases";releases.mkdir()
+        report=releases/"RMVF-local-previous-FileHashes.json";report.write_text("existing record")
+        with patch("package.validate"):
+            with self.assertRaises(ValueError):pack(self.root,label="previous")
+        self.assertEqual(report.read_text(),"existing record")
+        self.assertFalse(list(releases.glob("*.zip")))
 
     def test_candidate_or_unverified_status_cannot_be_stable(self):
         self.seal()

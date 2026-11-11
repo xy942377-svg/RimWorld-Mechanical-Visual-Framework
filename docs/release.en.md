@@ -18,9 +18,9 @@ Public versions use `major.minor.patch` with matching Git tags such as `v0.1.0`.
 
 Stable archive names are:
 
-- `RMVF-v0.1.2-Runtime.zip`
-- `RMVF-v0.1.2-Examples.zip`
-- `RMVF-v0.1.2-DeveloperKit.zip`
+- `RMVF-v0.1.3-Runtime.zip`
+- `RMVF-v0.1.3-Examples.zip`
+- `RMVF-v0.1.3-DeveloperKit.zip`
 
 Local builds use separate labels, such as `RMVF-local-check01-Runtime.zip`. These labels do not consume public version numbers and are not uploaded to GitHub.
 
@@ -37,7 +37,9 @@ python Tools/package.py --stable
 
 The checker verifies current sources, DLLs, models and local game-test results. It records the checked files in `Local/release-check.json`. Stable packaging compares those files again; changed files require another check.
 
-Outputs go to the local `Releases` directory. Inspect ZIP contents, file lists and hashes before delivering archives locally. Editable Workshop listing files belong in `Local/Workshop` and are delivered alongside the prepared mod folder. Commit only verified sources, runtime resources, tools, tutorials and examples to GitHub, then create the matching stable tag.
+Outputs go to the local `Releases` directory. Runtime can be installed directly or used for Workshop upload; Examples installs the optional examples. Neither includes build records. DeveloperKit retains sources, guides, examples and development records under `Verification`.
+
+Per-file checksums for all three archives are stored beside them in `RMVF-v0.1.3-FileHashes.json`. `SHA256-v0.1.3.txt` records hashes for the archives and that table. These files support publication checks and stay outside the installed mod. Inspect contents and checksums before delivering archives locally. Editable Workshop listing files belong in `Local/Workshop` and are delivered alongside the prepared mod folder. Commit only verified sources, runtime resources, tools, tutorials and examples to GitHub, then create the matching stable tag.
 
 For a local temporary package, use:
 

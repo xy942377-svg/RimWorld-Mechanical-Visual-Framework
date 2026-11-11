@@ -6,9 +6,9 @@ Source files use UTF-8 JSON with top-level `version=1`; compiled model XML also 
 
 ## Coordinates and hierarchy
 
-Model X points right, Y points back and Z points up. One unit equals one map cell. The neutral facing direction is -Y, and the default camera elevation is 55°.
+Model X points right, Y points back and Z points up. One unit equals one map cell. The neutral facing direction is -Y. The top-level `camera` value sets this model's viewing elevation: default 55°, allowed range 15°–85°. Larger values approach a top-down view; smaller values approach a side view. Rebuild assets and restart the game after changing it.
 
-List parents before their children. A node's `position` is its origin in parent space; `rotation` is a unit quaternion `[x,y,z,w]`; `scale` is positive and uniform. Geometry centers and vertices are in node-local space. A node can have no mesh and act solely as a pivot. The complete model must contain at least one non-degenerate triangle.
+List parents before their children. A node's `position` is its origin in parent space; `rotation` is a unit quaternion `[x,y,z,w]`; `scale` is positive and uniform. Geometry centers and vertices are in node-local space. A node can have no mesh and act solely as a pivot. The complete model must contain at least one non-degenerate triangle. Write scale as a single number, default 1. The layer defaults to raised; use foundation for a ground-level base.
 
 Each pose applies the node's rest rotation, then adds rotations in `bindings` order. Translation offsets follow the **local axes after rotation**, so recoil follows an elevated barrel. To translate before rotating, or to use several different pivots, add intermediate parent nodes.
 
@@ -37,9 +37,13 @@ The `foundation` layer uses the Building altitude band; `raised` is above ItemIm
 | `bindings` | `node`, `parameter`, `kind` (`rotation`, `translation` or `scale`), `axis`, `factor` |
 | `clips` | `name`, `duration` in seconds, `loop`, `tracks`; each track names a `parameter` and lists `keys` as `[time,value]` pairs |
 | `anchors` | `name`, `node`, `position`, `direction`; the default direction is -Y |
-| `palette` | Up to 16 RGB byte-color rows; entries 0..14 are materials and entry 15 is reserved for dark outlines |
+| `palette` | 1–16 RGB rows of integers from 0 to 255; missing rows use the default palette. Materials use entries 0–14; the compiler fixes entry 15 at outline color [19,23,27]. |
 
-Rotation uses degrees; translation uses map cells. A scale binding multiplies node scale by `1 + parameter × factor`, which must remain positive. A wrapped parameter must span exactly 360°; target tracking follows the shortest angular difference.
+A node's `rotation` is a quaternion. Parameters used by `kind="rotation"` bindings use degrees; translation parameters use map cells. A scale binding multiplies node scale by `1 + parameter × factor`, which must stay above 0.001 across the full parameter range. A wrapped parameter must span exactly 360°; target tracking follows the shortest angular difference.
+
+`speed` applies only to movement toward target values. Playing clips follow their keyframe times and values independently of `speed`.
+
+For cylinder geometry, axis is 0, 1 or 2 for X, Y or Z. A binding uses a three-component axis vector, such as [0,0,1] for Z. Rotation uses only its direction; translation also uses its length. Uniform scaling does not use the axis direction.
 
 Keyframe times must increase strictly. Values interpolate linearly, hold the first value before the first key and hold the last value after the last key. A looping clip restarts at `duration`. To make a smooth full rotation, the examples use a continuous 0→360 value track.
 

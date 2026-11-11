@@ -4,11 +4,11 @@
 
 ## Get a stable release
 
-Use **Code → Download ZIP** on the repository page for source code, models, authoring tools and tutorials. Prepared Workshop upload packages and listing text are assembled and delivered locally.
+Use **Code → Download ZIP** on the repository page for the current stable source, runtime resources, models, tools and tutorials. To download an older version, select its version tag in the branch selector first.
 
 For manual installation, copy `Mod` into the game's `Mods` directory and rename it `MechanicalVisualFramework`. Optionally copy `Examples/Mechanisms` and rename it `RMVFExamples`. Load Core, framework and examples in that order.
 
-The Steam Workshop listing has not been published. GitHub provides code, runtime resources, tools, tutorials and reusable examples. Workshop listing drafts and prepared ZIP archives are not committed to the repository.
+The Steam Workshop listing has not been published. The following workflow is for maintainers of this framework.
 
 ## Local development and public versions
 
@@ -18,9 +18,9 @@ Public versions use `major.minor.patch` with matching Git tags such as `v0.1.0`.
 
 Stable archive names are:
 
-- `RMVF-v0.1.1-Runtime.zip`
-- `RMVF-v0.1.1-Examples.zip`
-- `RMVF-v0.1.1-DeveloperKit.zip`
+- `RMVF-v0.1.2-Runtime.zip`
+- `RMVF-v0.1.2-Examples.zip`
+- `RMVF-v0.1.2-DeveloperKit.zip`
 
 Local builds use separate labels, such as `RMVF-local-check01-Runtime.zip`. These labels do not consume public version numbers and are not uploaded to GitHub.
 
@@ -45,4 +45,4 @@ For a local temporary package, use:
 python Tools/package.py --label check01
 ```
 
-Without arguments, the packager uses a timestamp as a local label. The toolbox's Package option also produces local builds only.
+Without arguments, the packager uses a timestamp as a local label. The toolbox's Package framework locally option also produces local builds only.

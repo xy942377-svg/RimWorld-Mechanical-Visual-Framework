@@ -26,17 +26,21 @@ To use the command line directly, run the following from the repository root. Yo
 python Tools/new_project.py D:/MyMechanicalMod --id yourname.mechanism --name "My Mechanism"
 ```
 
-The output directory must not already exist. The generated folder is a complete mod that depends on this framework for animation and rendering. Install it in the game's `Mods` directory alongside the framework. Set your own author, name and description in `About`, and retain the copyright and license notices required by reused code or assets. **Do not copy the framework DLL into each mod that uses it.**
+The output directory must not already exist. The generated folder is a complete mod that depends on this framework for animation and rendering. Install it in the game's `Mods` directory alongside the framework. Set your own author, name and description in `About/About.xml`. The generator saves the starter model's copyright and MIT license in `Licenses/RMVF-MIT.txt`; retain that file when reusing the included material. **Do not copy the framework DLL into each mod that uses it.**
 
 ## 3. Make the first change
 
-Open `Authoring/model.json` in the generated mod. The starter model consists of a base and one rotating child part. Change `size` or `material` on the box in the `arm` node, or change `speed` on the `yaw` parameter. Save the file, then run:
+Open `Authoring/model.json` in the generated mod. The starter model consists of a base and one rotating child part. In the `arm` node, find a geometry entry whose `type` is `box`. Change its `size` for dimensions or `material` for a palette color. Save the file, then run:
 
 ```text
 python Tools/assets.py D:/MyMechanicalMod/Authoring/model.json D:/MyMechanicalMod yourname_mechanism
 ```
 
 The final argument must match the name in the mod's `Models/...` path. The project generator creates this name by replacing dots in the package ID with underscores. Building produces model XML, binary geometry and a palette. Exit and restart the game to see the result; this version does not support hot reload.
+
+The starter automatically plays the `spin` clip. To test `yaw.speed`, edit and rebuild the model, click **Stop clips** in Animation controls, then move the `yaw` slider to set a target. `speed` controls movement toward a target; a playing clip uses its keyframe timing instead. To change the automatic rotation period, change both `spin.duration` and the final keyframe time.
+
+**Build sample assets** builds the repository's three examples. **Validate framework** and **Package framework locally** check and package this framework project. Build your own mod's model with the command above, or copy the command with filled-in paths from its generated `README.md`.
 
 Start with a small change before adding more parts. Set the pivot using the node's `position`; mesh vertices must be relative to that pivot. Using world-space vertices as local coordinates makes the part rotate around the wrong point.
 
@@ -67,7 +71,7 @@ Start your own models with a few hundred triangles. Runtime cost depends mainly 
 
 ## 6. Where to edit a complex mechanism
 
-Authors design the model's shape, joints, transformation sequence and triggers. The framework does not infer whether a model is a turret, an arm or another building, and does not generate a transformation plan from its shape. Authors define structure and motion; the framework handles part transforms, interpolation, playback, rendering and saved animation state.
+Authors design the shape and joints, define transformation sequences, and set triggers in their gameplay code. The framework uses those definitions to transform parts, interpolate values, play clips, render the model and save animation state. Turrets, arms and other buildings use the same approach.
 
 The paths below refer to a mod created by the new-mod tool. After importing GLB, you can use the exported JSON as your source model; the first path in the build command must point to the source file you maintain.
 
@@ -78,7 +82,8 @@ The paths below refer to a mod created by the new-mod tool. After importing GLB,
 |The order and duration of deployment or folding|`duration`, `tracks` and `keys` inside `clips`|Interpolation between authored times and values, playback, pausing, looping and parameter ownership|
 |Attachment positions for lights or other effects|`anchors`, queried by your own code|Positions and directions matching the model's projection; the author creates the actual effects|
 |Viewing elevation|Top-level `camera` in the source model; currently 15°–85°, default 55°|Projection at that angle; rebuild and restart the game after editing|
-|Building name, footprint, costs and components|`About/About.xml`, `Defs/Mechanism.xml` and matching entries in `Languages`|A working starting point from the new-mod tool, filled in by the author|
+|Mod name, author and dependencies|`About/About.xml`|Initial metadata and a framework dependency declaration|
+|Building name, footprint, costs and components|`Defs/Mechanism.xml`; translated names and descriptions in `Languages`|A working starter building whose properties the author edits|
 |When transformation starts, whether it can be interrupted and what happens afterward|Your building class or ThingComp, calling `SetTarget`, `Play` and other [animation methods](api.en.md)|Execution and saved animation state; the author manages gameplay state and trigger conditions|
 
 A practical order of work:
@@ -87,7 +92,7 @@ A practical order of work:
 2. Make one joint rotate or move correctly. Check its direction, range and parent motion through Animation controls before adding more joints.
 3. Write the intended sequence into clip tracks: for example, lift a platform, unfold supports, then rotate the housing. The author chooses the timing and values. See [model format](model-format.en.md) and the non-weapon [Deployment example](../Authoring/Deployment.json).
 4. Decide whether concurrent clips control the same parameters. A new clip stops older clips that own any of its parameters; clips using separate parameters can run together.
-5. Let your gameplay code decide when to call a clip, how interruptions work and how building state changes. The framework does not decide whether deployment enables power production, firing or passage.
+5. Let your gameplay code decide when to call a clip, how interruptions work and how building state changes. For example, that code determines whether deployment enables power production, firing or passage.
 6. Rebuild assets and restart the game after edits. Check intermediate poses, overlap and save restoration. For complex assemblies, also measure several instances moving at once.
 
 This version supports assemblies of rigid parts. Skinning, mesh deformation, automatic linkage constraints and inverse kinematics are not implemented. Authors needing a solver can supply one and feed its results into animation parameters.

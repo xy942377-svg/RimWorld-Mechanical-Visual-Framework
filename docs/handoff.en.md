@@ -12,7 +12,7 @@ The builder uses assemblies from `RimWorldWin64_Data/Managed` for 1.6 and the ga
 
 ## Build and test
 
-Run Build sample assets, Build framework DLLs and Validate in the toolbox. Validate checks resources and source/build correspondence, then runs the Python tool tests.
+Run Build sample assets, Build framework DLLs and Validate framework in the toolbox. Validate framework checks resources and source/build correspondence, then runs the Python tool tests.
 
 Automated game tests:
 

@@ -4,6 +4,8 @@
 
 如果只需展示模型和播放动画，可以直接配置 XML：将 ThingDef 的 `thingClass` 设为 `Building_MechanicalDisplay`，在 `comps` 中添加 `CompProperties_MechanicalVisual`，填写 `model`；如需生成建筑后自动播放动作，再填写 `autoplay`。完整示例见 [Mechanisms.xml](../Examples/Mechanisms/Defs/Mechanisms.xml)。tickerType必须为Normal，drawerType必须为RealtimeOnly；示例rotatable=false，朝向由模型yaw参数控制。
 
+`showControls` 默认开启，用于调节模型参数和测试动作。发布面向玩家的建筑时，可在该组件的XML配置中设置 `<showControls>false</showControls>` 隐藏通用面板，再由自己的操作按钮或游戏逻辑调用动画。
+
 已有自定义建筑可以保留自己的游戏逻辑和ThingComp；调用组件绘制一次，避免原静态贴图、原炮塔头和新网格重复出现。不要再调用原版turretTop.DrawTurret来画同一炮塔，也不要让动态头部进入静态地图网格缓存，否则会产生残影。网格与物品遮挡由模型layer决定。
 
 ## 常用调用
@@ -18,7 +20,7 @@ animation?.SetTarget("left_elevation", 20f);    // 示例模型自定义的参�
 animation?.Play("recoil_left");                 // 开火逻辑确认成功后再触发
 ```
 
-这些名字属于示例模型，不是框架内置炮塔规则。SetTarget/Play遇到未知名称返回false；模型资源加载失败时，`Animation` 为 `null`。不要反复每tick调用Play来“保持播放”，因为它会每次从零开始。普通目标追踪可每tick调用SetTarget，但会主动取消对应动作。
+这些名字属于示例模型，不是框架内置炮塔规则。SetTarget/Play遇到未知名称返回false；模型资源加载失败时，`Animation` 为 `null`。每次调用 `Play` 都会从头播放，因此应在动作开始时调用一次。目标追踪可在每个游戏更新周期调用 `SetTarget`，这会停止占用该参数的动作。
 
 ```csharp
 UnityEngine.Vector3 position, direction;

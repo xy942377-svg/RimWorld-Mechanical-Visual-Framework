@@ -12,7 +12,7 @@
 
 ## 构建与测试
 
-在工具箱中依次运行Build sample assets、Build framework DLLs和Validate。Validate检查资源与源码对应关系，并运行Python工具测试。
+在工具箱中依次运行Build sample assets、Build framework DLLs和Validate framework。Validate framework检查资源与源码对应关系，并运行Python工具测试。
 
 自动游戏测试命令：
 

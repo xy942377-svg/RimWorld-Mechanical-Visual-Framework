@@ -6,7 +6,7 @@ This framework displays moving mechanical models in RimWorld. Mod authors can se
 
 At runtime, the framework projects the 3D model onto the map using each part's current position and angle. It shades each face according to its orientation and draws thick outlines.
 
-Current stable release: **v0.1.1**, for RimWorld **1.6 / 1.7**. Author: Grey·Oviin/OpenAI Assisted.
+Current stable release: **v0.1.2**, for RimWorld **1.6 / 1.7**. Author: Grey·Oviin/OpenAI Assisted.
 
 ## Download and install
 
@@ -40,7 +40,7 @@ Players can use the precompiled runtime files. Model authoring needs Python 3.10
 | Animation parameters | Turn speed, elevation, translation and uniform scaling |
 | Clips | Playback, looping, pausing and concurrent clips using separate parameters |
 | API and saves | Gameplay-driven animation, anchors such as muzzles, and saved pose and playback state |
-| Authoring tools | Mod generation, JSON compilation, supported GLB import, validation and packaging |
+| Authoring tools | Mod generation, JSON compilation and supported GLB import; validation and packaging for this framework project |
 | In-game examples | Rotating arm with 100 triangles, folding mechanism with 380, and triple turret with 5344 |
 | [Shield modeling case](Modeling/ShieldGenerator/README.en.md) | Four corners built from one shared part, with separate base and orb exports |
 
@@ -57,9 +57,9 @@ All detailed guides have Chinese and English versions. Use the link at the top o
 | [API](docs/api.en.md) | Gameplay calls, anchors, resource ownership and saving |
 | [Architecture](docs/architecture.en.md) | Loading, animation, rendering buffers and performance measurement |
 | [Maintenance guide](docs/handoff.en.md) | Environment setup, builds, tests and maintenance conventions |
-| [Releases and downloads](docs/release.en.md) | Getting files, packaging and Workshop publication |
-| [Verification record](docs/verification.en.md) | Test environments, checks and verified scope |
+| [Versions and releases](docs/release.en.md) | Getting files, stable version numbers and local packaging |
+| [Verification scope](docs/verification.en.md) | Test environments, checks and verified scope |
 
 `Mod/` contains the framework and its sources; `Examples/` contains the game examples; `Authoring/` contains their source models; `Modeling/` contains modeling cases; `Templates/` supplies a starter model; `Tools/` contains authoring tools; `docs/` and `Verification/` contain guides and tests.
 
-Original code, tools, documentation and examples use [MIT](LICENSE). Modification, redistribution and reuse in other mods are allowed with the copyright and license notices retained. See [NOTICE](NOTICE.md) for attribution and the [verification record](docs/verification.en.md) for tested versions and scope.
+Original code, tools, documentation and examples use [MIT](LICENSE). Modification, redistribution and reuse in other mods are allowed with the copyright and license notices retained. See [NOTICE](NOTICE.md) for attribution and the [verification scope](docs/verification.en.md) for tested versions and scope.

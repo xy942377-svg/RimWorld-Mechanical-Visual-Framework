@@ -49,6 +49,10 @@ def create(output,package,name):
     if output.exists():raise ValueError("Output already exists; choose a new folder to avoid overwriting work.")
     asset=package.replace(".","_")
     output.mkdir(parents=True)
+    # The starter model is copied into the new mod, so its original license travels with it.
+    # Keep it under Licenses: the author's own additions may use a separate license.
+    (output/"Licenses").mkdir()
+    shutil.copyfile(ROOT/"LICENSE",output/"Licenses/RMVF-MIT.txt")
     metadata(output,name,package)
     (output/"Authoring").mkdir()
     source=output/"Authoring"/"model.json";shutil.copyfile(ROOT/"Templates/model.json",source)
@@ -73,8 +77,12 @@ def create(output,package,name):
         "```text\n"+command+"\n```\n\n"
         "The command regenerates model XML, geometry and the palette. Restart the game to load the updated files. "
         "If you move this mod, update the two paths in the command.\n\n"
+        "The starter plays the spin clip automatically. To test a target's turning speed, stop clips and set yaw with the slider. "
+        "Clip timing is defined by its keyframes, independently of parameter speed.\n\n"
         "Before publishing, set your author, name and description in About/About.xml. "
-        "Keep the package ID, definition names and asset paths unique. Use the installed framework dependency; do not bundle its DLL.\n\n"
+        "Keep the package ID, definition names and asset paths unique. Use the installed framework dependency; do not bundle its DLL. "
+        "Licenses/RMVF-MIT.txt contains the original copyright and license for the included starter material. Retain it when reusing that material; license your own additions separately.\n\n"
+        "[Authoring guide](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/docs/quickstart.en.md)\n\n"
         "## 中文\n\n"
         "将本文件夹放入 RimWorld 的 Mods 目录，按 Core、Mechanical Visual Framework、本 MOD 的顺序启用。"
         "在“杂项”菜单建造示例，选中后打开“动画控制”。\n\n"
@@ -82,8 +90,12 @@ def create(output,package,name):
         "```text\n"+command+"\n```\n\n"
         "命令会重新生成模型 XML、几何文件和色板贴图。重启游戏后加载更新后的文件。"
         "如果移动了本 MOD，请同步修改命令中的两个路径。\n\n"
+        "起步模型自动播放 spin 动作。若要测试目标转速，先停止动作，再用 yaw 滑条设置目标角度。"
+        "动作播放速度由关键帧时间决定，不受参数 speed 限制。\n\n"
         "发布前，在 About/About.xml 中填写自己的作者、名称和说明。"
-        "确保 packageId、定义名称和资源路径不与其他 MOD 重复。保留对框架的依赖，不要另行打包框架 DLL。\n",
+        "确保 packageId、定义名称和资源路径不与其他 MOD 重复。保留对框架的依赖，不要另行打包框架 DLL。"
+        "Licenses/RMVF-MIT.txt 保存了所附起步素材的原作者版权与许可；复用这些素材时保留该文件，自己的新增内容另行注明许可。\n\n"
+        "[制作教程](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/docs/quickstart.md)\n",
         encoding="utf-8")
     print("Created",output)
 if __name__=="__main__":

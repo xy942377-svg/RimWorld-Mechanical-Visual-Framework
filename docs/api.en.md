@@ -4,6 +4,8 @@
 
 A basic display needs only XML: use `Building_MechanicalDisplay` in the ThingDef and add `CompProperties_MechanicalVisual` to `comps`, with a `model` and optional `autoplay`. See [Examples/Mechanisms/Defs/Mechanisms.xml](../Examples/Mechanisms/Defs/Mechanisms.xml). Set `tickerType` to `Normal` and `drawerType` to `RealtimeOnly`. The examples use `rotatable=false`; the model's `yaw` parameter controls facing.
 
+`showControls` defaults to true and exposes model parameters and clips for testing. For a player-facing building, set `<showControls>false</showControls>` in the component XML to hide the generic panel, then drive animation from your own commands or gameplay code.
+
 An existing custom building can retain its gameplay logic and ThingComps. Draw the visual component once. Remove duplicate rendering of the old static graphic or turret head: do not also call vanilla `turretTop.DrawTurret` for the same head or put the animated head into the static map mesh cache. Duplicate rendering can leave a stationary barrel image beneath the moving model. Model `layer` settings control occlusion against map items.
 
 ## Common calls

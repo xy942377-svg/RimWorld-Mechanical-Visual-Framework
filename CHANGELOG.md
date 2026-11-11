@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.2 — 2026-11-11
+
+- Clarify target speed versus clip timing, per-model viewing elevation, and node rotation versus rotation bindings.
+- Label framework-only toolbox actions and separate mod metadata from building definitions in the authoring guide.
+- Include the starter material's MIT license in generated mods, with bilingual reuse instructions.
+- Document how authors can hide the generic animation panel and correct listing wording.
+
+明确目标转速与动作时间的区别、模型俯角和两种旋转字段；标明工具箱操作范围，补齐新建MOD的许可文件及说明，并补充隐藏通用动画面板的方法。
+
 ## v0.1.1 — 2026-11-11
 
 - Keep Workshop listing drafts and prepared release archives local; the repository provides sources, tools, guides and reusable examples.

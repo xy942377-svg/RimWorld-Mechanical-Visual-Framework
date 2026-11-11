@@ -40,6 +40,7 @@ class AssetsTest(unittest.TestCase):
             binary=mod/"Models/test_mechanism/geometry.bin";before=binary.read_bytes()
             build(source,mod,"test_mechanism");self.assertEqual(before,binary.read_bytes())
             self.assertTrue((mod/"Languages/ChineseSimplified/DefInjected/ThingDef/Mechanism.xml").exists())
+            self.assertEqual((mod/"Licenses/RMVF-MIT.txt").read_bytes(),(ROOT/"LICENSE").read_bytes())
             with self.assertRaises(ValueError):create(mod,"test.mechanism","Do not overwrite")
     def test_glb_axes_hierarchy_and_unsupported(self):
         binary=struct.pack("<9f",0,0,0,1,0,0,0,1,0)

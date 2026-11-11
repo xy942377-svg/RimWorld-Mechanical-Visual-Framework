@@ -64,3 +64,30 @@ GLB follows the [Khronos glTF 2.0 specification](https://registry.khronos.org/gl
 - [**ShieldGenerator modeling case**](../Modeling/ShieldGenerator/README.en.md): four placements of one shared corner, orthographic projection and separate base and orb sprite layers.
 
 Start your own models with a few hundred triangles. Runtime cost depends mainly on triangle count, outline edges and active parts. Model dimensions and the game's occupied footprint are configured separately: changing `ThingDef.size` does not scale the model.
+
+## 6. Where to edit a complex mechanism
+
+Authors design the model's shape, joints, transformation sequence and triggers. The framework does not infer whether a model is a turret, an arm or another building, and does not generate a transformation plan from its shape. Authors define structure and motion; the framework handles part transforms, interpolation, playback, rendering and saved animation state.
+
+The paths below refer to a mod created by the new-mod tool. After importing GLB, you can use the exported JSON as your source model; the first path in the build command must point to the source file you maintain.
+
+|What to change|Where to change it|What the framework handles|
+|---|---|---|
+|Part geometry, hierarchy and joint locations|`nodes` in `Authoring/model.json`, or edit in modeling software and import GLB|Local transforms through the hierarchy, so attached parts follow their parents|
+|How a joint rotates or extends|`parameters` for ranges, defaults and speed; `bindings` for the part, axis and transform type|Parameter-driven rotation, translation or uniform scaling|
+|The order and duration of deployment or folding|`duration`, `tracks` and `keys` inside `clips`|Interpolation between authored times and values, playback, pausing, looping and parameter ownership|
+|Attachment positions for lights or other effects|`anchors`, queried by your own code|Positions and directions matching the model's projection; the author creates the actual effects|
+|Viewing elevation|Top-level `camera` in the source model; currently 15°–85°, default 55°|Projection at that angle; rebuild and restart the game after editing|
+|Building name, footprint, costs and components|`About/About.xml`, `Defs/Mechanism.xml` and matching entries in `Languages`|A working starting point from the new-mod tool, filled in by the author|
+|When transformation starts, whether it can be interrupted and what happens afterward|Your building class or ThingComp, calling `SetTarget`, `Play` and other [animation methods](api.en.md)|Execution and saved animation state; the author manages gameplay state and trigger conditions|
+
+A practical order of work:
+
+1. List moving parts and their parent-child relationships. Give joints and parameters stable, clear names. Use nodes without geometry for pivots that need separate placement.
+2. Make one joint rotate or move correctly. Check its direction, range and parent motion through Animation controls before adding more joints.
+3. Write the intended sequence into clip tracks: for example, lift a platform, unfold supports, then rotate the housing. The author chooses the timing and values. See [model format](model-format.en.md) and the non-weapon [Deployment example](../Authoring/Deployment.json).
+4. Decide whether concurrent clips control the same parameters. A new clip stops older clips that own any of its parameters; clips using separate parameters can run together.
+5. Let your gameplay code decide when to call a clip, how interruptions work and how building state changes. The framework does not decide whether deployment enables power production, firing or passage.
+6. Rebuild assets and restart the game after edits. Check intermediate poses, overlap and save restoration. For complex assemblies, also measure several instances moving at once.
+
+This version supports assemblies of rigid parts. Skinning, mesh deformation, automatic linkage constraints and inverse kinematics are not implemented. Authors needing a solver can supply one and feed its results into animation parameters.

@@ -4,11 +4,11 @@
 
 ## 获取正式版
 
-[Downloads](../Downloads/README.md)提供框架运行包、可选的动画示例包和SHA-256校验值。完整源码、模型、制作工具与教程可通过仓库首页的 **Code → Download ZIP** 获取。
+完整源码、模型、制作工具与教程可通过仓库首页的 **Code → Download ZIP** 获取。工坊发布用的成品包、介绍文本和上传资料在本地整理交付。
 
-运行包解压后的`MechanicalVisualFramework`文件夹放入游戏的`Mods`目录；示例包中的`RMVFExamples`放在同一目录。在游戏中按Core、框架、示例的顺序启用。
+手动安装时，将仓库中的`Mod`文件夹复制到游戏的`Mods`目录并改名为`MechanicalVisualFramework`。可选示例位于`Examples/Mechanisms`，复制后改名为`RMVFExamples`。在游戏中按Core、框架、示例的顺序启用。
 
-创意工坊条目尚未发布，目前通过GitHub下载安装。
+创意工坊条目尚未发布。GitHub保留开发者需要的代码、运行资源、工具、教程和示例；工坊文案及成品压缩包不提交到仓库。
 
 ## 本地开发与正式版本号
 
@@ -18,9 +18,9 @@
 
 正式包统一命名：
 
-- `RMVF-v0.1.0-Runtime.zip`
-- `RMVF-v0.1.0-Examples.zip`
-- `RMVF-v0.1.0-DeveloperKit.zip`
+- `RMVF-v0.1.1-Runtime.zip`
+- `RMVF-v0.1.1-Examples.zip`
+- `RMVF-v0.1.1-DeveloperKit.zip`
 
 本地构建使用独立标签，例如`RMVF-local-check01-Runtime.zip`。这些标签不占用正式版本号，也不上传GitHub。
 
@@ -37,7 +37,7 @@ python Tools/package.py --stable
 
 检查工具核对当前源码、DLL、模型和本地游戏测试结果，在`Local/release-check.json`记录这次检查对应的文件。正式打包时再次比对；文件发生变化就需要重新检查。
 
-生成文件位于`Releases`。核对ZIP内的文件清单、内容和哈希后，将运行包与示例包复制到`Downloads`，更新该目录的校验值和下载说明。最后再提交到GitHub并创建对应正式标签。失败或未完成的测试文件继续留在本地。
+生成文件位于本地`Releases`。核对ZIP内的文件清单、内容和哈希后，在本地交付压缩包。工坊介绍等编辑文件存放在`Local/Workshop`，与待上传的MOD目录一并交付。GitHub只提交检查通过的源码、运行资源、工具、教程和示例，并创建对应正式标签。
 
 制作本地临时包时使用：
 
@@ -46,9 +46,3 @@ python Tools/package.py --label check01
 ```
 
 不指定参数时，打包工具使用时间戳作为本地标签。工具箱的Package选项也只生成本地包。
-
-## 工坊发布
-
-工坊上传使用运行包中的MOD目录。封面位于`About/Preview.png`，中英文正文见[工坊介绍](../Workshop/README.md)。首次发布的更新说明使用“初次发布”或“Initial Release”。
-
-发布后核对实际页面中的图片、标题、列表和链接，再将工坊地址加入仓库首页。工坊运行包保留C#源码、许可证和必要使用说明；开发工具、建模案例和测试工具随GitHub完整项目提供。

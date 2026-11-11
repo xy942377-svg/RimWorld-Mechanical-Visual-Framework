@@ -2,7 +2,7 @@
 
 [中文](verification.md) · [English home](../README.en.md) · [Maintenance guide](handoff.en.md)
 
-Version: **v0.1.0**. Verified on 2026-11-11 on Windows with RimWorld 1.6.4871 and 1.7.5000. Enabled content was Core, the framework, mechanical examples and the local test component.
+Version: **v0.1.1**. Verified on 2026-11-11 on Windows with RimWorld 1.6.4871 and 1.7.5000. Enabled content was Core, the framework, mechanical examples and the local test component.
 
 ## Verified behavior
 

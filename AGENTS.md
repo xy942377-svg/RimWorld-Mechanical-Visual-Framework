@@ -27,3 +27,7 @@ Ordinary package.py runs create local archives. Use check_release.py and package
 only after successful local tool checks, both game tests and visual/content review.
 Keep publisher work notes, generated prompts, test evidence and local verification receipts
 under ignored Local/ or Work/. Retain reusable test tools in Verification.
+
+Distribution: GitHub contains stable source, runtime resources, tutorials, tools and reusable examples.
+Workshop listing text and prepared upload folders stay local under Local/Workshop or Releases.
+Deliver release archives locally; do not commit Workshop/ or Downloads/ directories.

@@ -30,6 +30,7 @@ The `foundation` layer uses the Building altitude band; `raised` is above ItemIm
 
 | Field | Contents |
 |---|---|
+| `camera` | Authored orthographic viewing elevation, 15°–85°, default 55°; rebuild and restart after editing |
 | `nodes` | `name`, optional `parent`, `position`, `rotation`, `scale`, `layer`, `geometry` |
 | `geometry` | `box(center,size)`, `cylinder(center,radius,length,axis,segments)`, or `triangles`; each item has `material=0..14` |
 | `parameters` | `name`, `min`, `max`, `default`, `speed`, `wrap`; speed is in parameter units per second, and 0 moves directly to the target |

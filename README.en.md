@@ -6,17 +6,17 @@ This framework displays moving mechanical models in RimWorld. Mod authors can se
 
 At runtime, the framework projects the 3D model onto the map using each part's current position and angle. It shades each face according to its orientation and draws thick outlines.
 
-Current stable release: **v0.1.0**, for RimWorld **1.6 / 1.7**. Author: Grey·Oviin/OpenAI Assisted.
+Current stable release: **v0.1.1**, for RimWorld **1.6 / 1.7**. Author: Grey·Oviin/OpenAI Assisted.
 
 ## Download and install
 
-- [Runtime](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-v0.1.0-Runtime.zip): extract the `MechanicalVisualFramework` folder into the game's `Mods` directory.
-- [Animation examples](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-v0.1.0-Examples.zip): extract `RMVFExamples` into `Mods` to try the rotating arm, lifting and folding mechanism, and triple turret.
+- **Manual framework installation:** download and extract the full repository, then copy its `Mod` folder into the game `Mods` directory and rename it `MechanicalVisualFramework`.
+- **Optional animation examples:** copy `Examples/Mechanisms` into the same directory and rename it `RMVFExamples`.
 - **Full authoring project:** use **Code → Download ZIP** on this repository page for sources, models, tools and tutorials. Extract the download before running the tools.
 
 Load **Core → Mechanical Visual Framework → RMVF · Mechanical examples**. The runtime requires Core; the examples require the framework. The framework supplies rendering and animation, while mods using it add buildings and gameplay.
 
-The Steam Workshop listing has not yet been published. Downloads are available in this repository.
+The Steam Workshop listing has not yet been published. Developers can install the framework and examples from this repository using the steps above.
 
 ## Try the examples and create a model
 

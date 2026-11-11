@@ -25,6 +25,7 @@ foundation使用Building高度带，raised位于ItemImportant之上。这些高�
 
 |字段|含义|
 |---|---|
+|camera|作者设置的正交投影俯角，15°—85°，默认55°；修改后重新构建并重启游戏|
 |nodes|name、可选parent、position、rotation、scale、layer、geometry|
 |geometry|box(center,size)、cylinder(center,radius,length,axis,segments)、triangles；每项material=0..14|
 |parameters|name、min、max、default、speed、wrap；speed单位为参数单位/秒，0表示直接到目标|

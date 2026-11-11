@@ -4,11 +4,11 @@
 
 ## Get a stable release
 
-[Downloads](../Downloads/README.md) contains the runtime, optional animation examples and SHA-256 checksums. Use **Code → Download ZIP** on the repository page for source code, models, authoring tools and tutorials.
+Use **Code → Download ZIP** on the repository page for source code, models, authoring tools and tutorials. Prepared Workshop upload packages and listing text are assembled and delivered locally.
 
-Extract `MechanicalVisualFramework` and the optional `RMVFExamples` folder into the game's `Mods` directory. Load Core, framework and examples in that order.
+For manual installation, copy `Mod` into the game's `Mods` directory and rename it `MechanicalVisualFramework`. Optionally copy `Examples/Mechanisms` and rename it `RMVFExamples`. Load Core, framework and examples in that order.
 
-The Steam Workshop listing has not been published. Downloads are currently provided through GitHub.
+The Steam Workshop listing has not been published. GitHub provides code, runtime resources, tools, tutorials and reusable examples. Workshop listing drafts and prepared ZIP archives are not committed to the repository.
 
 ## Local development and public versions
 
@@ -18,9 +18,9 @@ Public versions use `major.minor.patch` with matching Git tags such as `v0.1.0`.
 
 Stable archive names are:
 
-- `RMVF-v0.1.0-Runtime.zip`
-- `RMVF-v0.1.0-Examples.zip`
-- `RMVF-v0.1.0-DeveloperKit.zip`
+- `RMVF-v0.1.1-Runtime.zip`
+- `RMVF-v0.1.1-Examples.zip`
+- `RMVF-v0.1.1-DeveloperKit.zip`
 
 Local builds use separate labels, such as `RMVF-local-check01-Runtime.zip`. These labels do not consume public version numbers and are not uploaded to GitHub.
 
@@ -37,7 +37,7 @@ python Tools/package.py --stable
 
 The checker verifies current sources, DLLs, models and local game-test results. It records the checked files in `Local/release-check.json`. Stable packaging compares those files again; changed files require another check.
 
-Outputs go to `Releases`. Inspect ZIP contents, file lists and hashes, then copy the runtime and examples into `Downloads` and update its checksums and download guide. Only then commit to GitHub and create the matching stable tag. Failed or unfinished test builds remain local.
+Outputs go to the local `Releases` directory. Inspect ZIP contents, file lists and hashes before delivering archives locally. Editable Workshop listing files belong in `Local/Workshop` and are delivered alongside the prepared mod folder. Commit only verified sources, runtime resources, tools, tutorials and examples to GitHub, then create the matching stable tag.
 
 For a local temporary package, use:
 
@@ -46,9 +46,3 @@ python Tools/package.py --label check01
 ```
 
 Without arguments, the packager uses a timestamp as a local label. The toolbox's Package option also produces local builds only.
-
-## Steam Workshop publication
-
-Upload the mod folder from the runtime package. Its cover is `About/Preview.png`; bilingual text is in [Workshop descriptions](../Workshop/README.md). Use “Initial Release” for the first change note.
-
-After publication, inspect the actual image, title, lists and links before adding the Workshop URL to the repository home page. The runtime retains C# source, the license and its user guide. Authoring tools, modeling cases and test tools are supplied with the full GitHub project.

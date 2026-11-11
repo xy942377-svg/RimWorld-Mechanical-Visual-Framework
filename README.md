@@ -7,17 +7,17 @@
 
 游戏运行时，框架根据各部件的位置和角度，将三维模型投影到地图画面上，并按各个面的朝向计算明暗、绘制粗描边。
 
-当前正式版：**v0.1.0**；支持RimWorld **1.6 / 1.7**。作者：Grey·Oviin/OpenAI Assisted。
+当前正式版：**v0.1.1**；支持RimWorld **1.6 / 1.7**。作者：Grey·Oviin/OpenAI Assisted。
 
 ## 下载与安装
 
-- [框架运行包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-v0.1.0-Runtime.zip)：解压后，将`MechanicalVisualFramework`文件夹放入游戏的`Mods`目录。
-- [动画示例包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-v0.1.0-Examples.zip)：解压后，将`RMVFExamples`文件夹放入`Mods`，用于体验转臂、升降折叠机构和三联装炮塔。
+- **手动安装框架**：下载并解压完整仓库，将其中的`Mod`文件夹复制到游戏的`Mods`目录，重命名为`MechanicalVisualFramework`。
+- **可选动画示例**：将`Examples/Mechanisms`文件夹复制到同一目录，重命名为`RMVFExamples`。
 - **完整开发资料**：使用本页的 **Code → Download ZIP**，包含源码、模型、制作工具和教程。下载后先解压，再运行工具。
 
 在游戏中按 **Core → Mechanical Visual Framework → RMVF · Mechanical examples** 的顺序启用。框架仅依赖Core，示例包需要框架。框架本身提供绘制和动画功能；建筑及其玩法由使用框架的MOD添加。
 
-创意工坊条目尚未发布，当前通过本仓库下载安装。
+创意工坊条目尚未发布。开发者可按上述步骤安装仓库中的框架和示例。
 
 ## 体验与制作
 

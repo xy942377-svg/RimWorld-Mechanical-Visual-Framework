@@ -4,9 +4,8 @@ from pathlib import Path
 from assets import ROOT,require
 from validate import validate
 
-ROOT_FILES={"Downloads/README.md","README.md","README.en.md","LICENSE","NOTICE.md","CHANGELOG.md","AGENTS.md","project.json","ToolPaths.example.json","Start.cmd",".gitignore",".gitattributes"}
-ROOT_DIRS={"Mod","Examples","Authoring","Templates","Tools","docs","Verification",".github","Modeling","Workshop"}
-WORKSHOP_FILES={"README.md","Workshop_Title.txt","Workshop_Description_ChineseSimplified.txt","Workshop_Description_English.txt","Workshop_ChangeNotes_ChineseSimplified.txt","Workshop_ChangeNotes_English.txt"}
+ROOT_FILES={"README.md","README.en.md","LICENSE","NOTICE.md","CHANGELOG.md","AGENTS.md","project.json","ToolPaths.example.json","Start.cmd",".gitignore",".gitattributes"}
+ROOT_DIRS={"Mod","Examples","Authoring","Templates","Tools","docs","Verification",".github","Modeling"}
 
 def portable_files(root):
     for folder in sorted(ROOT_DIRS):
@@ -17,7 +16,6 @@ def portable_files(root):
             rel=f.relative_to(base)
             # Tests are reusable tools; run logs, screenshots and editorial notes stay local.
             if folder=="Verification" and (len(rel.parts)!=1 or f.suffix not in (".py",".cs")):continue
-            if folder=="Workshop" and rel.as_posix() not in WORKSHOP_FILES:continue
             yield f
     for name in sorted(ROOT_FILES):
         if (root/name).is_file():yield root/name

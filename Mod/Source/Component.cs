@@ -126,7 +126,8 @@ namespace MechanicalVisualFramework
     public sealed class MechanicalControls : Window
     {
         readonly CompMechanicalVisual comp;Vector2 scroll;bool pause;
-        public override Vector2 InitialSize {get{return new Vector2(580,640);}}
+        // UI dimensions already account for the user's interface scale. Keep the close button on screen.
+        public override Vector2 InitialSize {get{return new Vector2(Math.Min(580,UI.screenWidth-40),Math.Min(640,UI.screenHeight-40));}}
         public MechanicalControls(CompMechanicalVisual c){comp=c;doCloseButton=true;doCloseX=true;absorbInputAroundWindow=true;}
         public override void DoWindowContents(Rect rect)
         {

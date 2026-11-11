@@ -1,7 +1,0 @@
-PASS pivots, parent composition, anchors and dirty revisions (idle=0/recoil=1/yaw=4).
-PASS independent instances, angular speed/shortest path, concurrent clips, pause, ownership, loop and completion.
-PASS Scribe roundtrip of parameter names/current/target values and paused playback time.
-PASS despawn/respawn retains animation and reuses immutable asset.
-PASS native normal-ticker integration: 10 scheduled game ticks.
-PASS three model definitions rendered concurrently; animation and screenshots captured.
-COMPLETE 0.1.0-candidate1 / 1.7.5000

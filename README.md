@@ -1,18 +1,18 @@
 # RimWorld Mechanical Visual Framework
 # 环世界机械动态视觉框架
 
-[English](README.en.md) · [上手教程](docs/quickstart.md) · [模型格式](docs/model-format.md) · [接口说明](docs/api.md) · [开发交接](docs/handoff.md)
+[English](README.en.md) · [上手教程](docs/quickstart.md) · [模型格式](docs/model-format.md) · [接口说明](docs/api.md) · [维护指南](docs/handoff.md)
 
 这个框架用于在 RimWorld 中显示可以活动的机械模型。MOD 作者可以分别设置各个部件的旋转中心，制作炮塔转向、炮管抬升与后坐、平台升降和机械折叠等动画。部件之间可以建立父子关系，例如炮塔转动时，安装在它上面的炮管会一起转动。
 
 游戏运行时，框架根据各部件的位置和角度，将三维模型投影到地图画面上，并按各个面的朝向计算明暗、绘制粗描边。
 
-框架版本：**0.1.0-candidate1**；支持RimWorld **1.6 / 1.7**。本次发布资料修订为**workshop1**，加入工坊封面、中英文介绍和上传说明。作者：Grey·Oviin/OpenAI Assisted。
+当前正式版：**v0.1.0**；支持RimWorld **1.6 / 1.7**。作者：Grey·Oviin/OpenAI Assisted。
 
 ## 下载与安装
 
-- [框架运行包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-workshop1-Workshop.zip)：解压后，将`MechanicalVisualFramework`文件夹放入游戏的`Mods`目录。
-- [动画示例包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-workshop1-Examples.zip)：解压后，将`RMVFExamples`文件夹放入`Mods`，用于体验转臂、升降折叠机构和三联装炮塔。
+- [框架运行包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-v0.1.0-Runtime.zip)：解压后，将`MechanicalVisualFramework`文件夹放入游戏的`Mods`目录。
+- [动画示例包](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-v0.1.0-Examples.zip)：解压后，将`RMVFExamples`文件夹放入`Mods`，用于体验转臂、升降折叠机构和三联装炮塔。
 - **完整开发资料**：使用本页的 **Code → Download ZIP**，包含源码、模型、制作工具和教程。下载后先解压，再运行工具。
 
 在游戏中按 **Core → Mechanical Visual Framework → RMVF · Mechanical examples** 的顺序启用。框架仅依赖Core，示例包需要框架。框架本身提供绘制和动画功能；建筑及其玩法由使用框架的MOD添加。
@@ -57,9 +57,8 @@
 |[模型格式](docs/model-format.md)|坐标、层级、参数、动作和编译产物|
 |[接口说明](docs/api.md)|游戏逻辑调用、挂接点、资源所有权和保存|
 |[运行时结构](docs/architecture.md)|加载、动画、绘制缓冲和性能测量|
-|[开发交接](docs/handoff.md)|环境配置、构建、测试和维护约定|
+|[维护指南](docs/handoff.md)|环境配置、本地构建、测试和维护约定|
 |[发布与下载](docs/release.md)|获取文件、打包和创意工坊发布|
-|[当前版本](docs/status.md)|版本、发布状态和后续工作|
 |[验证记录](docs/verification.md)|测试环境、检查项目和已验证范围|
 
 `Mod/`包含框架及源码；`Examples/`包含游戏示例；`Authoring/`包含示例源模型；`Modeling/`包含建模案例；`Templates/`提供起步模型；`Tools/`包含制作工具；`docs/`和`Verification/`分别存放说明与测试。

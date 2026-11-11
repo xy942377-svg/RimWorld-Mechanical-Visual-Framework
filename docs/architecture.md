@@ -1,6 +1,6 @@
 # 运行时分工与性能
 
-[English](architecture.en.md) · [中文首页](../README.md) · [接口说明](api.md) · [开发交接](handoff.md)
+[English](architecture.en.md) · [中文首页](../README.md) · [接口说明](api.md) · [维护指南](handoff.md)
 
 `Asset.cs`从声明模型的MOD读取资源并检查格式，每个`MechanicalModelDef`缓存一份只读模型。`PreparedGeometry.cs`在加载时合并重复顶点、计算法线并建立候选轮廓边。
 

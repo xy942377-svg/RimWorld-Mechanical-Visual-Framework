@@ -1,5 +1,5 @@
 """Validate portable assets, XML, translations, source/assembly parity and size budgets."""
-import hashlib,json,struct,sys
+import hashlib,json,re,struct,sys
 from pathlib import Path
 import xml.etree.ElementTree as ET
 from assets import ROOT,compile_source,require
@@ -21,6 +21,9 @@ def validate(root=ROOT,assemblies=True):
         for rel,hash_value in hashes.items():require(sha(root/"Examples/Mechanisms"/rel)==hash_value.upper(),"The asset does not match its recorded hash. Rebuild: "+rel)
     if assemblies:
         manifest=json.loads((root/"Mod/BuildManifest.json").read_text(encoding="utf-8-sig"))
+        version=json.loads((root/"project.json").read_text(encoding="utf-8-sig"))["version"]
+        source_version=re.search(r'const string Version="([^"]+)"',(root/"Mod/Source/FrameworkMod.cs").read_text(encoding="utf-8"))[1]
+        require(version==source_version==manifest["Build"],"Project, source and build manifest versions differ.")
         actual={p.name:sha(p) for p in (root/"Mod/Source").glob("*.cs")}
         require(actual=={s["Name"]:s["SHA256"] for s in manifest["Sources"]},"C# sources do not match BuildManifest.json. Rebuild both framework DLLs.")
         require({t["Version"] for t in manifest["Targets"]}=={"1.6","1.7"},"The release needs builds for both 1.6 and 1.7.")
@@ -29,7 +32,7 @@ def validate(root=ROOT,assemblies=True):
     # Exclude work/runtime links BEFORE traversal, never descend into a linked game installation.
     payload=[]
     for entry in root.iterdir():
-        if entry.name in ("Work","Releases",".git") or entry.is_symlink():continue
+        if entry.name in ("Work","Local","Releases",".git") or entry.is_symlink():continue
         if entry.is_file():payload.append(entry)
         elif entry.is_dir():payload.extend(f for f in entry.rglob("*") if f.is_file() and "__pycache__" not in f.parts)
     require(sum(f.stat().st_size for f in payload)<64*1024**2,"Release files exceed the 64 MiB size limit.")

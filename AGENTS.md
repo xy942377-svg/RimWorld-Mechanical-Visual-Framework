@@ -19,3 +19,11 @@ Use Tools/validate.py and Tools/package.py. Keep at most two completed game test
 Preserve necessary test summaries before removing temporary outputs.
 Resolve cleanup paths, check containment and reparse points, and never traverse game links during deletion.
 Exclude ToolPaths.local.json, Work, game binaries, credentials and player saves from commits and packages.
+
+Release policy: all builds and tests run locally. Do not run tests in GitHub Actions.
+Only verified stable versions may be pushed to GitHub. See docs/release.md.
+Use sequential public versions (v0.1.0, v0.1.1, ...), never local build labels.
+Ordinary package.py runs create local archives. Use check_release.py and package.py --stable
+only after successful local tool checks, both game tests and visual/content review.
+Keep publisher work notes, generated prompts, test evidence and local verification receipts
+under ignored Local/ or Work/. Retain reusable test tools in Verification.

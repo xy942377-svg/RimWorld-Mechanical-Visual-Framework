@@ -1,34 +1,15 @@
 # Changelog
 
-## Workshop materials revision workshop1 — 2026-11-11
+## v0.1.0 — 2026-11-11
 
-- Added an original cover, a 1024×576 upload preview, bilingual Steam BBCode descriptions and first-publication notes.
-- Added publisher instructions and links to the authoring tools, tutorials, optional animation examples and shield modeling case.
-- Included publisher materials in the developer package and the preview in the runtime package.
-- Framework code, DLLs, models, dependencies and save format are unchanged from docs3. The Workshop listing remains unpublished.
+Initial stable release.
 
-## Bilingual documentation revision docs3 — 2026-11-10
+- Hierarchical rigid-part models with continuous turning, independent elevation, recoil, lifting and folding.
+- Flat shading, outlines and separate rendering backends for RimWorld 1.6 and 1.7.
+- Animation parameters, clips, anchors and saved playback state.
+- Three optional animation examples, editable models and a shield-generator modeling case.
+- Authoring compiler, rigid GLB importer, mod template and local build/test tools.
+- English and Simplified Chinese controls, documentation and Workshop descriptions.
+- Animation controls fit the screen when interface scaling is increased.
 
-- Added English versions of all eight detailed guides: quick start, model format, API, architecture, maintenance, releases, status and verification.
-- Added matching Chinese/English navigation, a guide index on both home pages and English tutorial links in the shield case and installed guide.
-- Rewrote unclear setup instructions and tool errors; expanded the generated mod guide and explained technical terms on first use.
-- Updated package revision names. Runtime validation messages changed; animation and rendering algorithms, model assets and save format remain unchanged.
-
-## Documentation and examples revision docs2 — 2026-11-10
-
-- Clarified installation, GLB export steps and example descriptions in both languages.
-- Removed conversation-specific background and internal editorial notes from public documentation.
-- Added a shield-generator modeling case with a shared corner, separate orb, OBJ exporter and aligned sprite layers.
-- Added revisioned package names. Framework version, runtime algorithms and save format remain 0.1.0-candidate1.
-
-
-## 0.1.0-candidate1 — 2026-11-10
-
-- Extracted a multi-model, hierarchical rigid-part renderer with version-specific 1.6/1.7 buffers.
-- Added parameters, angular speed, independent linear tracks, clips, anchors and save restoration.
-- Added generic component/display host and bilingual game controls.
-- Added three visual examples and editable model sources.
-- Added source compiler, rigid GLB subset importer, new-mod template, toolbox and whitelist packaging.
-- Added compiler tests and isolated in-game verification for both supported versions.
-- Initial candidate; Workshop listing has not yet been published.
-
+初次正式发布。提供机械动画与绘制框架、三个可选示例、建模案例、中英文教程及本地制作工具。

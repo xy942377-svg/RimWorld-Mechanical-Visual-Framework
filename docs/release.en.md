@@ -1,29 +1,54 @@
-# Releases and downloads
+# Versions and releases
 
 [中文](release.md) · [English home](../README.en.md) · [Maintenance guide](handoff.en.md)
 
-## Install game content
+## Get a stable release
 
-Download the runtime and optional animation examples from the repository home page. Extract them, place the `MechanicalVisualFramework` and `RMVFExamples` folders in the game's `Mods` directory, and load Core, framework and examples in that order.
+[Downloads](../Downloads/README.md) contains the runtime, optional animation examples and SHA-256 checksums. Use **Code → Download ZIP** on the repository page for source code, models, authoring tools and tutorials.
 
-The framework supports RimWorld 1.6 and 1.7. Players need the game and the dependencies of the mods they use.
+Extract `MechanicalVisualFramework` and the optional `RMVFExamples` folder into the game's `Mods` directory. Load Core, framework and examples in that order.
 
-## Get the authoring files
+The Steam Workshop listing has not been published. Downloads are currently provided through GitHub.
 
-Use GitHub's **Code → Download ZIP** to get the full project. Extract it before reading tutorials, editing models or running the toolbox. The shield modeling case is in `Modeling/ShieldGenerator`.
+## Local development and public versions
 
-`Downloads/` provides installable runtime and example packages and SHA-256 checksums for those two files. Download the repository for the full development materials. The local packaging tool also generates a `DeveloperKit.zip`.
+All builds, tests and experiments run locally. GitHub receives only stable releases that have passed local checks, game tests and package-content review. Reusable test scripts belong with the source; logs, saves, temporary images and working notes stay local. Do not run tests in GitHub Actions.
 
-## Maintain release packages
+Public versions use `major.minor.patch` with matching Git tags such as `v0.1.0`. Start at `v0.1.0`. Increment the patch for fixes, the minor version for new features, and the major version for incompatible API changes. Public documentation or asset updates also receive a new version; delivered archives are never overwritten.
 
-Complete the checks in the [maintenance guide](handoff.en.md), then run from the repository root:
+Stable archive names are:
+
+- `RMVF-v0.1.0-Runtime.zip`
+- `RMVF-v0.1.0-Examples.zip`
+- `RMVF-v0.1.0-DeveloperKit.zip`
+
+Local builds use separate labels, such as `RMVF-local-check01-Runtime.zip`. These labels do not consume public version numbers and are not uploaded to GitHub.
+
+## Local verification and packaging
+
+1. Follow the [maintenance guide](handoff.en.md) to build assets and both DLLs, run tool tests and game tests for 1.6 and 1.7, and inspect the rendered models.
+2. Review documents, links, attribution, licenses and the actual files to publish. Synchronize the final version in `project.json`, `FrameworkMod.Version`, documentation and the changelog. Rebuild and retest after changing C#.
+3. After the checks pass, set `status` in `project.json` to `Stable`, then run:
 
 ```text
-python Tools/package.py
+python Tools/check_release.py
+python Tools/package.py --stable
 ```
 
-The tool creates runtime, example and full developer packages under `Releases/`. Each ZIP includes a file checksum manifest; a separate SHA-256 list covers all three archives.
+The checker verifies current sources, DLLs, models and local game-test results. It records the checked files in `Local/release-check.json`. Stable packaging compares those files again; changed files require another check.
 
-The framework version is recorded in `project.json`'s `version`. Documentation, reference assets, explanatory text and cover art use a separate `revision`, included in package names; the current revision is `workshop1`. Preserve previously delivered archives and use new filenames for a new revision.
+Outputs go to `Releases`. Inspect ZIP contents, file lists and hashes, then copy the runtime and examples into `Downloads` and update its checksums and download guide. Only then commit to GitHub and create the matching stable tag. Failed or unfinished test builds remain local.
 
-For Steam Workshop uploads, use the extracted runtime mod directory. The cover is in `Mod/About/Preview.png`; bilingual descriptions, the title, initial change notes and upload steps are in [Workshop materials](../Workshop/README.md). That folder is included only in the authoring project. The Workshop listing has not yet been published.
+For a local temporary package, use:
+
+```text
+python Tools/package.py --label check01
+```
+
+Without arguments, the packager uses a timestamp as a local label. The toolbox's Package option also produces local builds only.
+
+## Steam Workshop publication
+
+Upload the mod folder from the runtime package. Its cover is `About/Preview.png`; bilingual text is in [Workshop descriptions](../Workshop/README.md). Use “Initial Release” for the first change note.
+
+After publication, inspect the actual image, title, lists and links before adding the Workshop URL to the repository home page. The runtime retains C# source, the license and its user guide. Authoring tools, modeling cases and test tools are supplied with the full GitHub project.

@@ -6,12 +6,12 @@ This framework displays moving mechanical models in RimWorld. Mod authors can se
 
 At runtime, the framework projects the 3D model onto the map using each part's current position and angle. It shades each face according to its orientation and draws thick outlines.
 
-Framework version: **0.1.0-candidate1**, for RimWorld **1.6 / 1.7**. Package revision **workshop1** adds the Workshop cover, bilingual listing descriptions and upload instructions. Author: Grey·Oviin/OpenAI Assisted.
+Current stable release: **v0.1.0**, for RimWorld **1.6 / 1.7**. Author: Grey·Oviin/OpenAI Assisted.
 
 ## Download and install
 
-- [Runtime](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-workshop1-Workshop.zip): extract the `MechanicalVisualFramework` folder into the game's `Mods` directory.
-- [Animation examples](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-0.1.0-candidate1-workshop1-Examples.zip): extract `RMVFExamples` into `Mods` to try the rotating arm, lifting and folding mechanism, and triple turret.
+- [Runtime](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-v0.1.0-Runtime.zip): extract the `MechanicalVisualFramework` folder into the game's `Mods` directory.
+- [Animation examples](https://github.com/xy942377-svg/RimWorld-Mechanical-Visual-Framework/blob/main/Downloads/RMVF-v0.1.0-Examples.zip): extract `RMVFExamples` into `Mods` to try the rotating arm, lifting and folding mechanism, and triple turret.
 - **Full authoring project:** use **Code → Download ZIP** on this repository page for sources, models, tools and tutorials. Extract the download before running the tools.
 
 Load **Core → Mechanical Visual Framework → RMVF · Mechanical examples**. The runtime requires Core; the examples require the framework. The framework supplies rendering and animation, while mods using it add buildings and gameplay.
@@ -58,7 +58,6 @@ All detailed guides have Chinese and English versions. Use the link at the top o
 | [Architecture](docs/architecture.en.md) | Loading, animation, rendering buffers and performance measurement |
 | [Maintenance guide](docs/handoff.en.md) | Environment setup, builds, tests and maintenance conventions |
 | [Releases and downloads](docs/release.en.md) | Getting files, packaging and Workshop publication |
-| [Current status](docs/status.en.md) | Version, publication status and further work |
 | [Verification record](docs/verification.en.md) | Test environments, checks and verified scope |
 
 `Mod/` contains the framework and its sources; `Examples/` contains the game examples; `Authoring/` contains their source models; `Modeling/` contains modeling cases; `Templates/` supplies a starter model; `Tools/` contains authoring tools; `docs/` and `Verification/` contain guides and tests.

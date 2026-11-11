@@ -12,6 +12,10 @@ Pausing the game stops the animation clock. A parameter slider sets a target val
 
 The animation panel displays parameter and clip names from the model, such as `yaw` (turn angle) and `left_elevation` (left barrel elevation), so authors can find the corresponding entries in the source file. General buttons and descriptions are available in English and Simplified Chinese.
 
+![Three interactive mechanical examples](images/examples.png)
+
+![Animation controls](images/animation-controls.png)
+
 ## 2. Configure the tools
 
 Run `Start.cmd` in the repository root and select **Configure paths**. Enter the path to an existing Python 3.10+ executable; `python` also works if it is available on your command line. Game directories and the Roslyn `csc.exe` path are needed only for compiling the framework or running automated game tests. The configuration is saved in `ToolPaths.local.json`, which is excluded from release packages.

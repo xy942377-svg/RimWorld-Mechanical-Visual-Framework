@@ -1,8 +1,0 @@
-Cold developer-package check — 2026-11-10
-Extracted RMVF-0.1.0-candidate1-DeveloperKit.zip into a new task-owned directory.
-Rebuilt all three model assets using only extracted sources and Python standard library.
-Rebuilt 1.6 and 1.7 DLLs using existing compiler and locally owned game assemblies.
-Portable validation passed. Eight Python tests passed.
-1.6 byte-identical SHA256: 5D758E396294DFFC8D183F6751EDE1A138EC3045A533869DD09B09750BC8467E
-1.7 byte-identical SHA256: 020473E91F2108158D044380BCA1E9729066B602D2B7049DAA7986D17468949D
-No prior project or conversation was required by the extracted build.

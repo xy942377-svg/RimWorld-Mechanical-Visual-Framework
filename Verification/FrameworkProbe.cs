@@ -43,7 +43,13 @@ public sealed class FrameworkProbe : GameComponent
             if(frame==100){turret.Animation.SetTarget("yaw",60);turret.Animation.SetTarget("left_elevation",25);turret.Animation.SetTarget("right_elevation",-5);deploy.Animation.Play("spin");}
             if(frame==200)turret.Animation.Play("recoil_center");
             if(frame==270){turret.Animation.SetTarget("yaw",220);turret.Animation.Play("recoil_left");}
-            if(frame==320){controls=new MechanicalControls(turret);Find.WindowStack.Add(controls);}
+            if(frame==320)
+            {
+                controls=new MechanicalControls(turret);Find.WindowStack.Add(controls);
+                var rect=controls.windowRect;
+                Check(rect.xMin>=0&&rect.yMin>=0&&rect.xMax<=UI.screenWidth&&rect.yMax<=UI.screenHeight,"controls extend beyond scaled screen bounds");
+                Write("PASS animation controls fit the scaled screen bounds.");
+            }
             if(frame==360)Shot("RMVF_Controls");
             if(frame==400)controls.Close();
             if(frame==70||frame==220||frame==420)Shot("RMVF_"+frame);

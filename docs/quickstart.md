@@ -12,6 +12,10 @@
 
 动画控制面板直接显示模型中的参数名和动作名，例如 `yaw`（转向角度）、`left_elevation`（左炮管仰角）。这些名称与源文件一致，便于作者查找；通用按钮与说明提供英文和简体中文。
 
+![三个可操作的机械示例](images/examples.png)
+
+![动画控制面板](images/animation-controls.png)
+
 ## 2. 配置工具
 
 双击项目根目录的 `Start.cmd` 打开工具箱，选择 **Configure paths（配置路径）**。在 Python 项填写已安装的 Python 3.10 或更新版本的程序路径，例如 `C:/Python312/python.exe`。若在命令行输入 `python` 可以正常启动 Python，也可以直接填写 `python`。只有要编译框架或运行自动游戏测试时才需要填写游戏目录与Roslyn的`csc.exe`。配置保存在`ToolPaths.local.json`，不会进入发布包。

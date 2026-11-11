@@ -1,2 +1,0 @@
-2b7ab7b100b57e330097f06d6ec4f5ca0babf6d32bc69238563585b877ed52cd  RMVF-0.1.0-candidate1-docs2-Workshop.zip
-6214a850645eb6fc08554591555e696f932d90e72cddf9dabc1d184f340efd2a  RMVF-0.1.0-candidate1-docs2-Examples.zip

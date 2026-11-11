@@ -1,52 +1,46 @@
 # Maintenance guide
 
-[中文](handoff.md) · [English home](../README.en.md) · [Status](status.en.md) · [Verification](verification.en.md) · [Releases](release.en.md)
+[中文](handoff.md) · [English home](../README.en.md) · [Local verification](verification.en.md) · [Versions and releases](release.en.md)
 
-The framework version is 0.1.0-candidate1; the package revision is workshop1 (2026-11-11). Start with the repository README. Version and publication status are recorded in `project.json` and [status](status.en.md). Before changing implementation, read [architecture](architecture.en.md), [model format](model-format.en.md) and [API](api.en.md).
+This guide covers local rebuilding, testing and resource maintenance. The project version is in `project.json`. Before changing implementation, read [architecture](architecture.en.md), [model format](model-format.en.md) and [API](api.en.md).
 
-This revision adds the Workshop cover, bilingual listing descriptions and upload instructions; see [Workshop materials](../Workshop/README.md). The runtime package contains the upload cover. Listing text and the cover master are supplied with the authoring project. C# sources, DLLs, models, dependencies and save fields are unchanged from docs3.
+## Configure the environment
 
-## Set up the environment
+Download the full project. Model authoring requires Python 3.10+. C# changes require Roslyn's `csc.exe` and matching RimWorld installations. Enter tool paths through Configure paths in `Start.cmd`, or copy `ToolPaths.example.json` to `ToolPaths.local.json` and edit it. This configuration stays local.
 
-Download the full repository. Precompiled examples need no development software. Model authoring requires an existing Python 3.10+ installation. C# changes require an existing Roslyn `csc.exe` and your own installations of the corresponding RimWorld versions. Copy `ToolPaths.example.json` to `ToolPaths.local.json`, or use **Configure paths** in `Start.cmd`, and enter your local paths.
+The builder uses assemblies from `RimWorldWin64_Data/Managed` for 1.6 and the game root for 1.7. When game updates change layouts or APIs, inspect the actual installation and build each version separately.
 
-Build in this order: `BuildAssets → BuildCode → Validate`. Then run `Test16` and `Test17` sequentially. These are actions in `Tools/Toolbox.ps1`, also available through `Start.cmd`. The test launcher uses file links to your game under `Work/Runtime` and separate saves under `Work/Runs`; it leaves your normal ModsConfig unchanged. Run one game version at a time. Automated tests exit when complete.
+## Build and test
 
-For manual testing, run this from the repository root:
+Run Build sample assets, Build framework DLLs and Validate in the toolbox. Validate checks resources and source/build correspondence, then runs the Python tool tests.
+
+Automated game tests:
+
+```text
+powershell -File Tools/Start-Examples.ps1 -Version 1.6 -AutoTest -Launch
+powershell -File Tools/Start-Examples.ps1 -Version 1.7 -AutoTest -Launch
+```
+
+Run these commands sequentially, waiting for the first game process to exit before starting the next. The launcher uses game links under `Work/Runtime` and separate profiles under `Work/Runs`, leaving normal game settings unchanged. Each run writes `results.txt` to its own directory and exits when complete.
+
+For manual model and control-panel inspection, run:
 
 ```text
 powershell -File Tools/Start-Examples.ps1 -Version 1.7 -Launch
 ```
 
-Add `-AutoTest` for automated tests. Use `-Version 1.6` to select the other supported version.
+`Mod/BuildManifest.json` records matching sources and DLLs. Rebuild changed models, textures or geometry and verify their BuildHashes. Inspect actual game rendering after renderer changes; numeric checks do not replace visual inspection.
 
-The C# builder targets the verified assembly layouts: the `Managed` subdirectory for 1.6 and the game root for 1.7. If a game update changes assemblies or APIs, inspect the installed version and rebuild against it. DLLs from the two versions are not interchangeable.
+## Implementation rules
 
-## Interface conventions
-
-- Gameplay controls visuals through parameters, clips and anchors. Drawing and asset loading handle display and resources.
-- The mod using the framework implements firing, energy and navigation.
-- Resource paths belong to the consuming mod. Avoid hard-coded framework roots or global variables tied to a single model.
-- Share immutable assets only. Each instance owns its animation state and mesh buffers.
-- Update the format `version` when changing the model format, and check whether saved parameter names still have the same meaning. Edit pivots and geometry in source models, then rebuild.
+- Gameplay drives visuals through parameters, clips and anchors. Firing, energy and navigation belong to the consuming mod.
+- Resource paths belong to the mod declaring the model. Share only immutable assets; each instance owns animation state and mesh buffers.
 - Do not mix 1.7 native buffers with Unity compatibility setters.
-- Rebuild changes to geometry or textures and verify them through `BuildHashes` and `BuildManifest`.
-- Keep coordinate, outline and geometry explanations beside the relevant source. Tool behavior is described at the top of each script and in the [quick start](quickstart.en.md).
+- When model formats or parameter meanings change, check whether saved names and values remain valid.
+- Comments explain coordinates, resource ownership, version differences and constraints that must be preserved.
 
-## Verification and delivery
+## Local files and publication
 
-`Tools/validate.py` checks XML, language keys, geometry, build hashes and size budgets. `Verification/test_tools.py` covers project generation, input limits, reproducible builds and GLB coordinate and hierarchy conversion. `FrameworkProbe.cs` checks transforms, independent joints, playback state, Scribe restoration and tick-driven animation in the real game. Rendering changes also need visual inspection in-game.
+Keep test runs, logs and working notes under `Work` or `Local`; they are excluded from the repository and packages. Public versions and local build labels are separate. See [versions and releases](release.en.md) for checks, naming and upload order.
 
-`Mod/BuildManifest.json` links source hashes to the DLLs. The tested scope for each version is recorded in [verification](verification.en.md). Link or documentation edits do not require repeating mechanical motion tests. Changed C# sources must be rebuilt and their hashes checked.
-
-Use the whitelist in `Tools/package.py` for packaging. Preserve delivered ZIPs in `Releases`. For framework version changes, update `project.json`, `FrameworkMod.Version` and `CHANGELOG`. For documentation, explanatory text or modeling reference revisions, update `project.json`'s `revision` and `CHANGELOG` while retaining the framework version. `Downloads` contains installable versioned ZIPs; GitHub's **Code → Download ZIP** provides the complete project. Steam uploads use the extracted runtime package. `Modeling` belongs to the developer kit, not the runtime or animation example packages.
-
-To rebuild the shield modeling case:
-
-```text
-python Modeling/ShieldGenerator/build_model.py --output Work/ShieldModel
-```
-
-This exports OBJ files, materials and structural checks using Python's standard library. See the [case guide](../Modeling/ShieldGenerator/README.en.md) for sprite production.
-
-Do not recursively delete runtime links in `Work` as if they were ordinary directories. Before cleanup, resolve absolute paths, confirm they are inside the project's `Work` folder and check for links. Preserve necessary evidence, then remove completed `Runs` subdirectories that contain no links. Keep at most two completed test runs per game version. Storage budgets are in [AGENTS.md](../AGENTS.md).
+`Work/Runtime` contains links to the game; cleanup must not recurse through those links. Keep at most two completed test runs per game version. Preserve needed results before removing old test profiles. Retain delivered archives under `Releases` without overwriting or deleting them. Size budgets are in `AGENTS.md`.

@@ -1,36 +1,24 @@
-# Verification record
+# Local verification scope
 
 [中文](verification.md) · [English home](../README.en.md) · [Maintenance guide](handoff.en.md)
 
-## Framework 0.1.0-candidate1
+Version: **v0.1.0**. Verified on 2026-11-11 on Windows with RimWorld 1.6.4871 and 1.7.5000. Enabled content was Core, the framework, mechanical examples and the local test component.
 
-Tests ran on 2026-11-10 on Windows with RimWorld 1.6.4871 and 1.7.5000. Enabled content was Core, the framework, animation examples and the FrameworkProbe test component.
+## Verified behavior
 
-Passed checks:
+- Part pivots, parent-child rotations, barrel elevation and recoil along a rotated local axis.
+- Continuous turning, the shortest turn from 359° to 1°, independent concurrent clips, looping, pausing and stopping.
+- Independent instance state. Mesh updates remain correct after anchor queries: 0 updated nodes for an unchanged pose, 1 for single-barrel recoil and 4 active nodes for overall turret rotation.
+- Saving and restoring current and target parameter values, clip time and paused state; pose restoration after a building is despawned and spawned again.
+- Three examples rendering together, with animation driven by normal game updates. Model views and controls were inspected in both versions; the window adjusts to the available space after interface scaling.
+- Eleven tool tests covering template generation, reproducible builds, input validation, GLB coordinates and hierarchy, stable-package verification records, detection of changed files and preservation of existing archives.
 
-- Pivots, parent-child rotations, barrel elevation and recoil along a rotated local axis.
-- Mesh updates after anchor queries: 0 updated nodes for an unchanged pose, 1 for single-barrel recoil and 4 active nodes for overall turret rotation.
-- Independent instance state, concurrent clips using separate parameters and parameter conflict handling.
-- Target speed, the shortest turn from 359° to 1°, clip looping, pausing and stopping.
-- Scribe saving and restoration of current and target parameter values, clip time and paused state.
-- Pose restoration and recreation of independent meshes when a building is despawned and spawned again.
-- Three different models running together, with at least 10 normal game ticks advancing animation in each version.
-- Eight Python tool tests covering template generation, reproducible builds, input checks and GLB coordinate and hierarchy conversion.
+The build manifest connects sources to both DLLs. The three examples' geometry, textures and source files are checked against hashes and rebuilt output. Archive checks cover the file list, ZIP integrity and hashes of the packaged files.
 
-Visual inspection covered models in 1.7 and models plus the animation control panel in 1.6. The 1.6 in-game check used the final DLL. After the 1.7 mechanical tests, only link constants, comments and error messages changed before recompilation. Summaries and representative screenshots are in `Verification/Evidence/`.
+## Reproducing the checks
 
-The full developer package was also rebuilt in an independent directory: all three models and both DLLs matched the packaged files. See `Verification/Evidence/cold-rebuild.txt`.
+Follow [Build and test](handoff.en.md#build-and-test) for tool checks and both automated game tests. Test tools are included with the source; test runs and results stay local. See [Releases](release.en.md) for stable packaging.
 
-Complete-save migration between game versions, hardware performance benchmarks and complex mod combinations have not been tested. GLB importer tests use synthetic files; accepted input is described in the [quick start](quickstart.en.md#4-import-from-modeling-software).
+The shield modeling case contains a standalone builder, four rotated copies of one corner model, and separate base and orb exports. It teaches modeling and projection and is not installed as a fourth game building. See the [case guide](../Modeling/ShieldGenerator/README.en.md).
 
-## Documentation revision docs2
-
-Checks covered wording and bilingual content, download and documentation links, template generation, shield model export, source-to-DLL correspondence, package manifests and archive integrity. Every valid triangle in the three shield OBJ exports was compared with the original model; vertices and materials matched. The maximum coordinate error after reversing the four corner transforms was approximately 3.33×10⁻¹⁶. The shield case is an authoring reference and was not tested as a fourth in-game building.
-
-Rebuilt DLLs for both game versions were byte-for-byte identical to those before the documentation revision, and all eight tool tests passed. Animation and rendering algorithms and save fields were unchanged. In-game mechanical motion tests were not repeated for this revision.
-
-## Documentation revision docs3
-
-Added English versions of the eight detailed guides and reviewed project prose, game descriptions, tool prompts, templates, error messages and source comments. Chinese and English commands and C# examples match. Internal links and section anchors were checked. A new mod was generated to inspect its bilingual guide; the build command in that guide also ran successfully with spaces in the mod path.
-
-Both DLLs were rebuilt because runtime error messages changed, and source-to-assembly hash checks passed. Comparison confirmed that executable C# logic was unchanged. All eight Python tool tests and PowerShell syntax checks passed. Models and textures were unchanged; in-game animation tests were not repeated for this revision.
+Checks for this version do not cover complete-save migration between game versions, hardware performance benchmarks or complex mod combinations. GLB tests use synthetic models; real input must meet the [import requirements](quickstart.en.md#4-import-from-modeling-software).

@@ -5,7 +5,7 @@ $config=Join-Path $root 'ToolPaths.local.json'
 if($Action -eq 'Menu'){
  Write-Host "RMVF Creator Toolbox"
  Write-Host "1 Configure paths   2 New mod   3 Build sample assets   4 Build framework DLLs"
- Write-Host "5 Validate          6 Test 1.6  7 Test 1.7             8 Package"
+ Write-Host "5 Validate          6 Test 1.6  7 Test 1.7             8 Package local build"
  Write-Host "9 Open guide       10 Import GLB rest pose"
  $items=@('Configure','New','BuildAssets','BuildCode','Validate','Test16','Test17','Package','Docs','ImportGLB')
  $choice=0;if(-not [int]::TryParse((Read-Host 'Choose 1..10'),[ref]$choice) -or $choice -lt 1 -or $choice -gt 10){throw 'Enter a menu number from 1 to 10.'}

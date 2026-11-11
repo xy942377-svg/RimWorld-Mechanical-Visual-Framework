@@ -38,7 +38,7 @@ foreach($v in $Versions){
 }
 # Manifest covers only the versions built in this invocation. Build BOTH for a dual-version release.
 [pscustomobject]@{
- Build='0.1.0-candidate1'
+ Build=([regex]::Match((Get-Content -LiteralPath "$PSScriptRoot/FrameworkMod.cs" -Raw),'const string Version="([^"]+)"')).Groups[1].Value
  Sources=@($sources|ForEach-Object{[pscustomobject]@{Name=$_.Name;SHA256=(Get-FileHash -LiteralPath $_.FullName).Hash}})
 
  Targets=$targets

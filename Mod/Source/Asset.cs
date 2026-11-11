@@ -81,7 +81,7 @@ namespace MechanicalVisualFramework
             foreach(XmlElement e in top.SelectNodes("bindings/binding"))
             {
                 int ni,pi;Require(names.TryGetValue(e.GetAttribute("node"),out ni)&&paramNames.TryGetValue(e.GetAttribute("parameter"),out pi),"A binding must name an existing node and parameter.");
-                // Definite assignment kept explicit for older compilers.
+                // Short-circuit validation does not establish definite assignment for the compiler.
                 pi=paramNames[e.GetAttribute("parameter")];
                 var b=new Binding{Node=ni,Parameter=pi,Kind=e.GetAttribute("kind"),Axis=Vector(e,"axis",Vector3.forward),Factor=Number(e,"factor",1)};
                 Require(b.Kind=="rotation"||b.Kind=="translation"||b.Kind=="scale","Binding kind must be rotation, translation or scale.");

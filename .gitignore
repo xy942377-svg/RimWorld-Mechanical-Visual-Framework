@@ -1,6 +1,7 @@
 ToolPaths.local.json
 Work/
 Releases/
+Local/
 __pycache__/
 *.pyc
 *.pdb
